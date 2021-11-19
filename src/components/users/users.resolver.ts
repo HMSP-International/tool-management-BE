@@ -1,7 +1,10 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+// import { IToken } from '../token/token.interface.';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { User } from './user.entity';
 import { CreateUserInput } from './users.dto';
+import { Req } from '@nestjs/common';
+import { Request } from 'express';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -13,6 +16,13 @@ export class UsersResolver {
 		return this.usersService.findAll();
 	}
 
+	// @Query(() => User)
+	// getUser (@Req() request: Request): Promise<User> {
+	// 	console.log(request);
+
+	// 	return this.usersService.findById('12');
+	// }
+
 	// --------------------------------------- End Query --------------------------------------- //
 
 	// ---------------------------------------- Mutaion ---------------------------------------- //
@@ -22,27 +32,4 @@ export class UsersResolver {
 	}
 
 	// -------------------------------------- End Mutaion -------------------------------------- //
-
-	// @Query(() => [ User ], { name: 'users' })
-	// findAll () {
-	// 	return this.usersService.findAll();
-	// }
-
-	// @Query(() => User, { name: 'user' })
-	// findOne(@Args('id', { type: () => Int }) id: number) {
-	//   return this.usersService.findOne(id);
-	// }
-
-	// @Mutation(() => User)
-	// updateUser (@Args('updateUserInput') updateUserInput: UpdateUserInput) {
-	// 	return this.usersService.update(updateUserInput.id, updateUserInput);
-	// }
-
-	// @Mutation(() => User)
-	// removeUser (
-	// 	@Args('id', { type: () => Int })
-	// 	id: number,
-	// ) {
-	// 	return this.usersService.remove(id);
-	// }
 }

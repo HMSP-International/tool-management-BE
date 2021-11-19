@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, HttpException, HttpStatus } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateUserInput } from './users.dto';
@@ -31,17 +31,18 @@ export class UsersService {
 		return users;
 	}
 
+	async findById (_id: string, getPassword: Boolean = false): Promise<User | null> {
+		if (getPassword === true) {
+			return await this.userEntity.findById(_id);
+		}
+		else {
+			return await this.userEntity.findById(_id).select('-password');
+		}
+	}
+
 	async findByEmail (email: string): Promise<User | null> {
 		const user = await this.userEntity.findOne({ email });
 
 		return user;
-	}
-
-	// update (id: number, updateUserInput: UpdateUserInput) {
-	// 	return `This action updates a #${id} user`;
-	// }
-
-	remove (id: number) {
-		return `This action removes a #${id} user`;
 	}
 }

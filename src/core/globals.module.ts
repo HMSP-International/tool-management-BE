@@ -1,11 +1,14 @@
 // 3rd dependencies
+import { Global, Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
 import { join } from 'path';
 import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Global, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
-
+// Middleware
+import * as compression from 'compression';
+import * as helmet from 'helmet';
+import * as morgan from 'morgan';
 // Common
 import configuration from '../common/config/configuration';
 
@@ -24,7 +27,7 @@ import configuration from '../common/config/configuration';
 				inject: [ ConfigService ],
 			}),
 			GraphQLModule.forRoot({
-				autoSchemaFile: join(process.cwd(), 'schema.gql'),
+				autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
 			}),
 			ConfigModule.forRoot({
 				isGlobal: true,
@@ -44,4 +47,11 @@ import configuration from '../common/config/configuration';
 		],
 	exports: [ ConfigModule, JwtModule ],
 })
-export class CoresModule {}
+export class CoresModule implements NestModule {
+	configure (consumer: MiddlewareConsumer) {
+		consumer
+			.apply(compression(), helmet())
+			// .exclude({})
+			.forRoutes({ path: '*', method: RequestMethod.ALL });
+	}
+}

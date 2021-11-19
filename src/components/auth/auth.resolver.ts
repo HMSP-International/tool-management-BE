@@ -1,8 +1,9 @@
-import { Resolver, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
-import { SigninInput } from './auth.dto';
-import { Token } from './token/token.entity';
-import { IToken } from './token/token.interface';
+import { SigninInput, TestInput } from './auth.dto';
+import { Token } from '../token/token.entity';
+import { IToken } from '../token/token.interface';
+import { User } from '../users/user.entity';
 
 @Resolver(() => Token)
 export class AuthResolver {
@@ -12,9 +13,4 @@ export class AuthResolver {
 	signin (@Args('signinInput') signinInput: SigninInput): Promise<IToken> {
 		return this.authService.signin(signinInput.email, signinInput.password);
 	}
-
-	// @Mutation(() => Auth)
-	// signup (@Args('createAuthInput') AuthInput: AuthInput) {
-	// 	return this.authService.createUser(AuthInput);
-	// }
 }

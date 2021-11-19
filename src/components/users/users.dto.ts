@@ -1,5 +1,6 @@
-import { InputType, Field } from '@nestjs/graphql';
-import { Length, IsEmail, IsString, IsEnum, IsOptional } from 'class-validator';
+import { InputType, Field, ArgsType } from '@nestjs/graphql';
+import { Length, IsEmail, IsString, IsEnum, IsOptional, IsNotEmpty } from 'class-validator';
+import { Model } from 'mongoose';
 
 export enum ROLES {
 	superAdmin = 'SUPER_ADMIN',
@@ -30,3 +31,11 @@ export class CreateUserInput {
 	@Field(() => String, { nullable: true })
 	role: string;
 }
+
+@ArgsType()
+export class GetUserArgs {
+	@Field()
+	@IsNotEmpty()
+	userId: string;
+}
+

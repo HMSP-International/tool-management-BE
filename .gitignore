@@ -2,4 +2,4 @@
 /dist
 /node_modules
 
-schema.gql
+/src/schema.gql

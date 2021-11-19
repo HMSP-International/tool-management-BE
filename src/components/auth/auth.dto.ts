@@ -13,3 +13,9 @@ export class SigninInput {
 	@Field(() => String)
 	password: string;
 }
+
+@InputType()
+export class TestInput {
+	@Field(() => String)
+	_id: string;
+}

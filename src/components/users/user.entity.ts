@@ -16,7 +16,7 @@ export class User {
 	@Field(() => String)
 	email: string;
 
-	@Prop({ type: 'string', required: true, select: false })
+	@Prop({ type: 'string', required: true })
 	@Field(() => String, { nullable: true })
 	password: string;
 
