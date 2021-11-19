@@ -1,0 +1,11 @@
+http:
+  host: 'localhost'
+  port: 8080
+
+db:
+  mongodb:
+    host: 'mongodb://localhost:27017/ManagementTool'
+
+jwt:
+  secret: 'privateKey'
+  expiresIn: '60s'
