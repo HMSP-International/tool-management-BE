@@ -3,10 +3,15 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateUserInput } from './users.dto';
 import { User, UserDocument } from './user.entity';
+import { JwtService } from '@nestjs/jwt';
+import { IPayLoadToken, IToken } from '../token/token.interface';
 
 @Injectable()
 export class UsersService {
-	constructor (@InjectModel(User.name) private userEntity: Model<UserDocument>) {}
+	constructor (
+		@InjectModel(User.name) private userEntity: Model<UserDocument>,
+		private jwtService: JwtService,
+	) {}
 
 	async createUser (createUserInput: CreateUserInput): Promise<User> {
 		// Hash password
@@ -21,6 +26,7 @@ export class UsersService {
 		{
 			const user = await new this.userEntity(createUserInput);
 			const newUser = await user.save();
+			newUser.password = null;
 			return newUser;
 		}
 	}

@@ -1,9 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { IToken } from '../token/token.interface';
-import { User } from '../users/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -21,6 +20,6 @@ export class AuthService {
 			throw new NotFoundException('Email or Password Invalid');
 		}
 
-		return { jwt: this.jwtService.sign({ _id: user._id }) };
+		return { jwt: this.jwtService.sign({ _id: user._id, role: user.role }) };
 	}
 }

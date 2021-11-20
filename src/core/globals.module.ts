@@ -7,8 +7,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 // Middleware
 import * as compression from 'compression';
-import * as helmet from 'helmet';
-import * as morgan from 'morgan';
+import { JwtMiddleware } from '../common/middleware/jwt.middleware';
 // Common
 import configuration from '../common/config/configuration';
 
@@ -26,13 +25,17 @@ import configuration from '../common/config/configuration';
 					},
 				inject: [ ConfigService ],
 			}),
+
 			GraphQLModule.forRoot({
 				autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+				sortSchema: true,
 			}),
+
 			ConfigModule.forRoot({
 				isGlobal: true,
 				load: [ configuration ],
 			}),
+
 			JwtModule.registerAsync({
 				imports: [ ConfigModule ],
 				useFactory:
@@ -50,8 +53,8 @@ import configuration from '../common/config/configuration';
 export class CoresModule implements NestModule {
 	configure (consumer: MiddlewareConsumer) {
 		consumer
-			.apply(compression(), helmet())
-			// .exclude({})
-			.forRoutes({ path: '*', method: RequestMethod.ALL });
+			// .apply(compression(), JwtMiddleware)
+			.apply(compression())
+			.forRoutes({ path: '*', method: RequestMethod.POST });
 	}
 }

@@ -2,7 +2,7 @@ import { ObjectType, Field } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import * as bcrypt from 'bcrypt';
-// import { JwtService } from '@nestjs/jwt';
+import { JwtService } from '@nestjs/jwt';
 
 export type UserDocument = User & mongoose.Document;
 
@@ -46,7 +46,7 @@ UserSchema.pre<User>('save', function (next: Function) {
 	}
 });
 
-// UserSchema.methods.generateAuthToken = function<User> (jwtService: JwtService): String {
-// 	const token = jwtService.sign({ _id: this._id, role: this.role });
-// 	return token;
-// };
+UserSchema.methods.generateAuthToken = function<User> (jwtService: JwtService): String {
+	const token = jwtService.sign({ _id: this._id, role: this.role });
+	return token;
+};

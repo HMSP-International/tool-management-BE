@@ -1,13 +1,6 @@
-import { InputType, Field, ArgsType } from '@nestjs/graphql';
-import { Length, IsEmail, IsString, IsEnum, IsOptional, IsNotEmpty } from 'class-validator';
-import { Model } from 'mongoose';
-
-export enum ROLES {
-	superAdmin = 'SUPER_ADMIN',
-	admin = 'ADMIN',
-	member = 'MEMBER',
-	default = member,
-}
+import { InputType, Field } from '@nestjs/graphql';
+import { Length, IsEmail, IsString, IsEnum, IsOptional } from 'class-validator';
+import { ROLE } from '../../common/decorator/role.decorator';
 
 @InputType()
 export class CreateUserInput {
@@ -27,15 +20,7 @@ export class CreateUserInput {
 	displayName: string;
 
 	@IsOptional()
-	@IsEnum(ROLES)
+	@IsEnum(ROLE, { message: 'this role only: ' + JSON.stringify(Object.values(ROLE)) })
 	@Field(() => String, { nullable: true })
 	role: string;
 }
-
-@ArgsType()
-export class GetUserArgs {
-	@Field()
-	@IsNotEmpty()
-	userId: string;
-}
-
