@@ -24,3 +24,9 @@ export class CreateUserInput {
 	@Field(() => String, { nullable: true })
 	role: string;
 }
+
+@InputType()
+export class DeleteUserInput {
+	@Field(() => String)
+	_id: string;
+}

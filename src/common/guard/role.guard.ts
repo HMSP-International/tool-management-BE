@@ -9,25 +9,30 @@ export class RolesGuard implements CanActivate {
 	constructor (private reflector: Reflector) {}
 
 	async canActivate (context: GqlExecutionContext): Promise<boolean> {
-		console.log('RolesGuard');
-
 		const ctx = GqlExecutionContext.create(context);
+		const { user } = ctx.getContext().req;
 
+		// if dont send token
+		if (!user)
+			throw new HttpException(
+				'Cant find token in authorization headers',
+				HttpStatus.UNAUTHORIZED,
+			);
+
+		// get what roles this context needs
 		const requiredRoles = this.reflector.getAllAndOverride<ROLE[]>(ROLES_KEY, [
 			context.getHandler(),
 			context.getClass(),
 		]);
 
+		// if this req dont need any role, allowed to pass
 		if (!requiredRoles) {
 			return true;
 		}
-		const { user } = ctx.getContext().req;
 
-		// console.log('requiredRoles: ', requiredRoles);
-		// console.log('currentRole: ', user.role);
-		const isTrue: boolean = requiredRoles.includes(user.role);
-
-		if (!isTrue) throw new HttpException('Invalid role', HttpStatus.UNAUTHORIZED);
+		// check the roles from req and roles of this context
+		const isMatched: boolean = requiredRoles.includes(user.role);
+		if (!isMatched) throw new HttpException('Invalid role', HttpStatus.UNAUTHORIZED);
 
 		return true;
 	}

@@ -4,7 +4,6 @@ import { Model } from 'mongoose';
 import { CreateUserInput } from './users.dto';
 import { User, UserDocument } from './user.entity';
 import { JwtService } from '@nestjs/jwt';
-import { IPayLoadToken, IToken } from '../token/token.interface';
 
 @Injectable()
 export class UsersService {
@@ -48,6 +47,15 @@ export class UsersService {
 
 	async findByEmail (email: string): Promise<User | null> {
 		const user = await this.userEntity.findOne({ email });
+
+		return user;
+	}
+
+	async deleteById (_id: string): Promise<User | null> {
+		const user = await this.userEntity.findByIdAndDelete(_id);
+
+		if (user === null)
+			throw new HttpException('This user has been removed', HttpStatus.NO_CONTENT);
 
 		return user;
 	}

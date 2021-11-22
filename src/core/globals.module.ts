@@ -53,8 +53,8 @@ import configuration from '../common/config/configuration';
 export class CoresModule implements NestModule {
 	configure (consumer: MiddlewareConsumer) {
 		consumer
-			// .apply(compression(), JwtMiddleware)
-			.apply(compression())
+			.apply(compression(), JwtMiddleware)
+			// .apply(compression())
 			.forRoutes({ path: '*', method: RequestMethod.POST });
 	}
 }

@@ -4,9 +4,10 @@ import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/c
 // Module
 import { AuthModule } from '../components/auth/auth.module';
 import { UsersModule } from '../components/users/users.module';
+import { TasksModule } from '../components/tasks/tasks.module';
 
 @Module({
-	imports: [ AuthModule, UsersModule ],
+	imports: [ AuthModule, UsersModule, TasksModule ],
 })
 export class FeaturesModule implements NestModule {
 	configure (consumer: MiddlewareConsumer) {}
