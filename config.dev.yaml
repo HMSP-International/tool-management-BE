@@ -8,4 +8,4 @@ db:
 
 jwt:
   secret: 'privateKey'
-  expiresIn: '3600s'
+  expiresIn: '604800s'
