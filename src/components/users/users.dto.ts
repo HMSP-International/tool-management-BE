@@ -23,6 +23,21 @@ export class CreateUserInput {
 	@IsEnum(ROLE, { message: 'this role only: ' + JSON.stringify(Object.values(ROLE)) })
 	@Field(() => String, { nullable: true })
 	role: string;
+
+	@IsOptional()
+	@IsString()
+	@Field(() => String)
+	department: string;
+
+	@IsOptional()
+	@IsString()
+	@Field(() => String)
+	position: string;
+
+	@IsOptional()
+	@IsString()
+	@Field(() => String)
+	title: string;
 }
 
 @InputType()

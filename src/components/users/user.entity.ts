@@ -27,6 +27,18 @@ export class User {
 	@Prop({ type: 'string', default: 'member' })
 	@Field(() => String)
 	role: string;
+
+	@Prop({ type: 'string', default: 'anonymous' })
+	@Field(() => String)
+	department: string;
+
+	@Prop({ type: 'string', default: 'anonymous' })
+	@Field(() => String)
+	position: string;
+
+	@Prop({ type: 'string', default: 'anonymous' })
+	@Field(() => String)
+	title: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
