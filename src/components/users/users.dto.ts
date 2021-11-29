@@ -1,4 +1,4 @@
-import { InputType, Field, ObjectType } from '@nestjs/graphql';
+import { InputType, Field } from '@nestjs/graphql';
 import { Length, IsEmail, IsString, IsEnum, IsOptional } from 'class-validator';
 import { ROLE } from '../../common/decorator/role.decorator';
 
@@ -44,12 +44,6 @@ export class CreateUserInput {
 export class DeleteUserInput {
 	@Field(() => String)
 	_id: string;
-}
-
-@ObjectType()
-export class NoContentOutput {
-	@Field(() => String)
-	message: string;
 }
 
 @InputType()
