@@ -1,4 +1,4 @@
-import { InputType, Field } from '@nestjs/graphql';
+import { InputType, Field, ObjectType } from '@nestjs/graphql';
 import { Length, IsEmail, IsString, IsEnum, IsOptional } from 'class-validator';
 import { ROLE } from '../../common/decorator/role.decorator';
 
@@ -26,17 +26,17 @@ export class CreateUserInput {
 
 	@IsOptional()
 	@IsString()
-	@Field(() => String)
+	@Field(() => String, { nullable: true })
 	department: string;
 
 	@IsOptional()
 	@IsString()
-	@Field(() => String)
+	@Field(() => String, { nullable: true })
 	position: string;
 
 	@IsOptional()
 	@IsString()
-	@Field(() => String)
+	@Field(() => String, { nullable: true })
 	title: string;
 }
 
@@ -44,4 +44,31 @@ export class CreateUserInput {
 export class DeleteUserInput {
 	@Field(() => String)
 	_id: string;
+}
+
+@ObjectType()
+export class NoContentOutput {
+	@Field(() => String)
+	message: string;
+}
+
+@InputType()
+export class ChangePasswordInput {
+	@IsString()
+	@Length(6, 20)
+	@Field(() => String)
+	currentPassword: string;
+
+	@IsString()
+	@Length(6, 20)
+	@Field(() => String)
+	newPassword: string;
+}
+
+@InputType()
+export class ChangeInformationInput {
+	@Length(1, 30)
+	@IsString()
+	@Field(() => String)
+	displayName: string;
 }

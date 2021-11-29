@@ -36,6 +36,22 @@ export class UsersResolver {
 	}
 
 	@Mutation(() => User)
+	async chagePassword (
+		@CurrentUser() user: IPayLoadToken,
+		@Args('changePasswordInput') changePasswordInput: UserDto.ChangePasswordInput,
+	): Promise<User> {
+		return this.usersService.changePassword(user._id, changePasswordInput);
+	}
+
+	@Mutation(() => User)
+	async chageInformation (
+		@CurrentUser() user: IPayLoadToken,
+		@Args('changeInformationInput') changeInformationInput: UserDto.ChangeInformationInput,
+	): Promise<User> {
+		return this.usersService.changeInformation(user._id, changeInformationInput);
+	}
+
+	@Mutation(() => User)
 	async deleteUser (
 		@Args('deleteUserInput') deleteUserInput: UserDto.DeleteUserInput,
 	): Promise<User> {

@@ -1,9 +1,11 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateUserInput } from './users.dto';
 import { User, UserDocument } from './user.entity';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
+import * as UserDto from './users.dto';
 
 @Injectable()
 export class UsersService {
@@ -51,12 +53,41 @@ export class UsersService {
 		return user;
 	}
 
-	async deleteById (_id: string): Promise<User | null> {
+	async deleteById (_id: string): Promise<User> {
 		const user = await this.userEntity.findByIdAndDelete(_id);
 
-		if (user === null)
-			throw new HttpException('This user has been removed', HttpStatus.NO_CONTENT);
+		if (user === null) throw new HttpException('This user not found', HttpStatus.NO_CONTENT);
 
-		return user;
+		throw new HttpException('This user has been removed', HttpStatus.NO_CONTENT);
+	}
+
+	async changePassword (
+		_id: string,
+		changePasswordInput: UserDto.ChangePasswordInput,
+	): Promise<User> {
+		const user = await this.userEntity.findById(_id);
+		if (!user) throw new NotFoundException('This user not found');
+		const { newPassword, currentPassword } = changePasswordInput;
+
+		// check password
+		const isMatched = await bcrypt.compare(currentPassword, user.password);
+		if (!isMatched) {
+			throw new NotFoundException('Password Invalid');
+		}
+
+		user.password = newPassword;
+		return await user.save();
+	}
+
+	async changeInformation (
+		_id: string,
+		changeInformationInput: UserDto.ChangeInformationInput,
+	): Promise<User> {
+		let user = await this.userEntity.findByIdAndUpdate(_id, changeInformationInput, {
+			new: true,
+		});
+		if (!user) throw new NotFoundException('This user not found');
+
+		return await user.save();
 	}
 }
