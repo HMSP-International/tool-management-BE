@@ -7,5 +7,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 @Module({
 	imports: [ MongooseModule.forFeature([ { name: Space.name, schema: SpaceSchema } ]) ],
 	providers: [ SpacesResolver, SpacesService ],
+	exports: [ SpacesService ],
 })
 export class SpacesModule {}

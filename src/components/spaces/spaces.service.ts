@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { IPayLoadToken } from '../token/token.interface';
@@ -21,5 +21,11 @@ export class SpacesService {
 		await space.save();
 
 		return this.findAll(user);
+	}
+
+	async findBySpaceAndOwner (_id: string, owner: string): Promise<Space | null> {
+		const space = await this.spaceEntity.findOne({ _id, owner });
+
+		return space;
 	}
 }
