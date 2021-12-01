@@ -53,12 +53,15 @@ export class UsersService {
 		return user;
 	}
 
-	async deleteById (_id: string): Promise<User> {
+	async deleteById (_id: string): Promise<User[]> {
 		const user = await this.userEntity.findByIdAndDelete(_id);
 
-		if (user === null) throw new HttpException('This user not found', HttpStatus.NO_CONTENT);
+		if (user === null)
+			throw new NotFoundException(
+				'This user not found or maybe deleted, please refresh your page',
+			);
 
-		throw new HttpException('This user has been removed', HttpStatus.NO_CONTENT);
+		return await this.userEntity.find({});
 	}
 
 	async changePassword (

@@ -1,4 +1,4 @@
-import { InputType, Field } from '@nestjs/graphql';
+import { InputType, Field, ObjectType } from '@nestjs/graphql';
 import { Length, IsEmail, IsString, IsEnum, IsOptional } from 'class-validator';
 import { ROLE } from '../../common/decorator/role.decorator';
 
@@ -65,4 +65,10 @@ export class ChangeInformationInput {
 	@IsString()
 	@Field(() => String)
 	displayName: string;
+}
+
+@ObjectType()
+export class DeleteUserOutput {
+	@Field(() => Boolean)
+	status: boolean;
 }

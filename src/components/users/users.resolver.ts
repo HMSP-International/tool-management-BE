@@ -51,10 +51,10 @@ export class UsersResolver {
 		return this.usersService.changeInformation(user._id, changeInformationInput);
 	}
 
-	@Mutation(() => User)
+	@Mutation(() => [ User ])
 	async deleteUser (
 		@Args('deleteUserInput') deleteUserInput: UserDto.DeleteUserInput,
-	): Promise<User> {
+	): Promise<User[]> {
 		return this.usersService.deleteById(deleteUserInput._id);
 	}
 
