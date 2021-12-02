@@ -46,10 +46,10 @@ export class UsersResolver {
 	// TODO add role admin
 	@Mutation(() => User)
 	async chagePasswordByAdmin (
-		@CurrentUser() user: IPayLoadToken,
-		@Args('changePasswordInput') changePasswordInput: UserDto.ChangePasswordInput,
+		@Args('changePasswordInputByAdmin')
+		changePasswordInputByAdmin: UserDto.ChangePasswordInputByAdmin,
 	): Promise<User> {
-		return this.usersService.changePassword(user._id, changePasswordInput);
+		return this.usersService.changePasswordByAdmin(changePasswordInputByAdmin);
 	}
 
 	@Mutation(() => User)

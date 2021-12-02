@@ -83,18 +83,11 @@ export class UsersService {
 	}
 
 	async changePasswordByAdmin (
-		_id: string,
-		changePasswordInput: UserDto.ChangePasswordInput,
+		changePasswordInputByAdmin: UserDto.ChangePasswordInputByAdmin,
 	): Promise<User> {
+		const { newPassword, _id } = changePasswordInputByAdmin;
 		const user = await this.userEntity.findById(_id);
 		if (!user) throw new NotFoundException('This user not found');
-		const { newPassword, currentPassword } = changePasswordInput;
-
-		// check password
-		const isMatched = await bcrypt.compare(currentPassword, user.password);
-		if (!isMatched) {
-			throw new NotFoundException('Password Invalid');
-		}
 
 		user.password = newPassword;
 		return await user.save();

@@ -60,6 +60,18 @@ export class ChangePasswordInput {
 }
 
 @InputType()
+export class ChangePasswordInputByAdmin {
+	@IsString()
+	@Field(() => String)
+	_id: string;
+
+	@IsString()
+	@Length(6, 20)
+	@Field(() => String)
+	newPassword: string;
+}
+
+@InputType()
 export class ChangeInformationInput {
 	@Length(1, 30)
 	@IsOptional()
