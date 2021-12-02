@@ -43,12 +43,33 @@ export class UsersResolver {
 		return this.usersService.changePassword(user._id, changePasswordInput);
 	}
 
+	// TODO add role admin
+	@Mutation(() => User)
+	async chagePasswordByAdmin (
+		@CurrentUser() user: IPayLoadToken,
+		@Args('changePasswordInput') changePasswordInput: UserDto.ChangePasswordInput,
+	): Promise<User> {
+		return this.usersService.changePassword(user._id, changePasswordInput);
+	}
+
 	@Mutation(() => User)
 	async chageInformation (
 		@CurrentUser() user: IPayLoadToken,
 		@Args('changeInformationInput') changeInformationInput: UserDto.ChangeInformationInput,
 	): Promise<User> {
 		return this.usersService.changeInformation(user._id, changeInformationInput);
+	}
+
+	// TODO add role admin
+	@Mutation(() => User)
+	async chageInformationByAdmin (
+		@Args('changeInformationInputByAdmin')
+		changeInformationInputByAdmin: UserDto.ChangeInformationInputByAdmin,
+	): Promise<User> {
+		return this.usersService.changeInformationByAdmin(
+			changeInformationInputByAdmin._id,
+			changeInformationInputByAdmin,
+		);
 	}
 
 	@Mutation(() => [ User ])

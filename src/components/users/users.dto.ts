@@ -4,7 +4,7 @@ import { ROLE } from '../../common/decorator/role.decorator';
 
 @InputType()
 export class CreateUserInput {
-	@Length(4, 40)
+	@Length(0, 40)
 	@IsEmail()
 	@Field(() => String)
 	email: string;
@@ -62,9 +62,45 @@ export class ChangePasswordInput {
 @InputType()
 export class ChangeInformationInput {
 	@Length(1, 30)
+	@IsOptional()
 	@IsString()
 	@Field(() => String)
 	displayName: string;
+}
+
+@InputType()
+export class ChangeInformationInputByAdmin {
+	@Length(1, 30)
+	@IsString()
+	@Field(() => String)
+	displayName: string;
+
+	@IsString()
+	@Field(() => String)
+	_id: string;
+
+	@Length(0, 40)
+	@IsEmail()
+	@IsString()
+	@Field(() => String)
+	email: string;
+
+	@IsString()
+	@Field(() => String)
+	title: string;
+
+	@IsString()
+	@Field(() => String)
+	position: string;
+
+	@IsString()
+	@Field(() => String)
+	department: string;
+
+	@IsString()
+	@IsEnum(ROLE, { message: 'this role only: ' + JSON.stringify(Object.values(ROLE)) })
+	@Field(() => String)
+	role: string;
 }
 
 @ObjectType()
