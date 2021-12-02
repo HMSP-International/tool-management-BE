@@ -13,12 +13,6 @@ export class UsersResolver {
 	constructor (private readonly usersService: UsersService) {}
 
 	// ----------------------------------------- Query ----------------------------------------- //
-	@Query(() => [ User ])
-	@Roles(ROLE.admin)
-	async getUsers (): Promise<User[]> {
-		return this.usersService.findAll();
-	}
-
 	// @Roles(ROLE.admin)
 	@Query(() => User)
 	async getProfile (@CurrentUser() user: IPayLoadToken): Promise<User> {
@@ -28,6 +22,12 @@ export class UsersResolver {
 	// --------------------------------------- End Query --------------------------------------- //
 
 	// ---------------------------------------- Mutaion ---------------------------------------- //
+	// @Roles(ROLE.admin)
+	@Mutation(() => [ User ])
+	async getUsers (): Promise<User[]> {
+		return this.usersService.findAll();
+	}
+
 	@Mutation(() => User)
 	async createUser (
 		@Args('createUserInput') createUserInput: UserDto.CreateUserInput,
