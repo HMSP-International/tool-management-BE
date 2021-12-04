@@ -2,7 +2,7 @@ import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { CollaboratorsService } from './collaborators.service';
 import { Collaborator } from './collaborator.entity';
 import * as CollaboratorDTO from './collaborators.dto';
-import { CurrentUser } from 'src/common/decorator/CurrentUser.decorator';
+import { CurrentUser } from '../../common/decorator/CurrentUser.decorator';
 import { IPayLoadToken } from '../token/token.interface';
 
 @Resolver(() => Collaborator)
