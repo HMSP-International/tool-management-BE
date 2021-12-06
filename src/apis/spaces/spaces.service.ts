@@ -14,6 +14,15 @@ export class SpacesService {
 		return spaces;
 	}
 
+	async findById (_id: string): Promise<Space> {
+		const space = await this.spaceEntity.findById(_id);
+
+		if (space === null)
+			throw new HttpException('Not Found _spaceId = ' + _id, HttpStatus.NOT_FOUND);
+
+		return space;
+	}
+
 	async create (name: string, user: IPayLoadToken): Promise<Space[]> {
 		const order = await this.spaceEntity.count({ owner: user._id });
 

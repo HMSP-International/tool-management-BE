@@ -7,6 +7,7 @@ import { SendersModule } from '../senders/senders.module';
 import { UsersModule } from '../users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService, ConfigModule } from '@nestjs/config';
+import { SpacesModule } from '../spaces/spaces.module';
 
 @Module({
 	imports:
@@ -14,6 +15,7 @@ import { ConfigService, ConfigModule } from '@nestjs/config';
 			MongooseModule.forFeature([ { name: Collaborator.name, schema: CollaboratorSchema } ]),
 			SendersModule,
 			UsersModule,
+			SpacesModule,
 			JwtModule.registerAsync({
 				imports: [ ConfigModule ],
 				useFactory:

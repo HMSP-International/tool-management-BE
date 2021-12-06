@@ -7,6 +7,8 @@ import * as CollaboratorDTO from './collaborators.dto';
 import { SendersService } from '../senders/senders.service';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
+import { SpacesService } from '../spaces/spaces.service';
+import { Space } from '../spaces/space.entity';
 
 @Injectable()
 export class CollaboratorsService {
@@ -15,6 +17,7 @@ export class CollaboratorsService {
 		private sendersService: SendersService,
 		private usersService: UsersService,
 		private jwtService: JwtService,
+		private spacesService: SpacesService,
 	) {}
 
 	findOneByInvatedSpace = async (
@@ -77,4 +80,14 @@ export class CollaboratorsService {
 		collaborator.confirmEmail = true;
 		return await collaborator.save();
 	};
+
+	async findInvitedSpaces (user: IPayLoadToken): Promise<Collaborator[]> {
+		const collaborators = await this.collaboratorEntity.find({ _memberId: user._id });
+
+		return collaborators;
+	}
+
+	async getSpace (_id: string): Promise<Space> {
+		return await this.spacesService.findById(_id);
+	}
 }

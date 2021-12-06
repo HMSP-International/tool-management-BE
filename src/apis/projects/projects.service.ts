@@ -24,6 +24,16 @@ export class ProjectsService {
 		return projects;
 	}
 
+	async findAllByCollaborator (
+		getProjectsInput: ProjectDTO.GetProjectsInput,
+	): Promise<Project[]> {
+		const projects = await this.projectEntity
+			.find({ _spaceId: getProjectsInput._spacesId })
+			.sort('_spaceId order');
+
+		return projects;
+	}
+
 	async create (
 		createSpaceInput: ProjectDTO.CreateProjectInput,
 		user: IPayLoadToken,

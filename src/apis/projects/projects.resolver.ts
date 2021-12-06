@@ -18,6 +18,13 @@ export class ProjectsResolver {
 	}
 
 	@Mutation(() => [ Project ])
+	async getProjectsByCollaborator (
+		@Args('getProjectsInput') getProjectsInput: ProjectDTO.GetProjectsInput,
+	): Promise<Project[]> {
+		return this.projectsService.findAllByCollaborator(getProjectsInput);
+	}
+
+	@Mutation(() => [ Project ])
 	async createProject (
 		@CurrentUser() user: IPayLoadToken,
 		@Args('createProjectInput') createSpaceInput: ProjectDTO.CreateProjectInput,
