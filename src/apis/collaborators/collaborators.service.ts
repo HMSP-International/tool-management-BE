@@ -9,6 +9,7 @@ import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { SpacesService } from '../spaces/spaces.service';
 import { Space } from '../spaces/space.entity';
+import { User } from '../users/user.entity';
 
 @Injectable()
 export class CollaboratorsService {
@@ -45,10 +46,7 @@ export class CollaboratorsService {
 			if (!member) throw new HttpException('Not Found Member User', HttpStatus.BAD_REQUEST);
 
 			if (collaborator === null) {
-				const newCollaborator = new this.collaboratorEntity({
-					...createCollaboratorInput,
-					_adminId,
-				});
+				const newCollaborator = new this.collaboratorEntity({ ...createCollaboratorInput, _adminId });
 
 				collaborator = await newCollaborator.save();
 			}
@@ -64,15 +62,12 @@ export class CollaboratorsService {
 		}
 	};
 
-	verifyInviteSpace = async (
-		token: CollaboratorDTO.VerifyInviteSpaceInput,
-	): Promise<Collaborator> => {
+	verifyInviteSpace = async (token: CollaboratorDTO.VerifyInviteSpaceInput): Promise<Collaborator> => {
 		const decoded = await this.jwtService.verify(token.jwt);
 		const { _id } = decoded;
 
 		const collaborator = await this.collaboratorEntity.findById(_id);
-		if (!collaborator)
-			throw new HttpException('Invalid Link or expired', HttpStatus.BAD_REQUEST);
+		if (!collaborator) throw new HttpException('Invalid Link or expired', HttpStatus.BAD_REQUEST);
 		if (collaborator.confirmEmail === true) {
 			throw new HttpException('You have already confirmed this link', HttpStatus.BAD_REQUEST);
 		}
@@ -90,10 +85,21 @@ export class CollaboratorsService {
 		return await this.spacesService.findById(_id);
 	}
 
-	async putInvitedSpaces (
-		user: IPayLoadToken,
-		putInvitedSpaceInput: CollaboratorDTO.PutInvitedSpaceInput,
-	): Promise<Collaborator[]> {
-		return await this.collaboratorEntity.find({});
+	async getUser (_id: string): Promise<User> {
+		const user = await this.usersService.findById(_id);
+		if (user === null) throw new HttpException('_id user not found', HttpStatus.BAD_REQUEST);
+
+		return user;
+	}
+
+	// async putInvitedSpaces (
+	// 	user: IPayLoadToken,
+	// 	putInvitedSpaceInput: CollaboratorDTO.PutInvitedSpaceInput,
+	// ): Promise<Collaborator[]> {
+	// 	return await this.collaboratorEntity.find({});
+	// }
+
+	async findUsersBySpaceId (_spaceId: string): Promise<Collaborator[]> {
+		return await this.collaboratorEntity.find({ _workSpaceId: _spaceId });
 	}
 }

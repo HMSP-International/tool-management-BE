@@ -29,3 +29,9 @@ export class PutInvitedSpaceInput {
 	@Field(() => [ String ])
 	email: [string];
 }
+
+@InputType()
+export class FindUsersBySpaceId {
+	@Field(() => [ String ])
+	_spaceId: string;
+}

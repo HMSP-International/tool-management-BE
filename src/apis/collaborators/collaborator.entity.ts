@@ -19,7 +19,7 @@ export class Collaborator {
 	_workSpaceId: string;
 
 	@Prop({ type: ObjectId, required: true, ref: User.name })
-	@Field(() => String)
+	@Field(() => User)
 	_memberId: string;
 
 	@Prop({ type: ObjectId, required: true, ref: User.name })
