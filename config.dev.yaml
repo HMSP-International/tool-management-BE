@@ -9,3 +9,13 @@ db:
 jwt:
   secret: 'privateKey'
   expiresIn: '604800s'
+  
+sendGrid:
+  apiKey: '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'
+  customerEmail: 'info@hmsp.com.au'
+  jwt:
+    secret: 'privateKeySendGrid'
+    expiresIn: '1000s'
+
+FE:
+  host: 'http://localhost:3000'
