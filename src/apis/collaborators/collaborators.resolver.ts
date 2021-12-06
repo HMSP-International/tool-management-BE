@@ -31,6 +31,14 @@ export class CollaboratorsResolver {
 		return this.collaboratorsService.findInvitedSpaces(user);
 	}
 
+	@Query(() => [ Collaborator ])
+	putInvitedSpaces (
+		@CurrentUser() user: IPayLoadToken,
+		putInvitedSpaceInput: CollaboratorDTO.PutInvitedSpaceInput,
+	): Promise<Collaborator[]> {
+		return this.collaboratorsService.putInvitedSpaces(user, putInvitedSpaceInput);
+	}
+
 	@ResolveField(() => Space)
 	_workSpaceId (@Parent() collaborator: Collaborator): Promise<Space> {
 		return this.collaboratorsService.getSpace(collaborator._workSpaceId);

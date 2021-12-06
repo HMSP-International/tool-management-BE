@@ -1,5 +1,5 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
-import { Length, IsEmail, IsString, IsEnum, IsOptional } from 'class-validator';
+import { InputType, Field } from '@nestjs/graphql';
+import { IsEmail, IsString, IsEnum } from 'class-validator';
 import { ROLE } from '../../common/decorator/role.decorator';
 
 @InputType()
@@ -21,4 +21,11 @@ export class InviteSpaceInput {
 export class VerifyInviteSpaceInput {
 	@Field(() => String)
 	jwt: string;
+}
+
+@InputType()
+export class PutInvitedSpaceInput {
+	@IsEmail()
+	@Field(() => [ String ])
+	email: [string];
 }

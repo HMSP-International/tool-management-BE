@@ -83,11 +83,17 @@ export class CollaboratorsService {
 
 	async findInvitedSpaces (user: IPayLoadToken): Promise<Collaborator[]> {
 		const collaborators = await this.collaboratorEntity.find({ _memberId: user._id });
-
 		return collaborators;
 	}
 
 	async getSpace (_id: string): Promise<Space> {
 		return await this.spacesService.findById(_id);
+	}
+
+	async putInvitedSpaces (
+		user: IPayLoadToken,
+		putInvitedSpaceInput: CollaboratorDTO.PutInvitedSpaceInput,
+	): Promise<Collaborator[]> {
+		return await this.collaboratorEntity.find({});
 	}
 }
