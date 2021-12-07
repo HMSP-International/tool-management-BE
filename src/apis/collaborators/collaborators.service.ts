@@ -88,16 +88,23 @@ export class CollaboratorsService {
 	async getUser (_id: string): Promise<User> {
 		const user = await this.usersService.findById(_id);
 		if (user === null) throw new HttpException('_id user not found', HttpStatus.BAD_REQUEST);
-
 		return user;
 	}
 
-	// async putInvitedSpaces (
-	// 	user: IPayLoadToken,
-	// 	putInvitedSpaceInput: CollaboratorDTO.PutInvitedSpaceInput,
-	// ): Promise<Collaborator[]> {
-	// 	return await this.collaboratorEntity.find({});
-	// }
+	async putInvitedSpaces (
+		user: IPayLoadToken,
+		putInvitedSpaceInput: CollaboratorDTO.PutInvitedSpaceInput,
+	): Promise<Collaborator[]> {
+		const { _workSpaceId, _memberIds } = putInvitedSpaceInput;
+
+		const deleteByWorkSpaceId = await this.collaboratorEntity.deleteMany({ _workSpaceId, _adminId: user._id });
+
+		for (let _memberId of _memberIds) {
+			this.inviteSpace({ _workSpaceId, _memberId, role: 'MEMBER' }, user);
+		}
+
+		return await this.collaboratorEntity.find({ _adminId: user._id });
+	}
 
 	async findUsersBySpaceId (_spaceId: string): Promise<Collaborator[]> {
 		return await this.collaboratorEntity.find({ _workSpaceId: _spaceId });
