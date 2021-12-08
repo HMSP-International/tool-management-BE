@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { CollaboratorsService } from './collaborators.service';
 import { CollaboratorsResolver } from './collaborators.resolver';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Collaborator, CollaboratorSchema } from './collaborator.entity';
+import { CollaboratorModel, CollaboratorSchema } from './collaborator.model';
 import { SendersModule } from '../../helpers/modules/senders/senders.module';
 import { UsersModule } from '../users/users.module';
 import { JwtModule } from '@nestjs/jwt';
@@ -12,7 +12,7 @@ import { SpacesModule } from '../spaces/spaces.module';
 @Module({
 	imports:
 		[
-			MongooseModule.forFeature([ { name: Collaborator.name, schema: CollaboratorSchema } ]),
+			MongooseModule.forFeature([ { name: CollaboratorModel.name, schema: CollaboratorSchema } ]),
 			SendersModule,
 			UsersModule,
 			SpacesModule,
@@ -22,8 +22,7 @@ import { SpacesModule } from '../spaces/spaces.module';
 					async (configService: ConfigService) => {
 						return {
 							secret: configService.get<string>('sendGrid.jwt.secret'),
-							signOptions:
-								{ expiresIn: configService.get<string>('sendGrid.jwt.expiresIn') },
+							signOptions: { expiresIn: configService.get<string>('sendGrid.jwt.expiresIn') },
 						};
 					},
 				inject: [ ConfigService ],

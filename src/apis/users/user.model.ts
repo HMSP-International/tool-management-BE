@@ -15,7 +15,7 @@ export class UserModel {
 	@Prop({ type: 'string', default: 'anonymous' })
 	displayName: string;
 
-	@Prop({ type: 'string', default: 'member' })
+	@Prop({ type: 'string', default: 'MEMBER' })
 	role: string;
 
 	@Prop({ type: 'string', default: 'anonymous' })
