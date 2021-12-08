@@ -3,7 +3,7 @@ import { CollaboratorsService } from './collaborators.service';
 import { Collaborator } from './collaborator.entity';
 import * as CollaboratorDTO from './collaborators.dto';
 import { CurrentUser } from '../../common/decorator/CurrentUser.decorator';
-import { IPayLoadToken } from '../token/token.interface';
+import { IPayLoadToken } from '../../helpers/modules/token/token.interface';
 import { Space } from '../spaces/space.entity';
 import { User } from '../users/user.entity';
 

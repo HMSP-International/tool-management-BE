@@ -1,10 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { IPayLoadToken } from '../token/token.interface';
+import { IPayLoadToken } from '../../helpers/modules/token/token.interface';
 import { Collaborator, CollaboratorDocument } from './collaborator.entity';
 import * as CollaboratorDTO from './collaborators.dto';
-import { SendersService } from '../senders/senders.service';
+import { SendersService } from '../../helpers/modules/senders/senders.service';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { SpacesService } from '../spaces/spaces.service';

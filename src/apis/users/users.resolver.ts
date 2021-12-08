@@ -2,7 +2,7 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { User } from './user.entity';
 import * as UserDto from './users.dto';
-import { IPayLoadToken } from '../token/token.interface';
+import { IPayLoadToken } from '../../helpers/modules/token/token.interface';
 import { CurrentUser } from '../../common/decorator/CurrentUser.decorator';
 
 @Resolver(() => User)

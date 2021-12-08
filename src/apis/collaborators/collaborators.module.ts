@@ -3,7 +3,7 @@ import { CollaboratorsService } from './collaborators.service';
 import { CollaboratorsResolver } from './collaborators.resolver';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Collaborator, CollaboratorSchema } from './collaborator.entity';
-import { SendersModule } from '../senders/senders.module';
+import { SendersModule } from '../../helpers/modules/senders/senders.module';
 import { UsersModule } from '../users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService, ConfigModule } from '@nestjs/config';

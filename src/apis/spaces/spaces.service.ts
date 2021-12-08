@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { IPayLoadToken } from '../token/token.interface';
+import { IPayLoadToken } from '../../helpers/modules/token/token.interface';
 import { Space } from './space.entity';
 import { SpaceModel, SpaceDocument } from './space.model';
 import * as SpaceDTO from './spaces.dto';
