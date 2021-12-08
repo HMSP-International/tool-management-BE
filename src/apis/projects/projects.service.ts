@@ -22,6 +22,16 @@ export class ProjectsService {
 		return projects;
 	}
 
+	async findById (_id: string): Promise<Project> {
+		const project = await this.projectEntity.findById(_id);
+
+		if (project === null) {
+			throw new HttpException('Not Found _projectId', HttpStatus.BAD_REQUEST);
+		}
+
+		return project;
+	}
+
 	async findAllByCollaborator (getProjectsInput: ProjectDTO.GetProjectsInput): Promise<Project[]> {
 		const projects = await this.projectEntity.find({ _spaceId: getProjectsInput._spacesId }).sort('_spaceId order');
 

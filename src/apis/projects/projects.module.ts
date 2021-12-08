@@ -8,5 +8,6 @@ import { SpacesModule } from '../spaces/spaces.module';
 @Module({
 	imports: [ MongooseModule.forFeature([ { name: ProjectModel.name, schema: ProjectSchema } ]), SpacesModule ],
 	providers: [ ProjectsResolver, ProjectsService ],
+	exports: [ ProjectsService ],
 })
 export class ProjectsModule {}
