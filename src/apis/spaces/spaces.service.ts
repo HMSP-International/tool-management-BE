@@ -1,13 +1,14 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { IPayLoadToken } from '../token/token.interface';
-import { Space, SpaceDocument } from './space.entity';
-import * as SpaceDTO from './space.dto';
+import { IPayLoadToken } from '../../helpers/modules/token/token.interface';
+import { Space } from './space.entity';
+import { SpaceModel, SpaceDocument } from './space.model';
+import * as SpaceDTO from './spaces.dto';
 
 @Injectable()
 export class SpacesService {
-	constructor (@InjectModel(Space.name) private spaceEntity: Model<SpaceDocument>) {}
+	constructor (@InjectModel(SpaceModel.name) private spaceEntity: Model<SpaceDocument>) {}
 
 	async findAll (user: IPayLoadToken): Promise<Space[]> {
 		const spaces = await this.spaceEntity.find({ owner: user._id }).sort('order');

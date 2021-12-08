@@ -5,9 +5,8 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AuthModule } from '../apis/auth/auth.module';
 import { CollaboratorsModule } from '../apis/collaborators/collaborators.module';
 import { ProjectsModule } from '../apis/projects/projects.module';
-import { SendersModule } from '../apis/senders/senders.module';
 import { SpacesModule } from '../apis/spaces/spaces.module';
-import { TasksModule } from '../apis/tasks/tasks.module';
+// import { TasksModule } from '../apis/tasks/tasks.module';
 import { UsersModule } from '../apis/users/users.module';
 
 @Module({
@@ -16,9 +15,8 @@ import { UsersModule } from '../apis/users/users.module';
 			AuthModule,
 			CollaboratorsModule,
 			ProjectsModule,
-			SendersModule,
 			SpacesModule,
-			TasksModule,
+			// TasksModule,
 			UsersModule,
 		],
 })

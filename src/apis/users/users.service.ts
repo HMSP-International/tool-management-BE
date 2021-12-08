@@ -2,28 +2,21 @@ import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestj
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateUserInput } from './users.dto';
-import { User, UserDocument } from './user.entity';
-import { JwtService } from '@nestjs/jwt';
+import { User } from './user.entity';
+import { UserModel, UserDocument } from './user.model';
 import * as bcrypt from 'bcrypt';
 import * as UserDto from './users.dto';
 
 @Injectable()
 export class UsersService {
-	constructor (
-		@InjectModel(User.name) private userEntity: Model<UserDocument>,
-		private jwtService: JwtService,
-	) {}
+	constructor (@InjectModel(UserModel.name) private userEntity: Model<UserDocument>) {}
 
 	async createUser (createUserInput: CreateUserInput): Promise<User> {
-		// Hash password
-		// const salt = await bcrypt.genSalt();
-		// createUserInput.password = await bcrypt.hash(createUserInput.password, salt);
 		{
 			const user = await this.findByEmail(createUserInput.email);
 			if (user) throw new HttpException('Email Already Exists', HttpStatus.CONFLICT);
 		}
 
-		// SaveUser
 		{
 			const user = await new this.userEntity(createUserInput);
 			const newUser = await user.save();
@@ -57,17 +50,12 @@ export class UsersService {
 		const user = await this.userEntity.findByIdAndDelete(_id);
 
 		if (user === null)
-			throw new NotFoundException(
-				'This user not found or maybe deleted, please refresh your page',
-			);
+			throw new NotFoundException('This user not found or maybe deleted, please refresh your page');
 
 		return await this.userEntity.find({});
 	}
 
-	async changePassword (
-		_id: string,
-		changePasswordInput: UserDto.ChangePasswordInput,
-	): Promise<User> {
+	async changePassword (_id: string, changePasswordInput: UserDto.ChangePasswordInput): Promise<User> {
 		const user = await this.userEntity.findById(_id);
 		if (!user) throw new NotFoundException('This user not found');
 		const { newPassword, currentPassword } = changePasswordInput;
@@ -82,9 +70,7 @@ export class UsersService {
 		return await user.save();
 	}
 
-	async changePasswordByAdmin (
-		changePasswordInputByAdmin: UserDto.ChangePasswordInputByAdmin,
-	): Promise<User> {
+	async changePasswordByAdmin (changePasswordInputByAdmin: UserDto.ChangePasswordInputByAdmin): Promise<User> {
 		const { newPassword, _id } = changePasswordInputByAdmin;
 		const user = await this.userEntity.findById(_id);
 		if (!user) throw new NotFoundException('This user not found');
@@ -93,10 +79,7 @@ export class UsersService {
 		return await user.save();
 	}
 
-	async changeInformation (
-		_id: string,
-		changeInformationInput: UserDto.ChangeInformationInput,
-	): Promise<User> {
+	async changeInformation (_id: string, changeInformationInput: UserDto.ChangeInformationInput): Promise<User> {
 		let user = await this.userEntity.findByIdAndUpdate(_id, changeInformationInput, {
 			new: true,
 		});
@@ -111,11 +94,11 @@ export class UsersService {
 		changeInformationInputByAdmin: UserDto.ChangeInformationInputByAdmin,
 	): Promise<User> {
 		delete changeInformationInputByAdmin._id;
-		
+
 		const isExistsEmail = await this.userEntity.findOne({
 			$and: [ { email: changeInformationInputByAdmin.email }, { _id: { $ne: _id } } ],
 		});
-		
+
 		if (isExistsEmail) throw new NotFoundException('Email already exists');
 
 		let user = await this.userEntity.findByIdAndUpdate(_id, changeInformationInputByAdmin, {
