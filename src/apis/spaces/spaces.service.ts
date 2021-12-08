@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { IPayLoadToken } from '../token/token.interface';
 import { Space, SpaceDocument } from './space.entity';
+import * as SpaceDTO from './space.dto';
 
 @Injectable()
 export class SpacesService {
@@ -14,11 +15,16 @@ export class SpacesService {
 		return spaces;
 	}
 
+	async findBySpaceAndOwner (_id: string, owner: string): Promise<Space | null> {
+		const space = await this.spaceEntity.findOne({ _id, owner });
+
+		return space;
+	}
+
 	async findById (_id: string): Promise<Space> {
 		const space = await this.spaceEntity.findById(_id);
 
-		if (space === null)
-			throw new HttpException('Not Found _spaceId = ' + _id, HttpStatus.NOT_FOUND);
+		if (space === null) throw new HttpException('Not Found _spaceId = ' + _id, HttpStatus.NOT_FOUND);
 
 		return space;
 	}
@@ -32,8 +38,12 @@ export class SpacesService {
 		return this.findAll(user);
 	}
 
-	async findBySpaceAndOwner (_id: string, owner: string): Promise<Space | null> {
-		const space = await this.spaceEntity.findOne({ _id, owner });
+	async changeName (changeNameSpaceInput: SpaceDTO.ChangeNameSpaceInput, user: IPayLoadToken): Promise<Space> {
+		const { _id, ...rest } = changeNameSpaceInput;
+
+		const space = await this.spaceEntity.findByIdAndUpdate(_id, rest, { new: true });
+
+		if (space === null) throw new HttpException('Not Found _spaceId = ' + _id, HttpStatus.NOT_FOUND);
 
 		return space;
 	}

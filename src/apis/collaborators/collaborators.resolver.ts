@@ -11,6 +11,7 @@ import { User } from '../users/user.entity';
 export class CollaboratorsResolver {
 	constructor (private readonly collaboratorsService: CollaboratorsService) {}
 
+	// mutation
 	@Mutation(() => Collaborator)
 	inviteSpace (
 		@Args('inviteSpaceInput') createCollaboratorInput: CollaboratorDTO.InviteSpaceInput,
@@ -39,6 +40,14 @@ export class CollaboratorsResolver {
 		return this.collaboratorsService.putInvitedSpaces(user, putInvitedSpaceInput);
 	}
 
+	@Mutation(() => [ Collaborator ])
+	findUsersBySpaceId (
+		@Args('findUsersBySpaceId') findUsersBySpaceId: CollaboratorDTO.FindUsersBySpaceId,
+	): Promise<Collaborator[]> {
+		return this.collaboratorsService.findUsersBySpaceId(findUsersBySpaceId._spaceId);
+	}
+
+	// ResolveField ---start
 	@ResolveField(() => Space)
 	_workSpaceId (@Parent() collaborator: Collaborator): Promise<Space> {
 		return this.collaboratorsService.getSpace(collaborator._workSpaceId);
@@ -48,11 +57,5 @@ export class CollaboratorsResolver {
 	_memberId (@Parent() collaborator: Collaborator): Promise<User> {
 		return this.collaboratorsService.getUser(collaborator._memberId);
 	}
-
-	@Mutation(() => [ Collaborator ])
-	findUsersBySpaceId (
-		@Args('findUsersBySpaceId') findUsersBySpaceId: CollaboratorDTO.FindUsersBySpaceId,
-	): Promise<Collaborator[]> {
-		return this.collaboratorsService.findUsersBySpaceId(findUsersBySpaceId._spaceId);
-	}
+	// ResolveField ---end
 }

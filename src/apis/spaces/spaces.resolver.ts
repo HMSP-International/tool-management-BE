@@ -9,11 +9,14 @@ import * as SpaceDTO from './space.dto';
 export class SpacesResolver {
 	constructor (private readonly spacesService: SpacesService) {}
 
+	// Query ---- start
 	@Query(() => [ Space ])
 	async getSpaces (@CurrentUser() user: IPayLoadToken): Promise<Space[]> {
 		return this.spacesService.findAll(user);
 	}
+	// Query ---- end
 
+	// Mutation ---- start
 	@Mutation(() => [ Space ])
 	async createSpace (
 		@CurrentUser() user: IPayLoadToken,
@@ -21,4 +24,15 @@ export class SpacesResolver {
 	): Promise<Space[]> {
 		return this.spacesService.create(createSpaceInput.name, user);
 	}
+	// Mutation ---- end
+
+	// Mutation ---- start
+	@Mutation(() =>  Space )
+	async changeNameSpace (
+		@CurrentUser() user: IPayLoadToken,
+		@Args('changeNameSpaceInput') changeNameSpaceInput: SpaceDTO.ChangeNameSpaceInput,
+	): Promise<Space> {
+		return this.spacesService.changeName(changeNameSpaceInput, user);
+	}
+	// Mutation ---- end
 }
