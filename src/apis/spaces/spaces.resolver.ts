@@ -3,7 +3,7 @@ import { SpacesService } from './spaces.service';
 import { Space } from './space.entity';
 import { IPayLoadToken } from '../token/token.interface';
 import { CurrentUser } from '../../common/decorator/currentUser.decorator';
-import * as SpaceDTO from './space.dto';
+import * as SpaceDTO from './spaces.dto';
 
 @Resolver(() => Space)
 export class SpacesResolver {
