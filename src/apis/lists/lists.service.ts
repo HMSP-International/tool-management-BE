@@ -1,7 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Project } from '../projects/project.entity';
 import { ProjectsService } from '../projects/projects.service';
 import { List } from './list.entity';
 import { ListDocument, ListModel } from './list.model';
@@ -32,5 +31,15 @@ export class ListsService {
 		await this.projectsService.findById(_projectId);
 
 		return await this.listEntity.find({ _projectId });
+	}
+
+	async findById (_id: string): Promise<ListDocument | null> {
+		const list = await this.listEntity.findById(_id);
+
+		if (list === null) {
+			throw new HttpException('Not Found _listId', HttpStatus.BAD_REQUEST);
+		}
+
+		return list;
 	}
 }

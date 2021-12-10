@@ -14,5 +14,6 @@ import { CollaboratorsModule } from '../collaborators/collaborators.module';
 			CollaboratorsModule,
 		],
 	providers: [ ListsResolver, ListsService ],
+	exports: [ ListsService ],
 })
 export class ListsModule {}

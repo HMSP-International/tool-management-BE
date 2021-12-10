@@ -1,10 +1,7 @@
-import { Resolver, Query, Mutation, Args, Int, Parent, ResolveField } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { ListsService } from './lists.service';
 import { List } from './list.entity';
 import * as ListDTO from './lists.dto';
-import { CurrentUser } from '../../common/decorator/CurrentUser.decorator';
-import { IPayLoadToken } from '../../helpers/modules/token/token.interface';
-import { Project } from '../projects/project.entity';
 
 @Resolver(() => List)
 export class ListsResolver {

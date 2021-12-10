@@ -1,24 +1,32 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { ListsService } from '../lists/lists.service';
+import { Task } from './task.entity';
+import { TaskDocument, TaskModel } from './task.model';
+import * as TaskDto from './tasks.dto';
 
 @Injectable()
 export class TasksService {
-	// create(createTaskInput: CreateTaskInput) {
-	//   return 'This action adds a new task';
-	// }
+	constructor (
+		@InjectModel(TaskModel.name) private taskEntity: Model<TaskDocument>,
+		private readonly listsService: ListsService,
+	) {}
 
-	findAll () {
-		return `This action returns all tasks`;
+	async getTasksByListId (getTasksInput: TaskDto.GetTasksInput): Promise<Task[]> {
+		const { _listId } = getTasksInput;
+
+		return await this.taskEntity.find({ _listId });
 	}
 
-	findOne (id: number) {
-		return `This action returns a #${id} task`;
-	}
+	async createTask (getTasksInput: TaskDto.CreateTaskInput): Promise<Task> {
+		const { _listId, name } = getTasksInput;
 
-	// update(id: number, updateTaskInput: UpdateTaskInput) {
-	//   return `This action updates a #${id} task`;
-	// }
+		// check _listId
+		await this.listsService.findById(_listId);
 
-	remove (id: number) {
-		return `This action removes a #${id} task`;
+		const newTask = new this.taskEntity({ _listId, name });
+
+		return await newTask.save();
 	}
 }
