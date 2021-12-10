@@ -27,7 +27,16 @@ export class CollaboratorsService {
 		_memberId: string,
 		_workSpaceId: string,
 	): Promise<Collaborator | null> => {
-		return this.collaboratorEntity.findOne({ _adminId, _memberId, _workSpaceId });
+		return await this.collaboratorEntity.findOne({ _adminId, _memberId, _workSpaceId });
+	};
+
+	findById = async (_id: string): Promise<Collaborator | null> => {
+		const collaborator = await this.collaboratorEntity.findById(_id);
+		if (collaborator === null) {
+			throw new HttpException('Not Found _projectId', HttpStatus.BAD_REQUEST);
+		}
+
+		return collaborator;
 	};
 
 	inviteSpace = async (

@@ -4,9 +4,15 @@ import { ListsResolver } from './lists.resolver';
 import { ListModel, ListSchema } from './list.model';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ProjectsModule } from '../projects/projects.module';
+import { CollaboratorsModule } from '../collaborators/collaborators.module';
 
 @Module({
-	imports: [ MongooseModule.forFeature([ { name: ListModel.name, schema: ListSchema } ]), ProjectsModule ],
+	imports:
+		[
+			MongooseModule.forFeature([ { name: ListModel.name, schema: ListSchema } ]),
+			ProjectsModule,
+			CollaboratorsModule,
+		],
 	providers: [ ListsResolver, ListsService ],
 })
 export class ListsModule {}

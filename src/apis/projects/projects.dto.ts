@@ -16,3 +16,9 @@ export class GetProjectsInput {
 	@Field(() => [ String ])
 	_spacesId: [string];
 }
+
+@InputType()
+export class GetProjectInput {
+	@Field(() => String)
+	_projectId: string;
+}

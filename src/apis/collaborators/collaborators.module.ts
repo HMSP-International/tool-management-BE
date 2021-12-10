@@ -29,5 +29,6 @@ import { SpacesModule } from '../spaces/spaces.module';
 			}),
 		],
 	providers: [ CollaboratorsResolver, CollaboratorsService ],
+	exports: [ CollaboratorsService ],
 })
 export class CollaboratorsModule {}

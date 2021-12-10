@@ -17,6 +17,11 @@ export class ProjectsResolver {
 		return this.projectsService.findAll(getProjectsInput, user);
 	}
 
+	@Query(() => Project)
+	async getProject (@Args('getProjectInput') getProjectInput: ProjectDTO.GetProjectInput): Promise<Project> {
+		return this.projectsService.findById(getProjectInput._projectId);
+	}
+
 	@Mutation(() => [ Project ])
 	async getProjectsByCollaborator (
 		@Args('getProjectsInput') getProjectsInput: ProjectDTO.GetProjectsInput,
