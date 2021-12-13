@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, forwardRef, Inject } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ListsService } from '../lists/lists.service';
@@ -28,5 +28,21 @@ export class TasksService {
 		const newTask = new this.taskEntity({ _listId, name });
 
 		return await newTask.save();
+	}
+
+	async deleteTasks (deleteTaskInput: TaskDto.DeleteTaskInput): Promise<Task[]> {
+		const { _taskIds } = deleteTaskInput;
+
+		// check _listId
+		const arrayPromise = [];
+		_taskIds.forEach(_id => {
+			const taskDeleted = this.taskEntity.findByIdAndDelete(_id);
+
+			if (taskDeleted) {
+				arrayPromise.push(taskDeleted);
+			}
+		});
+
+		return await Promise.all(arrayPromise);
 	}
 }

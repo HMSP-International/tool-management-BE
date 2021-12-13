@@ -16,4 +16,9 @@ export class TasksResolver {
 	createTask (@Args('createTaskInput') createTaskInput: TaskDto.CreateTaskInput) {
 		return this.tasksService.createTask(createTaskInput);
 	}
+
+	@Mutation(() => [ Task ])
+	deleteTasks (@Args('deleteTaskInput') deleteTaskInput: TaskDto.DeleteTaskInput) {
+		return this.tasksService.deleteTasks(deleteTaskInput);
+	}
 }

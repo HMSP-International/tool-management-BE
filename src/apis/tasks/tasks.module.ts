@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { TasksResolver } from './tasks.resolver';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -8,5 +8,6 @@ import { ListsModule } from '../lists/lists.module';
 @Module({
 	imports: [ MongooseModule.forFeature([ { name: TaskModel.name, schema: TaskSchema } ]), ListsModule ],
 	providers: [ TasksResolver, TasksService ],
+	exports: [ TasksService ],
 })
 export class TasksModule {}

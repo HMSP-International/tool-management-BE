@@ -20,3 +20,14 @@ export class GetListsInput {
 	@Field(() => String)
 	_projectId: string;
 }
+
+@InputType()
+export class PutListsFormatedInput {
+	[type: string]: string;
+}
+
+@InputType()
+export class DeleteListsInput {
+	@Field(() => [ String ])
+	_listIds: string[];
+}

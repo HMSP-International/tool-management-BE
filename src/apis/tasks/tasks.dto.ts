@@ -20,3 +20,9 @@ export class CreateTaskInput {
 	@Field(() => String)
 	name: string;
 }
+
+@InputType()
+export class DeleteTaskInput {
+	@Field(() => [ String ])
+	_taskIds: string[];
+}

@@ -16,4 +16,9 @@ export class ListsResolver {
 	getLists (@Args('getListsInput') getListsInput: ListDTO.GetListsInput) {
 		return this.listsService.getLists(getListsInput);
 	}
+
+	@Query(() => [ List ])
+	deleteLists (@Args('deleteListsInput') deleteListsInput: ListDTO.DeleteListsInput) {
+		return this.listsService.deleteLists(deleteListsInput);
+	}
 }

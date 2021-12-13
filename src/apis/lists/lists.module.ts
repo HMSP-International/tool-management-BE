@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { ListsService } from './lists.service';
 import { ListsResolver } from './lists.resolver';
 import { ListModel, ListSchema } from './list.model';

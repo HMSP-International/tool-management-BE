@@ -42,4 +42,20 @@ export class ListsService {
 
 		return list;
 	}
+
+	async deleteLists (deleteListsInput: ListDTO.DeleteListsInput): Promise<List[]> {
+		const { _listIds } = deleteListsInput;
+
+		// check _listId
+		const arrayPromise = [];
+		_listIds.forEach(_id => {
+			const listDeleted = this.listEntity.findByIdAndDelete(_id);
+
+			if (listDeleted) {
+				arrayPromise.push(listDeleted);
+			}
+		});
+
+		return await Promise.all(arrayPromise);
+	}
 }
