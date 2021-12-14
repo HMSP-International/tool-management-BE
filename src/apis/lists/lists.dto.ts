@@ -27,7 +27,7 @@ export class PutListsFormatedInput {
 }
 
 @InputType()
-export class DeleteListsInput {
-	@Field(() => [ String ])
-	_listIds: string[];
+export class DeleteListInput {
+	@Field(() => String)
+	_listId: string;
 }

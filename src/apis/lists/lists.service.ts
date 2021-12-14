@@ -1,7 +1,8 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, forwardRef, Inject } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ProjectsService } from '../projects/projects.service';
+import { TasksService } from '../tasks/tasks.service';
 import { List } from './list.entity';
 import { ListDocument, ListModel } from './list.model';
 import * as ListDTO from './lists.dto';
@@ -11,6 +12,8 @@ export class ListsService {
 	constructor (
 		@InjectModel(ListModel.name) private listEntity: Model<ListDocument>,
 		private readonly projectsService: ProjectsService,
+		@Inject(forwardRef(() => TasksService))
+		private readonly tasksService: TasksService,
 	) {}
 
 	async create (createListInput: ListDTO.CreateListInput): Promise<List> {
@@ -43,19 +46,29 @@ export class ListsService {
 		return list;
 	}
 
-	async deleteLists (deleteListsInput: ListDTO.DeleteListsInput): Promise<List[]> {
-		const { _listIds } = deleteListsInput;
+	async deleteList (deleteListsInput: ListDTO.DeleteListInput): Promise<List> {
+		const { _listId } = deleteListsInput;
 
-		// check _listId
-		const arrayPromise = [];
-		_listIds.forEach(_id => {
-			const listDeleted = this.listEntity.findByIdAndDelete(_id);
+		// delete tasks of this list
+		this.tasksService.deleteTasksByListId(_listId);
 
-			if (listDeleted) {
-				arrayPromise.push(listDeleted);
-			}
-		});
+		// then delete list
+		const listDeleted = await this.listEntity.findByIdAndDelete(_listId);
+		if (listDeleted === null) {
+			throw new HttpException('Not Found _listId', HttpStatus.BAD_REQUEST);
+		}
 
-		return await Promise.all(arrayPromise);
+		this.resetListOrder(listDeleted._projectId);
+
+		return listDeleted;
+	}
+
+	async resetListOrder (_projectId: string): Promise<void> {
+		const lists = await this.listEntity.find({ _projectId });
+
+		for (let i = 0; i < lists.length; i++) {
+			lists[i].order = i;
+			await lists[i].save();
+		}
 	}
 }

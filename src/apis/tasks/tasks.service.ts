@@ -10,6 +10,7 @@ import * as TaskDto from './tasks.dto';
 export class TasksService {
 	constructor (
 		@InjectModel(TaskModel.name) private taskEntity: Model<TaskDocument>,
+		@Inject(forwardRef(() => ListsService))
 		private readonly listsService: ListsService,
 	) {}
 
@@ -44,5 +45,18 @@ export class TasksService {
 		});
 
 		return await Promise.all(arrayPromise);
+	}
+
+	async deleteTasksByListId (_listId: string): Promise<void> {
+		const tasks = await this.taskEntity.find({ _listId });
+		const tasksDeleted = [];
+
+		for (let task of tasks) {
+			const deleted = this.taskEntity.findByIdAndDelete(task._id);
+
+			tasksDeleted.push(deleted);
+		}
+
+		await Promise.all(tasksDeleted);
 	}
 }

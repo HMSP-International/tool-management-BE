@@ -6,7 +6,8 @@ import { TaskModel, TaskSchema } from './task.model';
 import { ListsModule } from '../lists/lists.module';
 
 @Module({
-	imports: [ MongooseModule.forFeature([ { name: TaskModel.name, schema: TaskSchema } ]), ListsModule ],
+	imports:
+		[ MongooseModule.forFeature([ { name: TaskModel.name, schema: TaskSchema } ]), forwardRef(() => ListsModule) ],
 	providers: [ TasksResolver, TasksService ],
 	exports: [ TasksService ],
 })

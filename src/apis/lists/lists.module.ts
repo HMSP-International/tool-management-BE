@@ -5,6 +5,7 @@ import { ListModel, ListSchema } from './list.model';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ProjectsModule } from '../projects/projects.module';
 import { CollaboratorsModule } from '../collaborators/collaborators.module';
+import { TasksModule } from '../tasks/tasks.module';
 
 @Module({
 	imports:
@@ -12,6 +13,7 @@ import { CollaboratorsModule } from '../collaborators/collaborators.module';
 			MongooseModule.forFeature([ { name: ListModel.name, schema: ListSchema } ]),
 			ProjectsModule,
 			CollaboratorsModule,
+			forwardRef(() => TasksModule),
 		],
 	providers: [ ListsResolver, ListsService ],
 	exports: [ ListsService ],
