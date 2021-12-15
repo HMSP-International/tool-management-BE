@@ -5,7 +5,7 @@ import * as CollaboratorDTO from './classes/collaborators.dto';
 import { CurrentUser } from '../../common/decorator/CurrentUser.decorator';
 import { IPayLoadToken } from '../../helpers/modules/token/token.interface';
 import { Space } from '../spaces/space.entity';
-import { User } from '../users/user.entity';
+import { User } from '../users/classes/user.entity';
 
 @Resolver(() => Collaborator)
 export class CollaboratorsResolver {

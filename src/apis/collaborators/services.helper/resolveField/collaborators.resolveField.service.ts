@@ -4,7 +4,7 @@ import { UsersService } from '../../../users/users.service';
 import { SpacesService } from '../../../spaces/spaces.service';
 // classes
 import { Space } from '../../../spaces/space.entity';
-import { User } from '../../../users/user.entity';
+import { User } from '../../../users/classes/user.entity';
 
 @Injectable()
 export class CollaboratorsResolverFieldService {

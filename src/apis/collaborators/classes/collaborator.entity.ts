@@ -1,6 +1,6 @@
 import { ObjectType, Field } from '@nestjs/graphql';
 import { Space } from '../../spaces/space.entity';
-import { User } from '../../users/user.entity';
+import { User } from '../../users/classes/user.entity';
 
 @ObjectType()
 export class Collaborator {

@@ -1,15 +1,20 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreateUserInput } from './users.dto';
-import { User } from './user.entity';
-import { UserModel, UserDocument } from './user.model';
-import * as bcrypt from 'bcrypt';
-import * as UserDto from './users.dto';
+import { CreateUserInput } from './classes/users.dto';
+import { User } from './classes/user.entity';
+import { UserModel, UserDocument } from './classes/user.model';
+import * as UserDto from './classes/users.dto';
+import { UsersPutService } from './services.helper/put/users.put.service';
+import { UsersFindService } from './services.helper/find/users.find.service';
 
 @Injectable()
 export class UsersService {
-	constructor (@InjectModel(UserModel.name) private userEntity: Model<UserDocument>) {}
+	constructor (
+		@InjectModel(UserModel.name) private userEntity: Model<UserDocument>,
+		private readonly usersPutService: UsersPutService,
+		private readonly usersFindService: UsersFindService,
+	) {}
 
 	async createUser (createUserInput: CreateUserInput): Promise<User> {
 		{
@@ -26,24 +31,15 @@ export class UsersService {
 	}
 
 	async findAll (): Promise<User[]> {
-		const users = await this.userEntity.find().select('-password');
-		if (users.length <= 0) throw new HttpException('Not Found Any User', HttpStatus.NO_CONTENT);
-		return users;
+		return await this.usersFindService.findAll();
 	}
 
 	async findById (_id: string, getPassword: Boolean = false): Promise<User | null> {
-		if (getPassword === true) {
-			return await this.userEntity.findById(_id);
-		}
-		else {
-			return await this.userEntity.findById(_id).select('-password');
-		}
+		return await this.usersFindService.findById(_id, getPassword);
 	}
 
 	async findByEmail (email: string): Promise<User | null> {
-		const user = await this.userEntity.findOne({ email });
-
-		return user;
+		return await this.usersFindService.findByEmail(email);
 	}
 
 	async deleteById (_id: string): Promise<User[]> {
@@ -56,57 +52,21 @@ export class UsersService {
 	}
 
 	async changePassword (_id: string, changePasswordInput: UserDto.ChangePasswordInput): Promise<User> {
-		const user = await this.userEntity.findById(_id);
-		if (!user) throw new NotFoundException('This user not found');
-		const { newPassword, currentPassword } = changePasswordInput;
-
-		// check password
-		const isMatched = await bcrypt.compare(currentPassword, user.password);
-		if (!isMatched) {
-			throw new NotFoundException('Password Invalid');
-		}
-
-		user.password = newPassword;
-		return await user.save();
+		return await this.usersPutService.changePassword(_id, changePasswordInput);
 	}
 
 	async changePasswordByAdmin (changePasswordInputByAdmin: UserDto.ChangePasswordInputByAdmin): Promise<User> {
-		const { newPassword, _id } = changePasswordInputByAdmin;
-		const user = await this.userEntity.findById(_id);
-		if (!user) throw new NotFoundException('This user not found');
-
-		user.password = newPassword;
-		return await user.save();
+		return await this.usersPutService.changePasswordByAdmin(changePasswordInputByAdmin);
 	}
 
 	async changeInformation (_id: string, changeInformationInput: UserDto.ChangeInformationInput): Promise<User> {
-		let user = await this.userEntity.findByIdAndUpdate(_id, changeInformationInput, {
-			new: true,
-		});
-
-		if (!user) throw new NotFoundException('This user not found');
-
-		return await user.save();
+		return await this.usersPutService.changeInformation(_id, changeInformationInput);
 	}
 
 	async changeInformationByAdmin (
 		_id: string,
 		changeInformationInputByAdmin: UserDto.ChangeInformationInputByAdmin,
 	): Promise<User> {
-		delete changeInformationInputByAdmin._id;
-
-		const isExistsEmail = await this.userEntity.findOne({
-			$and: [ { email: changeInformationInputByAdmin.email }, { _id: { $ne: _id } } ],
-		});
-
-		if (isExistsEmail) throw new NotFoundException('Email already exists');
-
-		let user = await this.userEntity.findByIdAndUpdate(_id, changeInformationInputByAdmin, {
-			new: true,
-		});
-
-		if (!user) throw new NotFoundException('This user not found');
-
-		return await user.save();
+		return await this.usersPutService.changeInformationByAdmin(_id, changeInformationInputByAdmin);
 	}
 }

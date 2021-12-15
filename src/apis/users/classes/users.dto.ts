@@ -1,6 +1,6 @@
 import { InputType, Field, ObjectType } from '@nestjs/graphql';
 import { Length, IsEmail, IsString, IsEnum, IsOptional } from 'class-validator';
-import { ROLE } from '../../common/decorator/role.decorator';
+import { ROLE } from '../../../common/decorator/role.decorator';
 
 @InputType()
 export class CreateUserInput {

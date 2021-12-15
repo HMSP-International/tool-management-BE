@@ -3,7 +3,7 @@ import { IPayLoadToken } from '../../helpers/modules/token/token.interface';
 import { Collaborator } from './classes/collaborator.entity';
 import * as CollaboratorDTO from './classes/collaborators.dto';
 import { Space } from '../spaces/space.entity';
-import { User } from '../users/user.entity';
+import { User } from '../users/classes/user.entity';
 import { CollaboratorsResolverFieldService } from './services.helper/resolveField/collaborators.resolveField.service';
 import { CollaboratorsFindService } from './services.helper/find/collaborators.find.service';
 import { CollaboratorsInviteService } from './services.helper/invite/collaborators.invite.service';
@@ -55,10 +55,10 @@ export class CollaboratorsService {
 	}
 
 	async getSpace (_id: string): Promise<Space> {
-		return this.collaboratorsResolverFieldService.getSpace(_id);
+		return await this.collaboratorsResolverFieldService.getSpace(_id);
 	}
 
 	async getUser (_id: string): Promise<User> {
-		return this.collaboratorsResolverFieldService.getUser(_id);
+		return await this.collaboratorsResolverFieldService.getUser(_id);
 	}
 }
