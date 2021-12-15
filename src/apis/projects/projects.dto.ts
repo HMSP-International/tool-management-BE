@@ -22,3 +22,9 @@ export class GetProjectInput {
 	@Field(() => String)
 	_projectId: string;
 }
+
+@InputType()
+export class DeleteProjectInput {
+	@Field(() => String)
+	_projectId: string;
+}

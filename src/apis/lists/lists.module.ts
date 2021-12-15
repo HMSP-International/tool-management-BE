@@ -11,8 +11,8 @@ import { TasksModule } from '../tasks/tasks.module';
 	imports:
 		[
 			MongooseModule.forFeature([ { name: ListModel.name, schema: ListSchema } ]),
-			ProjectsModule,
 			CollaboratorsModule,
+			forwardRef(() => ProjectsModule),
 			forwardRef(() => TasksModule),
 		],
 	providers: [ ListsResolver, ListsService ],

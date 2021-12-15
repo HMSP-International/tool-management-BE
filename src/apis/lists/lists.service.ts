@@ -11,6 +11,7 @@ import * as ListDTO from './lists.dto';
 export class ListsService {
 	constructor (
 		@InjectModel(ListModel.name) private listEntity: Model<ListDocument>,
+		@Inject(forwardRef(() => ProjectsService))
 		private readonly projectsService: ProjectsService,
 		@Inject(forwardRef(() => TasksService))
 		private readonly tasksService: TasksService,
@@ -33,7 +34,7 @@ export class ListsService {
 
 		await this.projectsService.findById(_projectId);
 
-		return await this.listEntity.find({ _projectId });
+		return await this.listEntity.find({ _projectId }).sort('order');
 	}
 
 	async findById (_id: string): Promise<ListDocument | null> {
@@ -46,9 +47,16 @@ export class ListsService {
 		return list;
 	}
 
-	async deleteList (deleteListsInput: ListDTO.DeleteListInput): Promise<List> {
-		const { _listId } = deleteListsInput;
+	async resetListOrder (_projectId: string): Promise<void> {
+		const lists = await this.listEntity.find({ _projectId }).sort('order');
 
+		for (let i = 0; i < lists.length; i++) {
+			lists[i].order = i;
+			await lists[i].save();
+		}
+	}
+
+	async deleteListById (_listId: string): Promise<List> {
 		// delete tasks of this list
 		this.tasksService.deleteTasksByListId(_listId);
 
@@ -63,12 +71,14 @@ export class ListsService {
 		return listDeleted;
 	}
 
-	async resetListOrder (_projectId: string): Promise<void> {
+	async deleteByProjectId (_projectId: string): Promise<void> {
 		const lists = await this.listEntity.find({ _projectId });
 
-		for (let i = 0; i < lists.length; i++) {
-			lists[i].order = i;
-			await lists[i].save();
+		// delete lists
+		for (let list of lists) {
+			this.deleteListById(list._id);
 		}
+
+		this.resetListOrder(_projectId);
 	}
 }

@@ -36,4 +36,9 @@ export class ProjectsResolver {
 	): Promise<Project[]> {
 		return this.projectsService.create(createSpaceInput, user);
 	}
+
+	@Mutation(() => Project)
+	async deleteProject (@Args('deleteProjectInput') deleteProjectInput: ProjectDTO.DeleteProjectInput) {
+		return this.projectsService.deleteProjectById(deleteProjectInput._projectId);
+	}
 }
