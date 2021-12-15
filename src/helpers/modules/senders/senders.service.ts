@@ -10,9 +10,7 @@ export class SendersService {
 		private readonly configService: ConfigService,
 	) {}
 
-	sendInviteSpaceByGrid = async (
-		inputSendGridInviteSpace: ISendGridInviteSpace,
-	): Promise<Boolean> => {
+	sendInviteSpaceByGrid = async (inputSendGridInviteSpace: ISendGridInviteSpace): Promise<Boolean> => {
 		try {
 			const sendGrid = this.senderFactoryService.sender('sendGrid');
 

@@ -34,7 +34,7 @@ import { GraphQLError, GraphQLFormattedError } from 'graphql';
 					(e: GraphQLError) => {
 						const graphQLFormattedError: GraphQLFormattedError = {
 							message: e.message,
-							extensions: e.extensions?.response?.message,
+							extensions: e.extensions?.response?.message || e,
 						};
 						return graphQLFormattedError;
 					},
@@ -63,7 +63,6 @@ export class CoresModule implements NestModule {
 	configure (consumer: MiddlewareConsumer) {
 		consumer
 			.apply(compression(), JwtMiddleware)
-			// .apply(compression())
 			.forRoutes({ path: '*', method: RequestMethod.POST });
 	}
 }

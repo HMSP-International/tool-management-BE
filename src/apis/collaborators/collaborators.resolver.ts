@@ -1,7 +1,7 @@
 import { Resolver, Mutation, Args, Parent, ResolveField, Query } from '@nestjs/graphql';
 import { CollaboratorsService } from './collaborators.service';
-import { Collaborator } from './collaborator.entity';
-import * as CollaboratorDTO from './collaborators.dto';
+import { Collaborator } from './classes/collaborator.entity';
+import * as CollaboratorDTO from './classes/collaborators.dto';
 import { CurrentUser } from '../../common/decorator/CurrentUser.decorator';
 import { IPayLoadToken } from '../../helpers/modules/token/token.interface';
 import { Space } from '../spaces/space.entity';
@@ -11,7 +11,7 @@ import { User } from '../users/user.entity';
 export class CollaboratorsResolver {
 	constructor (private readonly collaboratorsService: CollaboratorsService) {}
 
-	// mutation
+	// Mutation -- start
 	@Mutation(() => Collaborator)
 	inviteSpace (
 		@Args('inviteSpaceInput') createCollaboratorInput: CollaboratorDTO.InviteSpaceInput,
@@ -46,6 +46,7 @@ export class CollaboratorsResolver {
 	): Promise<Collaborator[]> {
 		return this.collaboratorsService.findUsersBySpaceId(findUsersBySpaceId._spaceId);
 	}
+	// Mutation ---end
 
 	// ResolveField ---start
 	@ResolveField(() => Space)

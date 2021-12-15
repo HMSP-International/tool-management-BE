@@ -1,10 +1,10 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
-import { SpaceModel } from '../spaces/space.model';
-import { UserModel } from '../users/user.model';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+
+import { SpaceModel } from '../../spaces/space.model';
+import { UserModel } from '../../users/user.model';
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
-
 export type CollaboratorDocument = CollaboratorModel & mongoose.Document;
 
 @Schema()
