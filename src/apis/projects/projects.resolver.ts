@@ -14,7 +14,7 @@ export class ProjectsResolver {
 		@CurrentUser() user: IPayLoadToken,
 		@Args('getProjectsInput') getProjectsInput: ProjectDTO.GetProjectsInput,
 	): Promise<Project[]> {
-		return this.projectsService.findAll(getProjectsInput, user);
+		return this.projectsService.findAll(getProjectsInput._spacesId, user._id);
 	}
 
 	@Query(() => Project)

@@ -20,3 +20,10 @@ export class ChangeNameSpaceInput {
 	@Field(() => String)
 	name: string;
 }
+
+@InputType()
+export class DeleteSpaceInput {
+	@IsString()
+	@Field(() => String)
+	_spaceId: string;
+}

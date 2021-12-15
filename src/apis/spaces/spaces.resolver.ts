@@ -24,15 +24,21 @@ export class SpacesResolver {
 	): Promise<Space[]> {
 		return this.spacesService.create(createSpaceInput.name, user);
 	}
-	// Mutation ---- end
 
-	// Mutation ---- start
-	@Mutation(() =>  Space )
+	@Mutation(() => Space)
 	async changeNameSpace (
 		@CurrentUser() user: IPayLoadToken,
 		@Args('changeNameSpaceInput') changeNameSpaceInput: SpaceDTO.ChangeNameSpaceInput,
 	): Promise<Space> {
 		return this.spacesService.changeName(changeNameSpaceInput, user);
+	}
+
+	@Mutation(() => Space)
+	async deleteSpaceById (
+		@Args('deleteSpaceInput') deleteSpaceInput: SpaceDTO.DeleteSpaceInput,
+		@CurrentUser() user: IPayLoadToken,
+	) {
+		return this.spacesService.deleteSpaceById(deleteSpaceInput._spaceId, user._id);
 	}
 	// Mutation ---- end
 }

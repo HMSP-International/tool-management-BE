@@ -12,15 +12,14 @@ import { ListsService } from '../lists/lists.service';
 export class ProjectsService {
 	constructor (
 		@InjectModel(ProjectModel.name) private projectEntity: Model<ProjectDocument>,
-		private spacesService: SpacesService,
+		@Inject(forwardRef(() => SpacesService))
+		private readonly spacesService: SpacesService,
 		@Inject(forwardRef(() => ListsService))
 		private readonly listsService: ListsService,
 	) {}
 
-	async findAll (getProjectsInput: ProjectDTO.GetProjectsInput, user: IPayLoadToken): Promise<Project[]> {
-		const projects = await this.projectEntity
-			.find({ _spaceId: getProjectsInput._spacesId, owner: user._id })
-			.sort('_spaceId order');
+	async findAll (_spacesId: string[], _userId: string): Promise<Project[]> {
+		const projects = await this.projectEntity.find({ _spaceId: _spacesId, owner: _userId }).sort('_spaceId order');
 
 		return projects;
 	}

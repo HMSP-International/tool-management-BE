@@ -10,7 +10,7 @@ import { ListsModule } from '../lists/lists.module';
 	imports:
 		[
 			MongooseModule.forFeature([ { name: ProjectModel.name, schema: ProjectSchema } ]),
-			SpacesModule,
+			forwardRef(() => SpacesModule),
 			forwardRef(() => ListsModule),
 		],
 	providers: [ ProjectsResolver, ProjectsService ],
