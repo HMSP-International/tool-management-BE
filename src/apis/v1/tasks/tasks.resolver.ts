@@ -1,7 +1,7 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { TasksService } from './tasks.service';
-import { Task } from './task.entity';
-import * as TaskDto from './tasks.dto';
+import { Task } from './classes/task.entity';
+import * as TaskDto from './classes/tasks.dto';
 
 @Resolver(() => Task)
 export class TasksResolver {
@@ -9,7 +9,7 @@ export class TasksResolver {
 
 	@Mutation(() => [ Task ])
 	getTasksByListId (@Args('getTasksInput') getTasksInput: TaskDto.GetTasksInput) {
-		return this.tasksService.getTasksByListId(getTasksInput);
+		return this.tasksService.findTasksByListId(getTasksInput);
 	}
 
 	@Mutation(() => Task)

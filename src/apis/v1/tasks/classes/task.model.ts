@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
-import { ListModel } from '../lists/classes/list.model';
+import { ListModel } from '../../lists/classes/list.model';
 
 export type TaskDocument = TaskModel & mongoose.Document;
 

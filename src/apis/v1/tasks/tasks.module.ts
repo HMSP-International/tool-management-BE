@@ -1,13 +1,13 @@
-import { forwardRef, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { TasksResolver } from './tasks.resolver';
-import { MongooseModule } from '@nestjs/mongoose';
-import { TaskModel, TaskSchema } from './task.model';
-import { ListsModule } from '../lists/lists.module';
+
+import { TasksCreateModule } from './services.helper/create/tasks.create.module';
+import { TasksDeleteModule } from './services.helper/delete/tasks.delete.module';
+import { TasksFindModule } from './services.helper/find/tasks.find.module';
 
 @Module({
-	imports:
-		[ MongooseModule.forFeature([ { name: TaskModel.name, schema: TaskSchema } ]), forwardRef(() => ListsModule) ],
+	imports: [ TasksCreateModule, TasksDeleteModule, TasksFindModule ],
 	providers: [ TasksResolver, TasksService ],
 	exports: [ TasksService ],
 })
