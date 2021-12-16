@@ -1,68 +1,38 @@
-import { forwardRef, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { ProjectModel, ProjectDocument } from './project.model';
-import { Project } from './project.entity';
-import { Model } from 'mongoose';
-import * as ProjectDTO from './projects.dto';
+import { Injectable } from '@nestjs/common';
+
+import { Project } from './classes/project.entity';
+import * as ProjectDTO from './classes/projects.dto';
 import { IPayLoadToken } from '../../helpers/modules/token/token.interface';
-import { SpacesService } from '../spaces/spaces.service';
-import { ListsService } from '../lists/lists.service';
+
+import { ProjectsCreateService } from './services.helper/create/projects.create.service';
+import { ProjectsDeleteService } from './services.helper/delete/projects.delete.service';
+import { ProjectsFindService } from './services.helper/find/projects.find.service';
 
 @Injectable()
 export class ProjectsService {
 	constructor (
-		@InjectModel(ProjectModel.name) private projectEntity: Model<ProjectDocument>,
-		@Inject(forwardRef(() => SpacesService))
-		private readonly spacesService: SpacesService,
-		@Inject(forwardRef(() => ListsService))
-		private readonly listsService: ListsService,
+		private readonly projectsCreateService: ProjectsCreateService,
+		private readonly projectsDeleteService: ProjectsDeleteService,
+		private readonly projectsFindService: ProjectsFindService,
 	) {}
 
 	async findAll (_spacesId: string[], _userId: string): Promise<Project[]> {
-		const projects = await this.projectEntity.find({ _spaceId: _spacesId, owner: _userId }).sort('_spaceId order');
-
-		return projects;
+		return await this.projectsFindService.findAll(_spacesId, _userId);
 	}
 
 	async findById (_id: string): Promise<Project> {
-		const project = await this.projectEntity.findById(_id);
-
-		if (project === null) {
-			throw new HttpException('Not Found _projectId', HttpStatus.BAD_REQUEST);
-		}
-
-		return project;
+		return await this.projectsFindService.findById(_id);
 	}
 
 	async findAllByCollaborator (getProjectsInput: ProjectDTO.GetProjectsInput): Promise<Project[]> {
-		const projects = await this.projectEntity.find({ _spaceId: getProjectsInput._spacesId }).sort('_spaceId order');
-
-		return projects;
+		return await this.projectsFindService.findAllByCollaborator(getProjectsInput);
 	}
 
 	async create (createSpaceInput: ProjectDTO.CreateProjectInput, user: IPayLoadToken): Promise<Project[]> {
-		const { _spaceId } = createSpaceInput;
-
-		const space = await this.spacesService.findBySpaceAndOwner(_spaceId, user._id);
-		if (space === null)
-			throw new HttpException('Not Found _spaceId or _spaceId is not yours', HttpStatus.BAD_REQUEST);
-
-		const order = await this.projectEntity.countDocuments({ _spaceId });
-
-		const newProject = new this.projectEntity({ order, owner: user._id, ...createSpaceInput });
-		await newProject.save();
-
-		return this.projectEntity.find({ _spaceId }).sort('order');
+		return await this.projectsCreateService.create(createSpaceInput, user);
 	}
 
 	async deleteProjectById (_projectId: string): Promise<Project> {
-		const projectDeleted = await this.projectEntity.findByIdAndDelete(_projectId);
-		if (projectDeleted === null) {
-			throw new HttpException('Not Found _projectId', HttpStatus.NOT_FOUND);
-		}
-
-		this.listsService.deleteByProjectId(_projectId);
-
-		return projectDeleted;
+		return await this.projectsDeleteService.deleteProjectById(_projectId);
 	}
 }

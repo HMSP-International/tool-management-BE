@@ -1,6 +1,6 @@
 import { Prop, SchemaFactory, Schema } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
-import { ProjectModel } from '../projects/project.model';
+import { ProjectModel } from '../projects/classes/project.model';
 
 export type ListDocument = ListModel & mongoose.Document;
 

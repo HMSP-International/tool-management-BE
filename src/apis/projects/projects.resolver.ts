@@ -1,9 +1,9 @@
 import { Resolver, Args, Query, Mutation } from '@nestjs/graphql';
 import { ProjectsService } from './projects.service';
-import { Project } from './project.entity';
+import { Project } from './classes/project.entity';
 import { CurrentUser } from '../../common/decorator/CurrentUser.decorator';
 import { IPayLoadToken } from '../../helpers/modules/token/token.interface';
-import * as ProjectDTO from './projects.dto';
+import * as ProjectDTO from './classes/projects.dto';
 
 @Resolver(() => Project)
 export class ProjectsResolver {
