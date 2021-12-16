@@ -1,18 +1,13 @@
 import { Module } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UsersResolver } from './users.resolver';
-import { MongooseModule } from '@nestjs/mongoose';
-import { UserModel, UserSchema } from './classes/user.model';
-import { UsersPutModule } from './services.helper/put/users.put.module';
+import { UsersCreateModule } from './services.helper/create/users.create.module';
+import { UsersDeleteModule } from './services.helper/delete/users.delete.module';
 import { UsersFindModule } from './services.helper/find/users.find.module';
+import { UsersPutModule } from './services.helper/put/users.put.module';
 
 @Module({
-	imports:
-		[
-			MongooseModule.forFeature([ { name: UserModel.name, schema: UserSchema } ]),
-			UsersPutModule,
-			UsersFindModule,
-		],
+	imports: [ UsersCreateModule, UsersDeleteModule, UsersFindModule, UsersPutModule ],
 	providers: [ UsersResolver, UsersService ],
 	exports: [ UsersService ],
 })

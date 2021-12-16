@@ -34,7 +34,7 @@ import { GraphQLError, GraphQLFormattedError } from 'graphql';
 					(e: GraphQLError) => {
 						const graphQLFormattedError: GraphQLFormattedError = {
 							message: e.message,
-							extensions: e.extensions?.response?.message || e,
+							extensions: e.extensions?.response?.message,
 						};
 						return graphQLFormattedError;
 					},

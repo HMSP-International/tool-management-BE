@@ -1,16 +1,13 @@
-import { forwardRef, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { SpacesService } from './spaces.service';
 import { SpacesResolver } from './spaces.resolver';
-import { SpaceModel, SpaceSchema } from './space.model';
-import { MongooseModule } from '@nestjs/mongoose';
-import { ProjectsModule } from '../projects/projects.module';
+import { SpacesCreateModule } from './services.helper/create/spaces.create.module';
+import { SpacesDeleteModule } from './services.helper/delete/spaces.delete.module';
+import { SpacesFindModule } from './services.helper/find/spaces.find.module';
+import { SpacesPutModule } from './services.helper/put/spaces.put.module';
 
 @Module({
-	imports:
-		[
-			MongooseModule.forFeature([ { name: SpaceModel.name, schema: SpaceSchema } ]),
-			forwardRef(() => ProjectsModule),
-		],
+	imports: [ SpacesCreateModule, SpacesDeleteModule, SpacesFindModule, SpacesPutModule ],
 	providers: [ SpacesResolver, SpacesService ],
 	exports: [ SpacesService ],
 })

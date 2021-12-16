@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-import { SpaceModel } from '../../spaces/space.model';
+import { SpaceModel } from '../../spaces/classes/space.model';
 import { UserModel } from '../../users/classes/user.model';
 
 const ObjectId = mongoose.Schema.Types.ObjectId;

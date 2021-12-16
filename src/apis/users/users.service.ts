@@ -1,33 +1,27 @@
-import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Injectable } from '@nestjs/common';
 import { CreateUserInput } from './classes/users.dto';
 import { User } from './classes/user.entity';
-import { UserModel, UserDocument } from './classes/user.model';
 import * as UserDto from './classes/users.dto';
 import { UsersPutService } from './services.helper/put/users.put.service';
 import { UsersFindService } from './services.helper/find/users.find.service';
+import { UsersDeleteService } from './services.helper/delete/users.delete.service';
+import { UsersCreateService } from './services.helper/create/users.create.service';
 
 @Injectable()
 export class UsersService {
 	constructor (
-		@InjectModel(UserModel.name) private userEntity: Model<UserDocument>,
-		private readonly usersPutService: UsersPutService,
+		private readonly usersCreateService: UsersCreateService,
+		private readonly usersDeleteService: UsersDeleteService,
 		private readonly usersFindService: UsersFindService,
+		private readonly usersPutService: UsersPutService,
 	) {}
 
 	async createUser (createUserInput: CreateUserInput): Promise<User> {
-		{
-			const user = await this.findByEmail(createUserInput.email);
-			if (user) throw new HttpException('Email Already Exists', HttpStatus.CONFLICT);
-		}
+		return await this.usersCreateService.createUser(createUserInput);
+	}
 
-		{
-			const user = await new this.userEntity(createUserInput);
-			const newUser = await user.save();
-			newUser.password = null;
-			return newUser;
-		}
+	async deleteById (_id: string): Promise<User[]> {
+		return await this.usersDeleteService.deleteById(_id);
 	}
 
 	async findAll (): Promise<User[]> {
@@ -40,15 +34,6 @@ export class UsersService {
 
 	async findByEmail (email: string): Promise<User | null> {
 		return await this.usersFindService.findByEmail(email);
-	}
-
-	async deleteById (_id: string): Promise<User[]> {
-		const user = await this.userEntity.findByIdAndDelete(_id);
-
-		if (user === null)
-			throw new NotFoundException('This user not found or maybe deleted, please refresh your page');
-
-		return await this.userEntity.find({});
 	}
 
 	async changePassword (_id: string, changePasswordInput: UserDto.ChangePasswordInput): Promise<User> {

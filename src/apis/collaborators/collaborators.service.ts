@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { IPayLoadToken } from '../../helpers/modules/token/token.interface';
 import { Collaborator } from './classes/collaborator.entity';
 import * as CollaboratorDTO from './classes/collaborators.dto';
-import { Space } from '../spaces/space.entity';
+import { Space } from '../spaces/classes/space.entity';
 import { User } from '../users/classes/user.entity';
 import { CollaboratorsResolverFieldService } from './services.helper/resolveField/collaborators.resolveField.service';
 import { CollaboratorsFindService } from './services.helper/find/collaborators.find.service';

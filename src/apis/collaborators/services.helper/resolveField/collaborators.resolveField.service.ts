@@ -3,7 +3,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UsersService } from '../../../users/users.service';
 import { SpacesService } from '../../../spaces/spaces.service';
 // classes
-import { Space } from '../../../spaces/space.entity';
+import { Space } from '../../../spaces/classes/space.entity';
 import { User } from '../../../users/classes/user.entity';
 
 @Injectable()

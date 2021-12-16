@@ -1,6 +1,6 @@
 import { Prop, SchemaFactory, Schema } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
-import { SpaceModel } from '../spaces/space.model';
+import { SpaceModel } from '../spaces/classes/space.model';
 import { UserModel } from '../users/classes/user.model';
 
 export type ProjectDocument = ProjectModel & mongoose.Document;
