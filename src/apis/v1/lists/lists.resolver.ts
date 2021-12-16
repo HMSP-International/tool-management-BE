@@ -1,7 +1,7 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { ListsService } from './lists.service';
-import { List } from './list.entity';
-import * as ListDTO from './lists.dto';
+import { List } from './classes/list.entity';
+import * as ListDTO from './classes/lists.dto';
 
 @Resolver(() => List)
 export class ListsResolver {
@@ -14,7 +14,7 @@ export class ListsResolver {
 
 	@Query(() => [ List ])
 	getLists (@Args('getListsInput') getListsInput: ListDTO.GetListsInput) {
-		return this.listsService.getLists(getListsInput);
+		return this.listsService.findAllByProjectId(getListsInput);
 	}
 
 	@Mutation(() => List)

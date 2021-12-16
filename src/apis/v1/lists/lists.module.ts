@@ -1,18 +1,13 @@
-import { Module, forwardRef } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ListsService } from './lists.service';
 import { ListsResolver } from './lists.resolver';
-import { ListModel, ListSchema } from './list.model';
-import { MongooseModule } from '@nestjs/mongoose';
-import { ProjectsModule } from '../projects/projects.module';
-import { TasksModule } from '../tasks/tasks.module';
+
+import { ListsCreateModule } from './services.helper/create/lists.create.module';
+import { ListsFindModule } from './services.helper/find/lists.find.module';
+import { ListsDeleteModule } from './services.helper/delete/lists.delete.module';
 
 @Module({
-	imports:
-		[
-			MongooseModule.forFeature([ { name: ListModel.name, schema: ListSchema } ]),
-			forwardRef(() => ProjectsModule),
-			forwardRef(() => TasksModule),
-		],
+	imports: [ ListsCreateModule, ListsDeleteModule, ListsFindModule ],
 	providers: [ ListsResolver, ListsService ],
 	exports: [ ListsService ],
 })

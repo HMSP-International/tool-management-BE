@@ -1,7 +1,7 @@
 import { forwardRef, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { ProjectsService } from '../../../../apis/projects/projects.service';
+import { ProjectsService } from '../../../projects/projects.service';
 import { Space } from '../../classes/space.entity';
 import { SpaceModel, SpaceDocument } from '../../classes/space.model';
 import { SpacesFindService } from '../find/spaces.find.service';
