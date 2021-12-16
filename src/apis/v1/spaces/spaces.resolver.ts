@@ -1,8 +1,8 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { SpacesService } from './spaces.service';
 import { Space } from './classes/space.entity';
-import { IPayLoadToken } from '../../helpers/modules/token/token.interface';
-import { CurrentUser } from '../../common/decorator/currentUser.decorator';
+import { IPayLoadToken } from '../../../helpers/modules/token/token.interface';
+import { CurrentUser } from '../../../common/decorator/currentUser.decorator';
 import * as SpaceDTO from './classes/spaces.dto';
 
 @Resolver(() => Space)

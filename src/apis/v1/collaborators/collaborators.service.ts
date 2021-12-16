@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { IPayLoadToken } from '../../helpers/modules/token/token.interface';
+import { IPayLoadToken } from '../../../helpers/modules/token/token.interface';
 import { Collaborator } from './classes/collaborator.entity';
 import * as CollaboratorDTO from './classes/collaborators.dto';
 import { Space } from '../spaces/classes/space.entity';

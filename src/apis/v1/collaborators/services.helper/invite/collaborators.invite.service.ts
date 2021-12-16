@@ -5,8 +5,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CollaboratorDocument, CollaboratorModel } from '../../classes/collaborator.model';
 // helpers
-import { SendersService } from '../../../../helpers/modules/senders/senders.service';
-import { IPayLoadToken } from '../../../../helpers/modules/token/token.interface';
+import { SendersService } from '../../../../../helpers/modules/senders/senders.service';
+import { IPayLoadToken } from '../../../../../helpers/modules/token/token.interface';
 // classes
 import * as CollaboratorDTO from '../../classes/collaborators.dto';
 import { Collaborator } from '../../classes/collaborator.entity';

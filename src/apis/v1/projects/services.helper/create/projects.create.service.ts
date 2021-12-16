@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import * as ProjectDTO from '../../classes/projects.dto';
 import { Project } from '../../classes/project.entity';
 import { ProjectModel, ProjectDocument } from '../../classes/project.model';
-import { IPayLoadToken } from '../../../../helpers/modules/token/token.interface';
+import { IPayLoadToken } from '../../../../../helpers/modules/token/token.interface';
 import { SpacesService } from '../../../spaces/spaces.service';
 
 @Injectable()

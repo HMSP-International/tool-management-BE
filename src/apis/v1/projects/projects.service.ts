@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { Project } from './classes/project.entity';
 import * as ProjectDTO from './classes/projects.dto';
-import { IPayLoadToken } from '../../helpers/modules/token/token.interface';
+import { IPayLoadToken } from '../../../helpers/modules/token/token.interface';
 
 import { ProjectsCreateService } from './services.helper/create/projects.create.service';
 import { ProjectsDeleteService } from './services.helper/delete/projects.delete.service';
