@@ -7,6 +7,8 @@ import { SendersModule } from '../../../../../helpers/modules/senders/senders.mo
 import { CollaboratorsFindModule } from '../find/collaborators.find.module';
 // mongoose
 import { CollaboratorModel, CollaboratorSchema } from '../../classes/collaborator.model';
+// Module
+import { UsersModule } from '../../../users/users.module';
 // services
 import { CollaboratorsInviteService } from './collaborators.invite.service';
 
@@ -14,6 +16,7 @@ import { CollaboratorsInviteService } from './collaborators.invite.service';
 	imports:
 		[
 			MongooseModule.forFeature([ { name: CollaboratorModel.name, schema: CollaboratorSchema } ]),
+			UsersModule,
 			CollaboratorsFindModule,
 			SendersModule,
 			JwtModule.registerAsync({

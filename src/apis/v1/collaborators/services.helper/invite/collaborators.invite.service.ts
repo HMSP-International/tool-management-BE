@@ -12,12 +12,13 @@ import * as CollaboratorDTO from '../../classes/collaborators.dto';
 import { Collaborator } from '../../classes/collaborator.entity';
 // services
 import { CollaboratorsFindService } from '../find/collaborators.find.service';
+import { UsersService } from '../../../users/users.service';
 
 @Injectable()
 export class CollaboratorsInviteService {
-	usersService: any;
 	constructor (
 		@InjectModel(CollaboratorModel.name) private collaboratorEntity: Model<CollaboratorDocument>,
+		private readonly usersService: UsersService,
 		private readonly collaboratorsFindService: CollaboratorsFindService,
 		private readonly sendersService: SendersService,
 		private readonly jwtService: JwtService,
