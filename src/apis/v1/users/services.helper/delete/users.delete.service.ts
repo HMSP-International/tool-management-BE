@@ -8,7 +8,7 @@ import { UserModel, UserDocument } from '../../classes/user.model';
 export class UsersDeleteService {
 	constructor (@InjectModel(UserModel.name) private userEntity: Model<UserDocument>) {}
 
-	async deleteById (_id: string): Promise<User[]> {
+	async deleteById (_id: string): Promise<UserModel[]> {
 		const user = await this.userEntity.findByIdAndDelete(_id);
 
 		if (user === null)

@@ -10,7 +10,7 @@ import * as UserDto from '../../classes/users.dto';
 export class UsersPutService {
 	constructor (@InjectModel(UserModel.name) private userEntity: Model<UserDocument>) {}
 
-	async changePassword (_id: string, changePasswordInput: UserDto.ChangePasswordInput): Promise<User> {
+	async changePassword (_id: string, changePasswordInput: UserDto.ChangePasswordInput): Promise<UserModel> {
 		const user = await this.userEntity.findById(_id);
 		if (!user) throw new NotFoundException('This user not found');
 		const { newPassword, currentPassword } = changePasswordInput;
@@ -21,33 +21,31 @@ export class UsersPutService {
 			throw new NotFoundException('Password Invalid');
 		}
 
-		user.password = newPassword;
-		return await user.save();
+		return await this.userEntity.findByIdAndUpdate(_id, { password: newPassword }, { new: true });
 	}
 
-	async changePasswordByAdmin (changePasswordInputByAdmin: UserDto.ChangePasswordInputByAdmin): Promise<User> {
+	async changePasswordByAdmin (changePasswordInputByAdmin: UserDto.ChangePasswordInputByAdmin): Promise<UserModel> {
 		const { newPassword, _id } = changePasswordInputByAdmin;
-		const user = await this.userEntity.findById(_id);
+		const user = await this.userEntity.findByIdAndUpdate(_id, { password: newPassword }, { new: true });
 		if (!user) throw new NotFoundException('This user not found');
 
-		user.password = newPassword;
-		return await user.save();
+		return user;
 	}
 
-	async changeInformation (_id: string, changeInformationInput: UserDto.ChangeInformationInput): Promise<User> {
+	async changeInformation (_id: string, changeInformationInput: UserDto.ChangeInformationInput): Promise<UserModel> {
 		let user = await this.userEntity.findByIdAndUpdate(_id, changeInformationInput, {
 			new: true,
 		});
 
 		if (!user) throw new NotFoundException('This user not found');
 
-		return await user.save();
+		return user;
 	}
 
 	async changeInformationByAdmin (
 		_id: string,
 		changeInformationInputByAdmin: UserDto.ChangeInformationInputByAdmin,
-	): Promise<User> {
+	): Promise<UserModel> {
 		delete changeInformationInputByAdmin._id;
 
 		const isExistsEmail = await this.userEntity.findOne({
@@ -62,6 +60,6 @@ export class UsersPutService {
 
 		if (!user) throw new NotFoundException('This user not found');
 
-		return await user.save();
+		return user;
 	}
 }

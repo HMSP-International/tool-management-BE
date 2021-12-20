@@ -4,31 +4,32 @@ import { User } from './classes/user.entity';
 import * as UserDto from './classes/users.dto';
 import { IPayLoadToken } from '../../../helpers/modules/token/token.interface';
 import { CurrentUser } from '../../../common/decorator/CurrentUser.decorator';
+import { PERMISSIONS } from '../../../common/decorator/permissions.decorator';
+import { UserModel } from './classes/user.model';
 
 @Resolver(() => User)
 export class UsersResolver {
 	constructor (private readonly usersService: UsersService) {}
 
 	// ----------------------------------------- Query ----------------------------------------- //
-	// @Roles(ROLE.admin)
+	@PERMISSIONS({ resolverName: 'getProfile' })
 	@Query(() => User)
-	async getProfile (@CurrentUser() user: IPayLoadToken): Promise<User> {
+	async getProfile (@CurrentUser() user: IPayLoadToken): Promise<UserModel> {
 		return this.usersService.findById(user._id);
 	}
 
 	// --------------------------------------- End Query --------------------------------------- //
 
 	// ---------------------------------------- Mutaion ---------------------------------------- //
-	// @Roles(ROLE.admin)
+	@PERMISSIONS({ resolverName: 'getUsers' })
 	@Mutation(() => [ User ])
-	async getUsers (): Promise<User[]> {
+	async getUsers (): Promise<UserModel[]> {
 		return this.usersService.findAll();
 	}
 
+	@PERMISSIONS({ resolverName: 'createUser' })
 	@Mutation(() => User)
-	async createUser (
-		@Args('createUserInput') createUserInput: UserDto.CreateUserInput,
-	): Promise<User> {
+	async createUser (@Args('createUserInput') createUserInput: UserDto.CreateUserInput): Promise<UserModel> {
 		return this.usersService.createUser(createUserInput);
 	}
 
@@ -36,16 +37,15 @@ export class UsersResolver {
 	async chagePassword (
 		@CurrentUser() user: IPayLoadToken,
 		@Args('changePasswordInput') changePasswordInput: UserDto.ChangePasswordInput,
-	): Promise<User> {
+	): Promise<UserModel> {
 		return this.usersService.changePassword(user._id, changePasswordInput);
 	}
 
-	// TODO add role admin
+	@PERMISSIONS({ resolverName: 'chagePasswordByAdmin' })
 	@Mutation(() => User)
 	async chagePasswordByAdmin (
-		@Args('changePasswordInputByAdmin')
-		changePasswordInputByAdmin: UserDto.ChangePasswordInputByAdmin,
-	): Promise<User> {
+		@Args('changePasswordInputByAdmin') changePasswordInputByAdmin: UserDto.ChangePasswordInputByAdmin,
+	): Promise<UserModel> {
 		return this.usersService.changePasswordByAdmin(changePasswordInputByAdmin);
 	}
 
@@ -53,26 +53,24 @@ export class UsersResolver {
 	async chageInformation (
 		@CurrentUser() user: IPayLoadToken,
 		@Args('changeInformationInput') changeInformationInput: UserDto.ChangeInformationInput,
-	): Promise<User> {
+	): Promise<UserModel> {
 		return this.usersService.changeInformation(user._id, changeInformationInput);
 	}
 
-	// TODO add role admin
+	@PERMISSIONS({ resolverName: 'chageInformationByAdmin' })
 	@Mutation(() => User)
 	async chageInformationByAdmin (
-		@Args('changeInformationInputByAdmin')
-		changeInformationInputByAdmin: UserDto.ChangeInformationInputByAdmin,
-	): Promise<User> {
+		@Args('changeInformationInputByAdmin') changeInformationInputByAdmin: UserDto.ChangeInformationInputByAdmin,
+	): Promise<UserModel> {
 		return this.usersService.changeInformationByAdmin(
 			changeInformationInputByAdmin._id,
 			changeInformationInputByAdmin,
 		);
 	}
 
+	@PERMISSIONS({ resolverName: 'deleteUser' })
 	@Mutation(() => [ User ])
-	async deleteUser (
-		@Args('deleteUserInput') deleteUserInput: UserDto.DeleteUserInput,
-	): Promise<User[]> {
+	async deleteUser (@Args('deleteUserInput') deleteUserInput: UserDto.DeleteUserInput): Promise<UserModel[]> {
 		return this.usersService.deleteById(deleteUserInput._id);
 	}
 

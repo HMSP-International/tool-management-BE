@@ -1,7 +1,7 @@
 import { InputType, Field } from '@nestjs/graphql';
 import { Type } from 'class-transformer';
 import { IsString, IsEnum, IsArray } from 'class-validator';
-import { ROLE } from '../../../../common/decorator/role.decorator';
+import { ROLE } from '../../../../common/decorator/permissions.decorator';
 
 @InputType()
 export class InviteSpaceInput {

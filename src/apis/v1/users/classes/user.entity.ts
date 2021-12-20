@@ -15,7 +15,7 @@ export class User {
 	displayName: string;
 
 	@Field(() => String)
-	role: string;
+	_roleId: string;
 
 	@Field(() => String)
 	department: string;

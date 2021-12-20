@@ -20,6 +20,6 @@ export class AuthService {
 			throw new NotFoundException('Email or Password Invalid');
 		}
 
-		return { jwt: this.jwtService.sign({ _id: user._id, role: user.role }) };
+		return { jwt: this.jwtService.sign({ _id: user._id, _roleId: user._roleId }) };
 	}
 }

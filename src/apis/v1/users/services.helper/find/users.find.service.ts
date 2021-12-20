@@ -8,13 +8,13 @@ import { UserModel, UserDocument } from '../../classes/user.model';
 export class UsersFindService {
 	constructor (@InjectModel(UserModel.name) private userEntity: Model<UserDocument>) {}
 
-	async findAll (): Promise<User[]> {
+	async findAll (): Promise<UserModel[]> {
 		const users = await this.userEntity.find().select('-password');
 		if (users.length <= 0) throw new HttpException('Not Found Any User', HttpStatus.NO_CONTENT);
 		return users;
 	}
 
-	async findById (_id: string, getPassword: Boolean = false): Promise<User | null> {
+	async findById (_id: string, getPassword: Boolean = false): Promise<UserModel | null> {
 		if (getPassword === true) {
 			return await this.userEntity.findById(_id);
 		}
@@ -23,8 +23,8 @@ export class UsersFindService {
 		}
 	}
 
-	async findByEmail (email: string): Promise<User | null> {
-		const user = await this.userEntity.findOne({ email });
+	async findByEmail (email: string): Promise<UserModel | null> {
+		const user = await this.userEntity.findOne({ email }).populate('_roleId');
 
 		return user;
 	}

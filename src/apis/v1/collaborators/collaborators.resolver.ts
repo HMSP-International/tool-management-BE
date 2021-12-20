@@ -6,6 +6,7 @@ import { CurrentUser } from '../../../common/decorator/CurrentUser.decorator';
 import { IPayLoadToken } from '../../../helpers/modules/token/token.interface';
 import { Space } from '../spaces/classes/space.entity';
 import { User } from '../users/classes/user.entity';
+import { UserModel } from '../users/classes/user.model';
 
 @Resolver(() => Collaborator)
 export class CollaboratorsResolver {
@@ -55,7 +56,7 @@ export class CollaboratorsResolver {
 	}
 
 	@ResolveField(() => User)
-	_memberId (@Parent() collaborator: Collaborator): Promise<User> {
+	_memberId (@Parent() collaborator: Collaborator): Promise<UserModel> {
 		return this.collaboratorsService.getUser(collaborator._memberId);
 	}
 	// ResolveField ---end

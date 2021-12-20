@@ -7,6 +7,7 @@ import { User } from '../users/classes/user.entity';
 import { CollaboratorsResolverFieldService } from './services.helper/resolveField/collaborators.resolveField.service';
 import { CollaboratorsFindService } from './services.helper/find/collaborators.find.service';
 import { CollaboratorsInviteService } from './services.helper/invite/collaborators.invite.service';
+import { UserModel } from '../users/classes/user.model';
 
 @Injectable()
 export class CollaboratorsService {
@@ -58,7 +59,7 @@ export class CollaboratorsService {
 		return await this.collaboratorsResolverFieldService.getSpace(_id);
 	}
 
-	async getUser (_id: string): Promise<User> {
+	async getUser (_id: string): Promise<UserModel> {
 		return await this.collaboratorsResolverFieldService.getUser(_id);
 	}
 }

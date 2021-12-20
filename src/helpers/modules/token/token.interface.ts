@@ -4,5 +4,5 @@ export interface IToken {
 
 export interface IPayLoadToken {
 	_id: string;
-	role: string;
+	_roleId: string;
 }

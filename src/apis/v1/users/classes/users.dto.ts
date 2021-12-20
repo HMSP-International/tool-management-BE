@@ -1,6 +1,6 @@
 import { InputType, Field, ObjectType } from '@nestjs/graphql';
 import { Length, IsEmail, IsString, IsEnum, IsOptional } from 'class-validator';
-import { ROLE } from '../../../../common/decorator/role.decorator';
+import { ROLE } from '../../../../common/decorator/permissions.decorator';
 
 @InputType()
 export class CreateUserInput {
@@ -16,27 +16,26 @@ export class CreateUserInput {
 
 	@IsOptional()
 	@IsString()
-	@Field(() => String, { nullable: true })
+	@Field(() => String)
 	displayName: string;
 
 	@IsOptional()
-	@IsEnum(ROLE, { message: 'this role only: ' + JSON.stringify(Object.values(ROLE)) })
-	@Field(() => String, { nullable: true })
-	role: string;
+	@Field(() => String)
+	_roleId: string;
 
 	@IsOptional()
 	@IsString()
-	@Field(() => String, { nullable: true })
+	@Field(() => String)
 	department: string;
 
 	@IsOptional()
 	@IsString()
-	@Field(() => String, { nullable: true })
+	@Field(() => String)
 	position: string;
 
 	@IsOptional()
 	@IsString()
-	@Field(() => String, { nullable: true })
+	@Field(() => String)
 	title: string;
 }
 
@@ -110,9 +109,8 @@ export class ChangeInformationInputByAdmin {
 	department: string;
 
 	@IsString()
-	@IsEnum(ROLE, { message: 'this role only: ' + JSON.stringify(Object.values(ROLE)) })
 	@Field(() => String)
-	role: string;
+	_roleId: string;
 }
 
 @ObjectType()
