@@ -9,6 +9,9 @@ export type UserDocument = UserModel & mongoose.Document;
 export class UserModel {
 	_id: string;
 
+	@Prop({ type: 'string' })
+	avatar: string;
+
 	@Prop({ type: 'string', required: true, unique: true })
 	email: string;
 

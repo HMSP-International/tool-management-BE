@@ -14,6 +14,7 @@ export class PermissionsFindService {
 
 	async findByRoleIdAndResolverName (roleName: string, resolverName: string): Promise<boolean> {
 		const role = await this.rolesService.findByName(roleName);
+		if (role === null) return false;
 		if (role.name === 'SUPER_ADMIN') return true;
 
 		const isPermit = await this.permissionEntity.findOne({ _roleId: role._id, resolverName });

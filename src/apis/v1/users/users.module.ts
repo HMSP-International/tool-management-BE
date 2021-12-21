@@ -6,7 +6,6 @@ import { UsersDeleteModule } from './services.helper/delete/users.delete.module'
 import { UsersFindModule } from './services.helper/find/users.find.module';
 import { UsersPutModule } from './services.helper/put/users.put.module';
 import { PermissionsModule } from '../permissions/permissions.module';
-
 @Module({
 	imports: [ UsersCreateModule, UsersDeleteModule, UsersFindModule, UsersPutModule, PermissionsModule ],
 	providers: [ UsersResolver, UsersService ],

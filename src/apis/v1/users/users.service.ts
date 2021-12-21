@@ -1,6 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateUserInput } from './classes/users.dto';
-import { User } from './classes/user.entity';
 import * as UserDto from './classes/users.dto';
 import { UsersPutService } from './services.helper/put/users.put.service';
 import { UsersFindService } from './services.helper/find/users.find.service';

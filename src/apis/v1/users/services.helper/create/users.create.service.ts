@@ -1,11 +1,13 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { RolesService } from '../../../roles/roles.service';
-import { User } from '../../classes/user.entity';
 import { UserModel, UserDocument } from '../../classes/user.model';
 import { CreateUserInput } from '../../classes/users.dto';
 import { UsersFindService } from '../find/users.find.service';
+
+import { CloudinaryService } from '../../../../../helpers/modules/cloudinary/cloudinary.service';
+import { UploadApiResponse, UploadApiErrorResponse } from 'cloudinary';
 
 @Injectable()
 export class UsersCreateService {
@@ -13,6 +15,7 @@ export class UsersCreateService {
 		@InjectModel(UserModel.name) private userEntity: Model<UserDocument>,
 		private readonly usersFindService: UsersFindService,
 		private readonly rolesService: RolesService,
+		private readonly cloudinary: CloudinaryService,
 	) {}
 
 	async createUser (createUserInput: CreateUserInput): Promise<UserModel> {
@@ -27,8 +30,10 @@ export class UsersCreateService {
 		}
 
 		{
-			const user = await new this.userEntity(createUserInput);
-			const newUser = await user.save();
+			const public_id = await this.cloudinary.uploadImage(createUserInput.avatar);
+			createUserInput.avatar = public_id;
+
+			const newUser = await new this.userEntity(createUserInput).save();
 			newUser.password = null;
 			return newUser;
 		}
