@@ -8,12 +8,12 @@ import { UserModel, UserDocument } from '../../classes/user.model';
 export class UsersDeleteService {
 	constructor (@InjectModel(UserModel.name) private userEntity: Model<UserDocument>) {}
 
-	async deleteById (_id: string): Promise<UserModel[]> {
+	async deleteById (_id: string): Promise<UserModel> {
 		const user = await this.userEntity.findByIdAndDelete(_id);
 
 		if (user === null)
 			throw new NotFoundException('This user not found or maybe deleted, please refresh your page');
 
-		return await this.userEntity.find({});
+		return user;
 	}
 }

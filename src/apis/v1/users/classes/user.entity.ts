@@ -1,4 +1,5 @@
 import { ObjectType, Field } from '@nestjs/graphql';
+import { Role } from '../../roles/classes/role.entity';
 
 @ObjectType()
 export class User {
@@ -17,7 +18,7 @@ export class User {
 	@Field(() => String)
 	displayName: string;
 
-	@Field(() => String)
+	@Field(() => Role)
 	_roleId: string;
 
 	@Field(() => String)

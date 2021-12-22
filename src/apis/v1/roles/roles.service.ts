@@ -9,6 +9,10 @@ export class RolesService {
 		return this.rolesFindService.findById(_id);
 	}
 
+	findAll () {
+		return this.rolesFindService.findAll();
+	}
+
 	findByName (roleName: string) {
 		return this.rolesFindService.findByName(roleName);
 	}

@@ -55,7 +55,7 @@ import { GraphQLError, GraphQLFormattedError } from 'graphql';
 						};
 					},
 				inject: [ ConfigService ],
-			}),
+			}),		
 		],
 	exports: [ ConfigModule, JwtModule ],
 })

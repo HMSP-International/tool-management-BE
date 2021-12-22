@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { RolesService } from '../../../roles/roles.service';
-import { Permission } from '../../classes/permission.entity';
 import { PermissionDocument, PermissionModel } from '../../classes/permission.model';
 
 @Injectable()

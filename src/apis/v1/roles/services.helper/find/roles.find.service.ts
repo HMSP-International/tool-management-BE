@@ -12,6 +12,10 @@ export class RolesFindService {
 		return await this.roleEntity.findById(_id);
 	}
 
+	async findAll (): Promise<Role[]> {
+		return await this.roleEntity.find({});
+	}
+
 	async findByName (roleName: string): Promise<Role | null> {
 		return await this.roleEntity.findOne({ name: roleName });
 	}

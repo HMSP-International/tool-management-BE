@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { User } from './classes/user.entity';
 import * as UserDto from './classes/users.dto';
@@ -69,10 +69,18 @@ export class UsersResolver {
 	}
 
 	@PERMISSIONS({ resolverName: 'deleteUser' })
-	@Mutation(() => [ User ])
-	async deleteUser (@Args('deleteUserInput') deleteUserInput: UserDto.DeleteUserInput): Promise<UserModel[]> {
+	@Mutation(() => User)
+	async deleteUser (@Args('deleteUserInput') deleteUserInput: UserDto.DeleteUserInput): Promise<UserModel> {
 		return this.usersService.deleteById(deleteUserInput._id);
 	}
 
 	// -------------------------------------- End Mutaion -------------------------------------- //
+
+	// ResolveField ---start
+
+	@ResolveField(() => User)
+	_roleId (@Parent() user: User) {
+		return this.usersService.getRole(user._roleId);
+	}
+	// ResolveField ---end
 }

@@ -6,6 +6,7 @@ import { UsersFindService } from './services.helper/find/users.find.service';
 import { UsersDeleteService } from './services.helper/delete/users.delete.service';
 import { UsersCreateService } from './services.helper/create/users.create.service';
 import { UserModel } from './classes/user.model';
+import { RoleModel } from '../roles/classes/role.model';
 
 @Injectable()
 export class UsersService {
@@ -20,7 +21,7 @@ export class UsersService {
 		return await this.usersCreateService.createUser(createUserInput);
 	}
 
-	async deleteById (_id: string): Promise<UserModel[]> {
+	async deleteById (_id: string): Promise<UserModel> {
 		return await this.usersDeleteService.deleteById(_id);
 	}
 
@@ -53,5 +54,9 @@ export class UsersService {
 		changeInformationInputByAdmin: UserDto.ChangeInformationInputByAdmin,
 	): Promise<UserModel> {
 		return await this.usersPutService.changeInformationByAdmin(_id, changeInformationInputByAdmin);
+	}
+
+	async getRole (_id: string): Promise<RoleModel> {
+		return await this.usersFindService.findRoleById(_id);
 	}
 }
