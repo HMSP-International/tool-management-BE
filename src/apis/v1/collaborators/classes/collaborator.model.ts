@@ -3,6 +3,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 import { SpaceModel } from '../../spaces/classes/space.model';
 import { UserModel } from '../../users/classes/user.model';
+import { ProjectModel } from '../../projects/classes/project.model';
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
 export type CollaboratorDocument = CollaboratorModel & mongoose.Document;
@@ -18,7 +19,7 @@ export class CollaboratorModel {
 	@Prop({ type: ObjectId, required: true, ref: UserModel.name })
 	_adminId: string;
 
-	@Prop({ type: String, default: 'MEMBER' })
+	@Prop({ type: String, default: 'member' })
 	role: string;
 
 	@Prop({ type: Boolean, default: false })

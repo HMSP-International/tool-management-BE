@@ -6,13 +6,14 @@ import * as bodyParser from 'body-parser';
 
 async function DucHuyRunning () {
 	const app = await NestFactory.create(AppModule);
-	app.use(bodyParser.json({ limit: '50mb' }));
-	app.enableCors();
-
-	app.useGlobalPipes(new ValidationPipe());
-
 	const configService: ConfigService = app.get(ConfigService);
+
 	const port = configService.get<string>('http.port');
+	const limitReq = configService.get<string>('app.limit_req');
+
+	app.use(bodyParser.json({ limit: limitReq }));
+	app.enableCors();
+	app.useGlobalPipes(new ValidationPipe());
 
 	await app.listen(port, () => {
 		console.log(`http://localhost:${port}/graphql`);

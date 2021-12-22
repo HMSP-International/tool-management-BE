@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import { ListModel } from '../../lists/classes/list.model';
+import { TimestampSchema, ITimestamp } from './timestamp';
 
 export type TaskDocument = TaskModel & mongoose.Document;
 
@@ -11,6 +12,17 @@ export class TaskModel {
 
 	@Prop({ type: mongoose.SchemaTypes.ObjectId, ref: ListModel.name, required: true })
 	_listId: string;
+
+	@Prop({ type: TimestampSchema, default: { createAt: Date.now(), updateAt: Date.now() } })
+	timestamp: ITimestamp;
 }
 
 export const TaskSchema = SchemaFactory.createForClass(TaskModel);
+
+TaskSchema.pre<TaskModel>('updateOne', function (next: Function) {
+	if (!this.timestamp.createAt) {
+		this.timestamp.updateAt = new Date();
+
+		next();
+	}
+});

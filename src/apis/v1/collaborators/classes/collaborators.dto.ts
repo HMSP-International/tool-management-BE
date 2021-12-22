@@ -1,7 +1,6 @@
 import { InputType, Field } from '@nestjs/graphql';
 import { Type } from 'class-transformer';
 import { IsString, IsEnum, IsArray } from 'class-validator';
-import { ROLE } from '../../../../common/decorator/permissions.decorator';
 
 @InputType()
 export class InviteSpaceInput {
@@ -13,8 +12,8 @@ export class InviteSpaceInput {
 	@Field(() => String)
 	_memberId: string;
 
-	@IsEnum(ROLE, { message: 'this role only: ' + JSON.stringify(Object.values(ROLE)) })
-	@Field(() => String, { nullable: true })
+	@IsString()
+	@Field(() => String)
 	role: string;
 }
 

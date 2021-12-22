@@ -5,11 +5,10 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CollaboratorDocument, CollaboratorModel } from '../../classes/collaborator.model';
 // helpers
-import { SendersService } from '../../../../../helpers/modules/senders/senders.service';
+// import { SendersService } from '../../../../../helpers/modules/senders/senders.service';
 import { IPayLoadToken } from '../../../../../helpers/modules/token/token.interface';
 // classes
 import * as CollaboratorDTO from '../../classes/collaborators.dto';
-import { Collaborator } from '../../classes/collaborator.entity';
 // services
 import { CollaboratorsFindService } from '../find/collaborators.find.service';
 import { UsersService } from '../../../users/users.service';
@@ -20,14 +19,14 @@ export class CollaboratorsInviteService {
 		@InjectModel(CollaboratorModel.name) private collaboratorEntity: Model<CollaboratorDocument>,
 		private readonly usersService: UsersService,
 		private readonly collaboratorsFindService: CollaboratorsFindService,
-		private readonly sendersService: SendersService,
+		// private readonly sendersService: SendersService,
 		private readonly jwtService: JwtService,
 	) {}
 
 	inviteSpace = async (
 		createCollaboratorInput: CollaboratorDTO.InviteSpaceInput,
 		user: IPayLoadToken,
-	): Promise<Collaborator> => {
+	): Promise<CollaboratorDocument> => {
 		try {
 			const { _workSpaceId, _memberId } = createCollaboratorInput;
 			const { _id: _adminId } = user;
@@ -50,10 +49,10 @@ export class CollaboratorsInviteService {
 				collaborator = await newCollaborator.save();
 			}
 
-			await this.sendersService.sendInviteSpaceByGrid({
-				email: member.email,
-				token: this.jwtService.sign({ _id: collaborator._id }),
-			});
+			// await this.sendersService.sendInviteSpaceByGrid({
+			// 	email: member.email,
+			// 	token: this.jwtService.sign({ _id: collaborator._id }),
+			// });
 
 			return collaborator;
 		} catch (error) {
@@ -61,7 +60,7 @@ export class CollaboratorsInviteService {
 		}
 	};
 
-	verifyInviteSpace = async (token: CollaboratorDTO.VerifyInviteSpaceInput): Promise<Collaborator> => {
+	verifyInviteSpace = async (token: CollaboratorDTO.VerifyInviteSpaceInput): Promise<CollaboratorDocument> => {
 		const decoded = await this.jwtService.verify(token.jwt);
 		const { _id } = decoded;
 
@@ -78,7 +77,7 @@ export class CollaboratorsInviteService {
 	async putInvitedSpaces (
 		user: IPayLoadToken,
 		putInvitedSpaceInput: CollaboratorDTO.PutInvitedSpaceInput,
-	): Promise<Collaborator[]> {
+	): Promise<CollaboratorDocument[]> {
 		const { _workSpaceId, _memberIds } = putInvitedSpaceInput;
 
 		await this.collaboratorEntity.deleteMany({ _workSpaceId, _adminId: user._id }); // deleteByWorkSpaceId

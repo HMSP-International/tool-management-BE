@@ -19,3 +19,6 @@ sendGrid:
 
 FE:
   host: 'http://localhost:3000'
+
+app:
+  limit_req: 10mb

@@ -6,7 +6,6 @@ import { CurrentUser } from '../../../common/decorator/CurrentUser.decorator';
 import { IPayLoadToken } from '../../../helpers/modules/token/token.interface';
 import { Space } from '../spaces/classes/space.entity';
 import { User } from '../users/classes/user.entity';
-import { UserModel } from '../users/classes/user.model';
 
 @Resolver(() => Collaborator)
 export class CollaboratorsResolver {
@@ -17,19 +16,17 @@ export class CollaboratorsResolver {
 	inviteSpace (
 		@Args('inviteSpaceInput') createCollaboratorInput: CollaboratorDTO.InviteSpaceInput,
 		@CurrentUser() user: IPayLoadToken,
-	): Promise<Collaborator> {
+	) {
 		return this.collaboratorsService.inviteSpace(createCollaboratorInput, user);
 	}
 
 	@Mutation(() => Collaborator)
-	verifyInviteSpace (
-		@Args('verifyInviteSpaceInput') verifyInviteSpaceInput: CollaboratorDTO.VerifyInviteSpaceInput,
-	): Promise<Collaborator> {
+	verifyInviteSpace (@Args('verifyInviteSpaceInput') verifyInviteSpaceInput: CollaboratorDTO.VerifyInviteSpaceInput) {
 		return this.collaboratorsService.verifyInviteSpace(verifyInviteSpaceInput);
 	}
 
 	@Query(() => [ Collaborator ])
-	getInvitedSpaces (@CurrentUser() user: IPayLoadToken): Promise<Collaborator[]> {
+	getInvitedSpaces (@CurrentUser() user: IPayLoadToken) {
 		return this.collaboratorsService.findInvitedSpaces(user);
 	}
 
@@ -37,26 +34,25 @@ export class CollaboratorsResolver {
 	putInvitedSpaces (
 		@CurrentUser() user: IPayLoadToken,
 		@Args('putInvitedSpaceInput') putInvitedSpaceInput: CollaboratorDTO.PutInvitedSpaceInput,
-	): Promise<Collaborator[]> {
+	) {
 		return this.collaboratorsService.putInvitedSpaces(user, putInvitedSpaceInput);
 	}
 
 	@Mutation(() => [ Collaborator ])
-	findUsersBySpaceId (
-		@Args('findUsersBySpaceId') findUsersBySpaceId: CollaboratorDTO.FindUsersBySpaceId,
-	): Promise<Collaborator[]> {
+	findUsersBySpaceId (@Args('findUsersBySpaceId') findUsersBySpaceId: CollaboratorDTO.FindUsersBySpaceId) {
 		return this.collaboratorsService.findUsersBySpaceId(findUsersBySpaceId._spaceId);
 	}
+
 	// Mutation ---end
 
 	// ResolveField ---start
 	@ResolveField(() => Space)
-	_workSpaceId (@Parent() collaborator: Collaborator): Promise<Space> {
+	_workSpaceId (@Parent() collaborator: Collaborator) {
 		return this.collaboratorsService.getSpace(collaborator._workSpaceId);
 	}
 
 	@ResolveField(() => User)
-	_memberId (@Parent() collaborator: Collaborator): Promise<UserModel> {
+	_memberId (@Parent() collaborator: Collaborator) {
 		return this.collaboratorsService.getUser(collaborator._memberId);
 	}
 	// ResolveField ---end
