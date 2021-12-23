@@ -1,26 +1,31 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePaticipantInput } from './dto/create-paticipant.input';
-import { UpdatePaticipantInput } from './dto/update-paticipant.input';
+import * as PaticipantDTO from './classes/paticipants.dto';
+import { Args } from '@nestjs/graphql';
+import { PaticipantsCreateService } from './services.helper/create/paticipants.create.service';
+import { PaticipantsFindService } from './services.helper/find/paticipants.find.service';
+import { PaticipantsResolverFieldService } from './services.helper/resolveField/paticipants.resolveField.service';
 
 @Injectable()
 export class PaticipantsService {
-  create(createPaticipantInput: CreatePaticipantInput) {
-    return 'This action adds a new paticipant';
-  }
+	constructor (
+		private readonly paticipantsCreateService: PaticipantsCreateService,
+		private readonly paticipantsFindService: PaticipantsFindService,
+		private readonly paticipantsResolveFieldService: PaticipantsResolverFieldService,
+	) {}
 
-  findAll() {
-    return `This action returns all paticipants`;
-  }
+	createPaticipant (@Args('createPaticipantInput') data: PaticipantDTO.CreatePaticipantInput, _ownerId: string) {
+		return this.paticipantsCreateService.create(data, _ownerId);
+	}
 
-  findOne(id: number) {
-    return `This action returns a #${id} paticipant`;
-  }
+	getProjectsBySpacesAndMember (projectsBySpacesAndMemberInput: PaticipantDTO.ProjectsBySpacesAndMemberInput) {
+		return this.paticipantsFindService.getProjectsBySpacesAndMember(projectsBySpacesAndMemberInput);
+	}
 
-  update(id: number, updatePaticipantInput: UpdatePaticipantInput) {
-    return `This action updates a #${id} paticipant`;
-  }
+	getCollaborator (_id: string) {
+		return this.paticipantsResolveFieldService.getCollaborator(_id);
+	}
 
-  remove(id: number) {
-    return `This action removes a #${id} paticipant`;
-  }
+	getProject (_id: string) {
+		return this.paticipantsResolveFieldService.getProject(_id);
+	}
 }

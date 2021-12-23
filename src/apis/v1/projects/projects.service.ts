@@ -24,6 +24,10 @@ export class ProjectsService {
 		return await this.projectsFindService.findById(_id);
 	}
 
+	async findByListId (_ids: string[]) {
+		return await this.projectsFindService.findByListId(_ids);
+	}
+
 	async findAllByCollaborator (getProjectsInput: ProjectDTO.GetProjectsInput): Promise<Project[]> {
 		return await this.projectsFindService.findAllByCollaborator(getProjectsInput);
 	}

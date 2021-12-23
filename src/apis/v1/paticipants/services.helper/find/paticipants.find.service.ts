@@ -1,0 +1,44 @@
+import { Injectable } from '@nestjs/common';
+// classes
+import * as PaticipantDTO from '../../classes/paticipants.dto';
+import { CollaboratorsService } from '../../../collaborators/collaborators.service';
+// mongoose
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import { PaticipantDocument, PaticipantModel } from '../../classes/paticipant.model';
+import { ProjectsService } from '../../../projects/projects.service';
+
+@Injectable()
+export class PaticipantsFindService {
+	constructor (
+		@InjectModel(PaticipantModel.name) private paticipantEntity: Model<PaticipantDocument>,
+		private readonly collaboratorsService: CollaboratorsService,
+		private readonly projectsService: ProjectsService,
+	) {}
+
+	async getProjectsBySpacesAndMember ({ _spaceIds, _memberId }: PaticipantDTO.ProjectsBySpacesAndMemberInput) {
+		// get _collaboratorId
+		const collaborators = await this.collaboratorsService.findByMemberIdAndSpaceId({
+			_spaceIds,
+			_memberId,
+		});
+
+		// get list paticipant
+		const paticipantsPromise = [];
+		for (let coll of collaborators) {
+			const paticipant = this.paticipantEntity.findOne({ _collaboratorId: coll._id });
+
+			paticipantsPromise.push(paticipant);
+		}
+		const paticipants = await Promise.all(paticipantsPromise);
+
+		// get list projectId
+		const projectIds: string[] = paticipants.filter(p => p !== null).map(p => p._projectId);
+
+		// get list project
+		const x = await this.projectsService.findByListId(projectIds);
+		console.log(x);
+
+		return [];
+	}
+}

@@ -25,6 +25,12 @@ export class ProjectsFindService {
 		return project;
 	}
 
+	async findByListId (_ids: string[]): Promise<Project[]> {
+		const projects = await this.projectEntity.find({ _id: _ids });
+
+		return projects;
+	}
+
 	async findAllByCollaborator (getProjectsInput: ProjectDTO.GetProjectsInput): Promise<Project[]> {
 		const projects = await this.projectEntity.find({ _spaceId: getProjectsInput._spacesId }).sort('_spaceId order');
 

@@ -1,35 +1,41 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql';
+import { Paticipant } from './classes/paticipant.entity';
 import { PaticipantsService } from './paticipants.service';
-import { Paticipant } from './entities/paticipant.entity';
-import { CreatePaticipantInput } from './dto/create-paticipant.input';
-import { UpdatePaticipantInput } from './dto/update-paticipant.input';
+import { IPayLoadToken } from '../../../helpers/modules/token/token.interface';
+import { CurrentUser } from '../../../common/decorator/CurrentUser.decorator';
+import * as PaticipantDTO from './classes/paticipants.dto';
+import { Collaborator } from '../collaborators/classes/collaborator.entity';
+import { Project } from '../projects/classes/project.entity';
 
 @Resolver(() => Paticipant)
 export class PaticipantsResolver {
-  constructor(private readonly paticipantsService: PaticipantsService) {}
+	constructor (private readonly paticipantsService: PaticipantsService) {}
 
-  @Mutation(() => Paticipant)
-  createPaticipant(@Args('createPaticipantInput') createPaticipantInput: CreatePaticipantInput) {
-    return this.paticipantsService.create(createPaticipantInput);
-  }
+	@Mutation(() => Paticipant)
+	createPaticipant (
+		@CurrentUser() user: IPayLoadToken,
+		@Args('createPaticipantInput') createPaticipantInput: PaticipantDTO.CreatePaticipantInput,
+	) {
+		return this.paticipantsService.createPaticipant(createPaticipantInput, user._id);
+	}
 
-  @Query(() => [Paticipant], { name: 'paticipants' })
-  findAll() {
-    return this.paticipantsService.findAll();
-  }
+	@Mutation(() => [ Project ])
+	getProjectsBySpacesAndMember (
+		@CurrentUser() user: IPayLoadToken,
+		@Args('projectsBySpacesAndMemberInput')
+		projectsBySpacesAndMemberInput: PaticipantDTO.ProjectsBySpacesAndMemberInput,
+	) {
+		this.paticipantsService.getProjectsBySpacesAndMember(projectsBySpacesAndMemberInput);
+		return [];
+	}
 
-  @Query(() => Paticipant, { name: 'paticipant' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.paticipantsService.findOne(id);
-  }
+	@ResolveField(() => Collaborator)
+	_collaboratorId (@Parent() paticipant: Paticipant) {
+		return this.paticipantsService.getCollaborator(paticipant._collaboratorId);
+	}
 
-  @Mutation(() => Paticipant)
-  updatePaticipant(@Args('updatePaticipantInput') updatePaticipantInput: UpdatePaticipantInput) {
-    return this.paticipantsService.update(updatePaticipantInput.id, updatePaticipantInput);
-  }
-
-  @Mutation(() => Paticipant)
-  removePaticipant(@Args('id', { type: () => Int }) id: number) {
-    return this.paticipantsService.remove(id);
-  }
+	@ResolveField(() => Project)
+	_projectId (@Parent() paticipant: Paticipant) {
+		return this.paticipantsService.getProject(paticipant._projectId);
+	}
 }

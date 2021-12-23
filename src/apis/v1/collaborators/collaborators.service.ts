@@ -3,7 +3,11 @@ import { IPayLoadToken } from '../../../helpers/modules/token/token.interface';
 import { Collaborator } from './classes/collaborator.entity';
 import * as CollaboratorDTO from './classes/collaborators.dto';
 import { CollaboratorsResolverFieldService } from './services.helper/resolveField/collaborators.resolveField.service';
-import { CollaboratorsFindService } from './services.helper/find/collaborators.find.service';
+import {
+	CollaboratorsFindService,
+	IMemberIdAndSpaceId,
+	IMemberIdAndSpaceIdAndAdminId,
+} from './services.helper/find/collaborators.find.service';
 import { CollaboratorsInviteService } from './services.helper/invite/collaborators.invite.service';
 
 @Injectable()
@@ -29,6 +33,14 @@ export class CollaboratorsService {
 	findInvitedSpaces (user: IPayLoadToken) {
 		return this.collaboratorsFindService.findInvitedSpaces(user);
 	}
+
+	findByMemberIdAndSpaceIdAndOwnerId = async (data: IMemberIdAndSpaceIdAndAdminId) => {
+		return this.collaboratorsFindService.findByMemberIdAndSpaceIdAndOwnerId(data);
+	};
+
+	findByMemberIdAndSpaceId = async (data: IMemberIdAndSpaceId) => {
+		return  this.collaboratorsFindService.findByMemberIdAndSpaceId(data);
+	};
 
 	inviteSpace = async (createCollaboratorInput: CollaboratorDTO.InviteSpaceInput, user: IPayLoadToken) => {
 		return this.collaboratorsInviteService.inviteSpace(createCollaboratorInput, user);

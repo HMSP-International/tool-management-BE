@@ -6,9 +6,14 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { CollaboratorDocument, CollaboratorModel } from '../../classes/collaborator.model';
 // interfaces
-interface IMemberIdAndSpaceIdAndAdminId {
+export interface IMemberIdAndSpaceIdAndAdminId {
 	_spaceId: string;
 	_adminId: string;
+	_memberId: string;
+}
+
+export interface IMemberIdAndSpaceId {
+	_spaceIds: string[];
 	_memberId: string;
 }
 
@@ -42,11 +47,26 @@ export class CollaboratorsFindService {
 		return collaborators;
 	}
 
-	findByMemberIdAndSpaceIdAndAdminId = async (
+	findByMemberIdAndSpaceIdAndOwnerId = async (
 		data: IMemberIdAndSpaceIdAndAdminId,
 	): Promise<CollaboratorDocument | null> => {
 		const collaborator = await this.collaboratorEntity.findOne(data);
 
 		return collaborator;
+	};
+
+	findByMemberIdAndSpaceId = async ({
+		_spaceIds,
+		_memberId,
+	}: IMemberIdAndSpaceId): Promise<CollaboratorDocument[]> => {
+		const collaborators = [];
+
+		for (let _workSpaceId of _spaceIds) {
+			const collaborator = this.collaboratorEntity.findOne({ _workSpaceId, _memberId });
+
+			collaborators.push(collaborator);
+		}
+
+		return await Promise.all(collaborators);
 	};
 }

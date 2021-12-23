@@ -1,5 +1,4 @@
 import { ObjectType, Field } from '@nestjs/graphql';
-import { Project } from '../../projects/classes/project.entity';
 import { Space } from '../../spaces/classes/space.entity';
 import { User } from '../../users/classes/user.entity';
 
@@ -22,7 +21,4 @@ export class Collaborator {
 
 	@Field(() => Boolean)
 	confirmEmail: boolean;
-
-	@Field(() => [ Project ])
-	projects: string[];
 }
