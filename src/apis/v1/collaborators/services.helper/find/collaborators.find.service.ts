@@ -7,7 +7,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { CollaboratorDocument, CollaboratorModel } from '../../classes/collaborator.model';
 // interfaces
 export interface IMemberIdAndSpaceIdAndAdminId {
-	_spaceId: string;
+	_workSpaceId: string;
 	_adminId: string;
 	_memberId: string;
 }

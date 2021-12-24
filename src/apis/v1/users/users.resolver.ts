@@ -23,7 +23,7 @@ export class UsersResolver {
 	// ---------------------------------------- Mutaion ---------------------------------------- //
 	@PERMISSIONS({ resolverName: 'getUsers' })
 	@Mutation(() => [ User ])
-	async getUsers (): Promise<UserModel[]> {
+	async getUsers () {
 		return this.usersService.findAll();
 	}
 
@@ -37,7 +37,7 @@ export class UsersResolver {
 	async chagePassword (
 		@CurrentUser() user: IPayLoadToken,
 		@Args('changePasswordInput') changePasswordInput: UserDto.ChangePasswordInput,
-	): Promise<UserModel> {
+	) {
 		return this.usersService.changePassword(user._id, changePasswordInput);
 	}
 
@@ -45,7 +45,7 @@ export class UsersResolver {
 	@Mutation(() => User)
 	async chagePasswordByAdmin (
 		@Args('changePasswordInputByAdmin') changePasswordInputByAdmin: UserDto.ChangePasswordInputByAdmin,
-	): Promise<UserModel> {
+	) {
 		return this.usersService.changePasswordByAdmin(changePasswordInputByAdmin);
 	}
 
@@ -53,7 +53,7 @@ export class UsersResolver {
 	async chageInformation (
 		@CurrentUser() user: IPayLoadToken,
 		@Args('changeInformationInput') changeInformationInput: UserDto.ChangeInformationInput,
-	): Promise<UserModel> {
+	) {
 		return this.usersService.changeInformation(user._id, changeInformationInput);
 	}
 
@@ -61,7 +61,7 @@ export class UsersResolver {
 	@Mutation(() => User)
 	async chageInformationByAdmin (
 		@Args('changeInformationInputByAdmin') changeInformationInputByAdmin: UserDto.ChangeInformationInputByAdmin,
-	): Promise<UserModel> {
+	) {
 		return this.usersService.changeInformationByAdmin(
 			changeInformationInputByAdmin._id,
 			changeInformationInputByAdmin,
@@ -70,7 +70,7 @@ export class UsersResolver {
 
 	@PERMISSIONS({ resolverName: 'deleteUser' })
 	@Mutation(() => User)
-	async deleteUser (@Args('deleteUserInput') deleteUserInput: UserDto.DeleteUserInput): Promise<UserModel> {
+	async deleteUser (@Args('deleteUserInput') deleteUserInput: UserDto.DeleteUserInput) {
 		return this.usersService.deleteById(deleteUserInput._id);
 	}
 

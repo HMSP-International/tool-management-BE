@@ -16,7 +16,10 @@ export class PaticipantsFindService {
 		private readonly projectsService: ProjectsService,
 	) {}
 
-	async getProjectsBySpacesAndMember ({ _spaceIds, _memberId }: PaticipantDTO.ProjectsBySpacesAndMemberInput) {
+	async getProjectsBySpacesAndMember (
+		{ _spaceIds }: PaticipantDTO.ProjectsBySpacesAndMemberInput,
+		_memberId: string,
+	) {
 		// get _collaboratorId
 		const collaborators = await this.collaboratorsService.findByMemberIdAndSpaceId({
 			_spaceIds,
@@ -36,9 +39,12 @@ export class PaticipantsFindService {
 		const projectIds: string[] = paticipants.filter(p => p !== null).map(p => p._projectId);
 
 		// get list project
-		const x = await this.projectsService.findByListId(projectIds);
-		console.log(x);
+		const projectList = await this.projectsService.findByListId(projectIds);
 
-		return [];
+		return projectList;
+	}
+
+	async getUsersBelongProject ({ _projectId }: PaticipantDTO.GetUsersBelongProjectInput): Promise<PaticipantDocument[]> {
+		return await this.paticipantEntity.find({ _projectId });
 	}
 }

@@ -1,36 +1,47 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { ProjectsService } from '../../../projects/projects.service';
 import { Model } from 'mongoose';
 import { CollaboratorsService } from '../../../collaborators/collaborators.service';
 import { PaticipantDocument, PaticipantModel } from '../../classes/paticipant.model';
 import * as PaticipantDTO from '../../classes/paticipants.dto';
+import { IPayLoadToken } from 'helpers/modules/token/token.interface';
+import { CollaboratorDocument } from '../../../collaborators/classes/collaborator.model';
+import { UsersService } from '../../../users/users.service';
+import { UserDocument } from '../../../users/classes/user.model';
 
 @Injectable()
 export class PaticipantsCreateService {
 	constructor (
 		@InjectModel(PaticipantModel.name) private paticipantEntity: Model<PaticipantDocument>,
+		private readonly projectsService: ProjectsService,
 		private readonly collaboratorsService: CollaboratorsService,
+		private readonly usersService: UsersService,
 	) {}
 
-	async create (data: PaticipantDTO.CreatePaticipantInput, _adminId: string): Promise<PaticipantDocument> {
-		const { _memberId, _projectId, _spaceId, role } = data;
+	async create (data: PaticipantDTO.CreatePaticipantInput, user: IPayLoadToken): Promise<UserDocument> {
+		const { _memberId, _projectId, role } = data;
+		const { _id: _adminId } = user;
 
-		const collaborator = await this.collaboratorsService.findByMemberIdAndSpaceIdAndOwnerId({
-			_spaceId,
+		const project = await this.projectsService.findById(_projectId);
+		const _workSpaceId = project._spaceId;
+
+		let collaborator: CollaboratorDocument = await this.collaboratorsService.findByMemberIdAndSpaceIdAndOwnerId({
 			_memberId,
 			_adminId,
+			_workSpaceId,
 		});
 
 		if (collaborator === null) {
-			throw new HttpException('Can not create', HttpStatus.BAD_REQUEST);
+			collaborator = await this.collaboratorsService.inviteSpace({ _workSpaceId, _memberId, role }, user);
 		}
 
 		const paticipant = await this.paticipantEntity.findOne({ _projectId, role, _collaboratorId: collaborator._id });
 
 		if (paticipant === null) {
-			return await new this.paticipantEntity({ _projectId, role, _collaboratorId: collaborator._id }).save();
+			await new this.paticipantEntity({ _projectId, role, _collaboratorId: collaborator._id }).save();
 		}
 
-		return paticipant;
+		return this.usersService.findById(_adminId);
 	}
 }

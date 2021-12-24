@@ -9,13 +9,13 @@ import { ProjectModel, ProjectDocument } from '../../classes/project.model';
 export class ProjectsFindService {
 	constructor (@InjectModel(ProjectModel.name) private projectEntity: Model<ProjectDocument>) {}
 
-	async findAll (_spacesId: string[], _userId: string): Promise<Project[]> {
+	async findAll (_spacesId: string[], _userId: string): Promise<ProjectDocument[]> {
 		const projects = await this.projectEntity.find({ _spaceId: _spacesId, owner: _userId }).sort('_spaceId order');
 
 		return projects;
 	}
 
-	async findById (_id: string): Promise<Project> {
+	async findById (_id: string): Promise<ProjectDocument> {
 		const project = await this.projectEntity.findById(_id);
 
 		if (project === null) {
@@ -25,13 +25,13 @@ export class ProjectsFindService {
 		return project;
 	}
 
-	async findByListId (_ids: string[]): Promise<Project[]> {
+	async findByListId (_ids: string[]): Promise<ProjectDocument[]> {
 		const projects = await this.projectEntity.find({ _id: _ids });
 
 		return projects;
 	}
 
-	async findAllByCollaborator (getProjectsInput: ProjectDTO.GetProjectsInput): Promise<Project[]> {
+	async findAllByCollaborator (getProjectsInput: ProjectDTO.GetProjectsInput): Promise<ProjectDocument[]> {
 		const projects = await this.projectEntity.find({ _spaceId: getProjectsInput._spacesId }).sort('_spaceId order');
 
 		return projects;

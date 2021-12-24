@@ -8,15 +8,15 @@ import { RoleDocument, RoleModel } from '../../classes/role.model';
 export class RolesFindService {
 	constructor (@InjectModel(RoleModel.name) private roleEntity: Model<RoleDocument>) {}
 
-	async findById (_id: string): Promise<Role | null> {
+	async findById (_id: string): Promise<RoleDocument | null> {
 		return await this.roleEntity.findById(_id);
 	}
 
-	async findAll (): Promise<Role[]> {
+	async findAll (): Promise<RoleDocument[]> {
 		return await this.roleEntity.find({});
 	}
 
-	async findByName (roleName: string): Promise<Role | null> {
+	async findByName (roleName: string): Promise<RoleDocument | null> {
 		return await this.roleEntity.findOne({ name: roleName });
 	}
 }

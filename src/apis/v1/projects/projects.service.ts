@@ -16,11 +16,11 @@ export class ProjectsService {
 		private readonly projectsFindService: ProjectsFindService,
 	) {}
 
-	async findAll (_spacesId: string[], _userId: string): Promise<Project[]> {
+	async findAll (_spacesId: string[], _userId: string) {
 		return await this.projectsFindService.findAll(_spacesId, _userId);
 	}
 
-	async findById (_id: string): Promise<Project> {
+	async findById (_id: string) {
 		return await this.projectsFindService.findById(_id);
 	}
 
@@ -28,15 +28,15 @@ export class ProjectsService {
 		return await this.projectsFindService.findByListId(_ids);
 	}
 
-	async findAllByCollaborator (getProjectsInput: ProjectDTO.GetProjectsInput): Promise<Project[]> {
+	async findAllByCollaborator (getProjectsInput: ProjectDTO.GetProjectsInput) {
 		return await this.projectsFindService.findAllByCollaborator(getProjectsInput);
 	}
 
-	async create (createSpaceInput: ProjectDTO.CreateProjectInput, user: IPayLoadToken): Promise<Project[]> {
+	async create (createSpaceInput: ProjectDTO.CreateProjectInput, user: IPayLoadToken) {
 		return await this.projectsCreateService.create(createSpaceInput, user);
 	}
 
-	async deleteProjectById (_projectId: string): Promise<Project> {
+	async deleteProjectById (_projectId: string) {
 		return await this.projectsDeleteService.deleteProjectById(_projectId);
 	}
 }

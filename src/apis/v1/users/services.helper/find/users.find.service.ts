@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { RoleDocument } from '../../../roles/classes/role.model';
 import { RolesService } from '../../../roles/roles.service';
-import { RoleModel } from '../../../roles/classes/role.model';
 import { UserModel, UserDocument } from '../../classes/user.model';
 
 @Injectable()
@@ -12,13 +12,13 @@ export class UsersFindService {
 		private rolesService: RolesService,
 	) {}
 
-	async findAll (): Promise<UserModel[]> {
+	async findAll (): Promise<UserDocument[]> {
 		const users = await this.userEntity.find().select('-password');
 		if (users.length <= 0) throw new HttpException('Not Found Any User', HttpStatus.NO_CONTENT);
 		return users;
 	}
 
-	async findById (_id: string, getPassword: Boolean = false): Promise<UserModel | null> {
+	async findById (_id: string, getPassword: Boolean = false): Promise<UserDocument | null> {
 		if (getPassword === true) {
 			return await this.userEntity.findById(_id);
 		}
@@ -27,17 +27,17 @@ export class UsersFindService {
 		}
 	}
 
-	async findByEmail (email: string): Promise<UserModel | null> {
+	async findByEmail (email: string): Promise<UserDocument | null> {
 		const user = await this.userEntity.findOne({ email }).populate('_roleId');
 
 		return user;
 	}
 
-	async findRoleById (_id: string): Promise<RoleModel> {
-		const user = await this.rolesService.findById(_id);
+	async findRoleById (_id: string): Promise<RoleDocument> {
+		const role = await this.rolesService.findById(_id);
 
-		if (!user) throw new HttpException('Not Found role', HttpStatus.NO_CONTENT);
+		if (!role) throw new HttpException('Not Found role', HttpStatus.NO_CONTENT);
 
-		return user;
+		return role;
 	}
 }

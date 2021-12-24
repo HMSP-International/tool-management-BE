@@ -6,17 +6,26 @@ import { CurrentUser } from '../../../common/decorator/CurrentUser.decorator';
 import * as PaticipantDTO from './classes/paticipants.dto';
 import { Collaborator } from '../collaborators/classes/collaborator.entity';
 import { Project } from '../projects/classes/project.entity';
+import { User } from '../users/classes/user.entity';
 
 @Resolver(() => Paticipant)
 export class PaticipantsResolver {
 	constructor (private readonly paticipantsService: PaticipantsService) {}
 
-	@Mutation(() => Paticipant)
+	@Mutation(() => User)
 	createPaticipant (
 		@CurrentUser() user: IPayLoadToken,
 		@Args('createPaticipantInput') createPaticipantInput: PaticipantDTO.CreatePaticipantInput,
 	) {
-		return this.paticipantsService.createPaticipant(createPaticipantInput, user._id);
+		return this.paticipantsService.createPaticipant(createPaticipantInput, user);
+	}
+
+	@Mutation(() => Paticipant)
+	deletePaticipant (
+		@CurrentUser() user: IPayLoadToken,
+		@Args('deletePaticipantInput') deletePaticipantInput: PaticipantDTO.DeletePaticipantInput,
+	) {
+		return this.paticipantsService.deletePaticipant(deletePaticipantInput, user);
 	}
 
 	@Mutation(() => [ Project ])
@@ -25,8 +34,14 @@ export class PaticipantsResolver {
 		@Args('projectsBySpacesAndMemberInput')
 		projectsBySpacesAndMemberInput: PaticipantDTO.ProjectsBySpacesAndMemberInput,
 	) {
-		this.paticipantsService.getProjectsBySpacesAndMember(projectsBySpacesAndMemberInput);
-		return [];
+		return this.paticipantsService.getProjectsBySpacesAndMember(projectsBySpacesAndMemberInput, user._id);
+	}
+
+	@Mutation(() => [ Paticipant ])
+	getUsersBelongProject (
+		@Args('getUsersBelongProjectInput') getUsersBelongProjectInput: PaticipantDTO.GetUsersBelongProjectInput,
+	) {
+		return this.paticipantsService.getUsersBelongSpace(getUsersBelongProjectInput);
 	}
 
 	@ResolveField(() => Collaborator)

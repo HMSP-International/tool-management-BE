@@ -13,19 +13,17 @@ export class ProjectsResolver {
 	async getProjects (
 		@CurrentUser() user: IPayLoadToken,
 		@Args('getProjectsInput') getProjectsInput: ProjectDTO.GetProjectsInput,
-	): Promise<Project[]> {
+	) {
 		return this.projectsService.findAll(getProjectsInput._spacesId, user._id);
 	}
 
 	@Query(() => Project)
-	async getProject (@Args('getProjectInput') getProjectInput: ProjectDTO.GetProjectInput): Promise<Project> {
+	async getProject (@Args('getProjectInput') getProjectInput: ProjectDTO.GetProjectInput) {
 		return this.projectsService.findById(getProjectInput._projectId);
 	}
 
 	@Mutation(() => [ Project ])
-	async getProjectsByCollaborator (
-		@Args('getProjectsInput') getProjectsInput: ProjectDTO.GetProjectsInput,
-	): Promise<Project[]> {
+	async getProjectsByCollaborator (@Args('getProjectsInput') getProjectsInput: ProjectDTO.GetProjectsInput) {
 		return this.projectsService.findAllByCollaborator(getProjectsInput);
 	}
 
@@ -33,7 +31,7 @@ export class ProjectsResolver {
 	async createProject (
 		@CurrentUser() user: IPayLoadToken,
 		@Args('createProjectInput') createSpaceInput: ProjectDTO.CreateProjectInput,
-	): Promise<Project[]> {
+	) {
 		return this.projectsService.create(createSpaceInput, user);
 	}
 
