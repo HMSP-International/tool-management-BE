@@ -10,7 +10,7 @@ import { CollaboratorModel, CollaboratorSchema } from '../../classes/collaborato
 // Module
 import { UsersModule } from '../../../users/users.module';
 // services
-import { CollaboratorsInviteService } from './collaborators.invite.service';
+import { CollaboratorsCreateService } from './collaborators.create.service';
 
 @Module({
 	imports:
@@ -31,7 +31,7 @@ import { CollaboratorsInviteService } from './collaborators.invite.service';
 				inject: [ ConfigService ],
 			}),
 		],
-	providers: [ CollaboratorsInviteService ],
-	exports: [ CollaboratorsInviteService ],
+	providers: [ CollaboratorsCreateService ],
+	exports: [ CollaboratorsCreateService ],
 })
-export class CollaboratorsInviteModule {}
+export class CollaboratorsCreateModule {}

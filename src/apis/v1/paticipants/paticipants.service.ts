@@ -24,6 +24,10 @@ export class PaticipantsService {
 		return this.paticipantsDeleteService.delete(data, user);
 	}
 
+	findByProjectAndDelete (_projectId: string) {
+		return this.paticipantsDeleteService.findByProjectAndDelete(_projectId);
+	}
+
 	getProjectsBySpacesAndMember (
 		projectsBySpacesAndMemberInput: PaticipantDTO.ProjectsBySpacesAndMemberInput,
 		_memberId: string,

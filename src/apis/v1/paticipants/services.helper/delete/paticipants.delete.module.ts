@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ProjectsModule } from '../../../projects/projects.module';
 import { CollaboratorsModule } from '../../../collaborators/collaborators.module';
@@ -9,8 +9,8 @@ import { PaticipantsDeleteService } from './paticipants.delete.service';
 	imports:
 		[
 			MongooseModule.forFeature([ { name: PaticipantModel.name, schema: PaticipantSchema } ]),
-			CollaboratorsModule,
-			ProjectsModule,
+			forwardRef(() => CollaboratorsModule),
+			forwardRef(() => ProjectsModule),
 		],
 	providers: [ PaticipantsDeleteService ],
 	exports: [ PaticipantsDeleteService ],

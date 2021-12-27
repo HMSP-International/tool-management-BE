@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Inject, forwardRef } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { PaticipantDocument, PaticipantModel } from '../../classes/paticipant.model';
@@ -11,7 +11,9 @@ import { ProjectsService } from '../../../projects/projects.service';
 export class PaticipantsDeleteService {
 	constructor (
 		@InjectModel(PaticipantModel.name) private paticipantEntity: Model<PaticipantDocument>,
+		@Inject(forwardRef(() => CollaboratorsService))
 		private readonly collaboratorsService: CollaboratorsService,
+		@Inject(forwardRef(() => ProjectsService))
 		private readonly projectsService: ProjectsService,
 	) {}
 
@@ -35,5 +37,9 @@ export class PaticipantsDeleteService {
 		}
 
 		return await this.paticipantEntity.findByIdAndDelete(paticipant._id);
+	}
+
+	async findByProjectAndDelete (_projectId: string): Promise<void> {
+		await this.paticipantEntity.deleteMany({ _projectId });
 	}
 }

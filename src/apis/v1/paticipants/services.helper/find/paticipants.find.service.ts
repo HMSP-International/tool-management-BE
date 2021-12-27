@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, forwardRef, Inject } from '@nestjs/common';
 // classes
 import * as PaticipantDTO from '../../classes/paticipants.dto';
 import { CollaboratorsService } from '../../../collaborators/collaborators.service';
@@ -12,7 +12,9 @@ import { ProjectsService } from '../../../projects/projects.service';
 export class PaticipantsFindService {
 	constructor (
 		@InjectModel(PaticipantModel.name) private paticipantEntity: Model<PaticipantDocument>,
+		@Inject(forwardRef(() => CollaboratorsService))
 		private readonly collaboratorsService: CollaboratorsService,
+		@Inject(forwardRef(() => ProjectsService))
 		private readonly projectsService: ProjectsService,
 	) {}
 
@@ -44,7 +46,9 @@ export class PaticipantsFindService {
 		return projectList;
 	}
 
-	async getUsersBelongProject ({ _projectId }: PaticipantDTO.GetUsersBelongProjectInput): Promise<PaticipantDocument[]> {
+	async getUsersBelongProject ({
+		_projectId,
+	}: PaticipantDTO.GetUsersBelongProjectInput): Promise<PaticipantDocument[]> {
 		return await this.paticipantEntity.find({ _projectId });
 	}
 }

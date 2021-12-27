@@ -10,5 +10,6 @@ import { PaticipantsDeleteModule } from './services.helper/delete/paticipants.de
 	imports:
 		[ PaticipantsCreateModule, PaticipantsDeleteModule, PaticipantsFindModule, PaticipantsResolverFieldModule ],
 	providers: [ PaticipantsResolver, PaticipantsService ],
+	exports: [ PaticipantsService ],
 })
 export class PaticipantsModule {}

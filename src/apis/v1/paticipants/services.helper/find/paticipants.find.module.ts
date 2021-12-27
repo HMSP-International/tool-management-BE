@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 // mongoose
 import { MongooseModule } from '@nestjs/mongoose';
 import { PaticipantModel, PaticipantSchema } from '../../classes/paticipant.model';
@@ -12,8 +12,8 @@ import { PaticipantsFindService } from './paticipants.find.service';
 	imports:
 		[
 			MongooseModule.forFeature([ { name: PaticipantModel.name, schema: PaticipantSchema } ]),
-			CollaboratorsModule,
-			ProjectsModule,
+			forwardRef(() => CollaboratorsModule),
+			forwardRef(() => ProjectsModule),
 		],
 	providers: [ PaticipantsFindService ],
 	exports: [ PaticipantsFindService ],

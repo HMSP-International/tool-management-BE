@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, forwardRef, Inject } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { ProjectsService } from '../../../projects/projects.service';
 import { Model } from 'mongoose';
@@ -14,8 +14,11 @@ import { UserDocument } from '../../../users/classes/user.model';
 export class PaticipantsCreateService {
 	constructor (
 		@InjectModel(PaticipantModel.name) private paticipantEntity: Model<PaticipantDocument>,
+		@Inject(forwardRef(() => ProjectsService))
 		private readonly projectsService: ProjectsService,
+		@Inject(forwardRef(() => CollaboratorsService))
 		private readonly collaboratorsService: CollaboratorsService,
+		@Inject(forwardRef(() => UsersService))
 		private readonly usersService: UsersService,
 	) {}
 

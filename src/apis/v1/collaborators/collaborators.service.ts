@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { IPayLoadToken } from '../../../helpers/modules/token/token.interface';
-import { Collaborator } from './classes/collaborator.entity';
 import * as CollaboratorDTO from './classes/collaborators.dto';
 import { CollaboratorsResolverFieldService } from './services.helper/resolveField/collaborators.resolveField.service';
 import {
@@ -8,14 +7,16 @@ import {
 	IMemberIdAndSpaceId,
 	IMemberIdAndSpaceIdAndAdminId,
 } from './services.helper/find/collaborators.find.service';
-import { CollaboratorsInviteService } from './services.helper/invite/collaborators.invite.service';
+import { CollaboratorsCreateService } from './services.helper/create/collaborators.create.service';
+import { CollaboratorsDeleteService } from './services.helper/delete/collaborators.delete.service';
 
 @Injectable()
 export class CollaboratorsService {
 	constructor (
+		private collaboratorsDeleteService: CollaboratorsDeleteService,
 		private collaboratorsResolverFieldService: CollaboratorsResolverFieldService,
 		private collaboratorsFindService: CollaboratorsFindService,
-		private collaboratorsInviteService: CollaboratorsInviteService,
+		private collaboratorsInviteService: CollaboratorsCreateService,
 	) {}
 
 	async findOneByInvitedSpace (_adminId: string, _memberId: string, _workSpaceId: string) {
@@ -39,7 +40,7 @@ export class CollaboratorsService {
 	};
 
 	findByMemberIdAndSpaceId = async (data: IMemberIdAndSpaceId) => {
-		return  this.collaboratorsFindService.findByMemberIdAndSpaceId(data);
+		return this.collaboratorsFindService.findByMemberIdAndSpaceId(data);
 	};
 
 	inviteSpace = async (createCollaboratorInput: CollaboratorDTO.InviteSpaceInput, user: IPayLoadToken) => {
@@ -50,9 +51,17 @@ export class CollaboratorsService {
 		return this.collaboratorsInviteService.verifyInviteSpace(token);
 	};
 
-	async putInvitedSpaces (user: IPayLoadToken, putInvitedSpaceInput: CollaboratorDTO.PutInvitedSpaceInput) {
-		return this.collaboratorsInviteService.putInvitedSpaces(user, putInvitedSpaceInput);
-	}
+	deleteBySpaceId = (_workSpaceId: string) => {
+		return this.collaboratorsDeleteService.deleteBySpaceId(_workSpaceId);
+	};
+
+	deleteByUserAndSpace = (deleteByUserAndSpace: CollaboratorDTO.DeleteByUserAndSpaceInput, user: IPayLoadToken) => {
+		return this.collaboratorsDeleteService.deleteByUserAndSpace(deleteByUserAndSpace, user);
+	};
+
+	// async putInvitedSpaces (user: IPayLoadToken, putInvitedSpaceInput: CollaboratorDTO.PutInvitedSpaceInput) {
+	// 	return this.collaboratorsInviteService.putInvitedSpaces(user, putInvitedSpaceInput);
+	// }
 
 	getSpace (_id: string) {
 		return this.collaboratorsResolverFieldService.getSpace(_id);

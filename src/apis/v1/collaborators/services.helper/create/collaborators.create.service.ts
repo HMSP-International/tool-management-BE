@@ -14,7 +14,7 @@ import { CollaboratorsFindService } from '../find/collaborators.find.service';
 import { UsersService } from '../../../users/users.service';
 
 @Injectable()
-export class CollaboratorsInviteService {
+export class CollaboratorsCreateService {
 	constructor (
 		@InjectModel(CollaboratorModel.name) private collaboratorEntity: Model<CollaboratorDocument>,
 		private readonly usersService: UsersService,
@@ -74,18 +74,18 @@ export class CollaboratorsInviteService {
 		return await collaborator.save();
 	};
 
-	async putInvitedSpaces (
-		user: IPayLoadToken,
-		putInvitedSpaceInput: CollaboratorDTO.PutInvitedSpaceInput,
-	): Promise<CollaboratorDocument[]> {
-		const { _workSpaceId, _memberIds } = putInvitedSpaceInput;
+	// async putInvitedSpaces (
+	// 	user: IPayLoadToken,
+	// 	putInvitedSpaceInput: CollaboratorDTO.PutInvitedSpaceInput,
+	// ): Promise<CollaboratorDocument[]> {
+	// 	const { _workSpaceId, _memberIds } = putInvitedSpaceInput;
 
-		await this.collaboratorEntity.deleteMany({ _workSpaceId, _adminId: user._id }); // deleteByWorkSpaceId
+	// 	await this.collaboratorEntity.deleteMany({ _workSpaceId, _adminId: user._id }); // deleteByWorkSpaceId
 
-		for (let _memberId of _memberIds) {
-			this.inviteSpace({ _workSpaceId, _memberId, role: 'MEMBER' }, user);
-		}
+	// 	for (let _memberId of _memberIds) {
+	// 		this.inviteSpace({ _workSpaceId, _memberId, role: 'MEMBER' }, user);
+	// 	}
 
-		return await this.collaboratorEntity.find({ _adminId: user._id });
-	}
+	// 	return await this.collaboratorEntity.find({ _adminId: user._id });
+	// }
 }

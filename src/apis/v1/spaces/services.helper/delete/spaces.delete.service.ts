@@ -1,5 +1,6 @@
 import { forwardRef, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { CollaboratorsService } from '../../../collaborators/collaborators.service';
 import { Model } from 'mongoose';
 import { ProjectsService } from '../../../projects/projects.service';
 import { Space } from '../../classes/space.entity';
@@ -12,20 +13,24 @@ export class SpacesDeleteService {
 		@InjectModel(SpaceModel.name) private spaceEntity: Model<SpaceDocument>,
 		@Inject(forwardRef(() => ProjectsService))
 		private readonly projectsService: ProjectsService,
-        private readonly spacesFindService: SpacesFindService,
+		private readonly spacesFindService: SpacesFindService,
+		@Inject(forwardRef(() => CollaboratorsService))
+		private readonly collaboratorsService: CollaboratorsService,
 	) {}
 
-	async deleteSpaceById (_spaceId: string, _userId: string): Promise<Space> {
-		const space = await this.spacesFindService.findById(_spaceId);
+	async deleteSpaceById (_workSpaceId: string, _userId: string): Promise<Space> {
+		const space = await this.spacesFindService.findById(_workSpaceId);
 		if (space.owner.toString() !== _userId) {
 			throw new HttpException('This space is not your', HttpStatus.BAD_REQUEST);
 		}
 
-		const projects = await this.projectsService.findAll([ _spaceId ], _userId);
+		const projects = await this.projectsService.findAll([ _workSpaceId ], _userId);
 		if (projects.length >= 1) {
 			throw new HttpException('Please delete all project first', HttpStatus.BAD_REQUEST);
 		}
 
-		return await this.spaceEntity.findByIdAndDelete(_spaceId);
+		this.collaboratorsService.deleteBySpaceId(_workSpaceId);
+
+		return await this.spaceEntity.findByIdAndDelete(_workSpaceId);
 	}
 }

@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 // services
 import { CollaboratorsService } from '../../../collaborators/collaborators.service';
 import { ProjectsService } from '../../../projects/projects.service';
@@ -7,7 +7,9 @@ import { ProjectsService } from '../../../projects/projects.service';
 @Injectable()
 export class PaticipantsResolverFieldService {
 	constructor (
+		@Inject(forwardRef(() => CollaboratorsService))
 		private readonly collaboratorsService: CollaboratorsService,
+		@Inject(forwardRef(() => ProjectsService))
 		private readonly projectsService: ProjectsService,
 	) {}
 

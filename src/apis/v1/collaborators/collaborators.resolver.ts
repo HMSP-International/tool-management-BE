@@ -30,19 +30,26 @@ export class CollaboratorsResolver {
 		return this.collaboratorsService.findInvitedSpaces(user);
 	}
 
-	@Mutation(() => [ Collaborator ])
-	putInvitedSpaces (
-		@CurrentUser() user: IPayLoadToken,
-		@Args('putInvitedSpaceInput') putInvitedSpaceInput: CollaboratorDTO.PutInvitedSpaceInput,
-	) {
-		return this.collaboratorsService.putInvitedSpaces(user, putInvitedSpaceInput);
-	}
+	// @Mutation(() => [ Collaborator ])
+	// putInvitedSpaces (
+	// 	@CurrentUser() user: IPayLoadToken,
+	// 	@Args('putInvitedSpaceInput') putInvitedSpaceInput: CollaboratorDTO.PutInvitedSpaceInput,
+	// ) {
+	// 	return this.collaboratorsService.putInvitedSpaces(user, putInvitedSpaceInput);
+	// }
 
 	@Mutation(() => [ Collaborator ])
 	findUsersBySpaceId (@Args('findUsersBySpaceId') findUsersBySpaceId: CollaboratorDTO.FindUsersBySpaceId) {
 		return this.collaboratorsService.findUsersBySpaceId(findUsersBySpaceId._spaceId);
 	}
 
+	@Mutation(() => Collaborator)
+	deleteByUserAndSpace (
+		@CurrentUser() user: IPayLoadToken,
+		@Args('deleteByUserAndSpaceInput') deleteByUserAndSpace: CollaboratorDTO.DeleteByUserAndSpaceInput,
+	) {
+		return this.collaboratorsService.deleteByUserAndSpace(deleteByUserAndSpace, user);
+	}
 	// Mutation ---end
 
 	// ResolveField ---start

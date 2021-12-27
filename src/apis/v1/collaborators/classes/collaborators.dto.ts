@@ -40,3 +40,12 @@ export class FindUsersBySpaceId {
 	@Field(() => [ String ])
 	_spaceId: string;
 }
+
+@InputType()
+export class DeleteByUserAndSpaceInput {
+	@Field(() => String)
+	_workSpaceId: string;
+
+	@Field(() => String)
+	_memberId: string;
+}

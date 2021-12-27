@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 // modules
 import { CollaboratorsModule } from '../../../collaborators/collaborators.module';
 import { ProjectsModule } from '../../../projects/projects.module';
@@ -6,7 +6,7 @@ import { ProjectsModule } from '../../../projects/projects.module';
 import { PaticipantsResolverFieldService } from './paticipants.resolveField.service';
 
 @Module({
-	imports: [ CollaboratorsModule, ProjectsModule ],
+	imports: [ forwardRef(() => CollaboratorsModule), forwardRef(() => ProjectsModule) ],
 	providers: [ PaticipantsResolverFieldService ],
 	exports: [ PaticipantsResolverFieldService ],
 })
