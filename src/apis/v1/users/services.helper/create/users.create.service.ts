@@ -1,13 +1,12 @@
-import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { RolesService } from '../../../roles/roles.service';
 import { UserModel, UserDocument } from '../../classes/user.model';
 import { CreateUserInput } from '../../classes/users.dto';
 import { UsersFindService } from '../find/users.find.service';
-
 import { CloudinaryService } from '../../../../../helpers/modules/cloudinary/cloudinary.service';
-import { UploadApiResponse, UploadApiErrorResponse } from 'cloudinary';
+import { SendersService } from '../../../../../helpers/modules/senders/senders.service';
 
 @Injectable()
 export class UsersCreateService {
@@ -16,6 +15,7 @@ export class UsersCreateService {
 		private readonly usersFindService: UsersFindService,
 		private readonly rolesService: RolesService,
 		private readonly cloudinary: CloudinaryService,
+		private readonly sendersService: SendersService,
 	) {}
 
 	async createUser (createUserInput: CreateUserInput): Promise<UserModel> {
@@ -34,7 +34,14 @@ export class UsersCreateService {
 			createUserInput.avatar = public_id;
 
 			const newUser = await new this.userEntity(createUserInput).save();
+			// invite email
+			await this.sendersService.sendCreateUser({
+				email: newUser.email,
+				password: createUserInput.password,
+			});
+
 			newUser.password = null;
+
 			return newUser;
 		}
 	}

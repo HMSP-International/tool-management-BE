@@ -1,5 +1,5 @@
 import { MailService } from '@sendgrid/mail';
-import { ISender, ISendGridInviteSpace } from '../interfaces';
+import { ISendCreateUser, ISender, ISendGridInviteSpace } from '../interfaces';
 import { Module } from '@nestjs/common';
 
 interface IData {
@@ -88,14 +88,45 @@ export class SendGridService implements ISender {
 			const htmlMessage = `
 				Hi,<br/>
 				Click the link below to verify my invite.<br/>
-				<a href="${this.data
-					.frontendHost}/verify/inviteSpace?token=${token}">Click this link to verifyl</a><br/>
+				<a href="${this.data.frontendHost}/verify/inviteSpace?token=${token}">Click this link to verifyl</a><br/>
 				<strong>Didn't make this request?</strong><br/>
 				You can ignore this if you didn't make this request.
 			`;
 			try {
 				await this.setReceiver(email)
 					.setSubject('HMSP - Invite Verification')
+					.setHtml(htmlMessage)
+					.setText(textMessage)
+					.send();
+			} catch (error) {
+				throw new Error(error.message);
+			}
+		} catch (error) {
+			throw new Error(error.message);
+		}
+	};
+
+	createUser = async (inputSendGridInviteSpace: ISendCreateUser) => {
+		try {
+			const { password, email } = inputSendGridInviteSpace;
+
+			const textMessage = `
+				Hi ,\r\n
+				Click the link below to login:\r\n
+				Link: ${this.data.frontendHost}.\r\n\
+				Please change password when you login
+			`;
+			const htmlMessage = `
+				Hi,<br/>
+				Click the link below to login.<br/>
+				<a href="${this.data.frontendHost}">Click this link to login</a><br/>
+				<h1>email: ${email}</h1>
+				<h1>password: ${password}</h1>
+				<h3>Please change password when you login</h3>
+			`;
+			try {
+				await this.setReceiver(email)
+					.setSubject('HMSP - New Member')
 					.setHtml(htmlMessage)
 					.setText(textMessage)
 					.send();

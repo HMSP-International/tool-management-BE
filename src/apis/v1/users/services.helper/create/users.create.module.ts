@@ -5,6 +5,7 @@ import { UsersCreateService } from './users.create.service';
 import { UsersFindModule } from '../find/users.find.module';
 import { RolesModule } from '../../../roles/roles.module';
 import { CloudinaryModule } from '../../../../../helpers/modules/cloudinary/cloudinary.module';
+import { SendersModule } from '../../../../../helpers/modules/senders/senders.module';
 
 @Module({
 	imports:
@@ -13,6 +14,8 @@ import { CloudinaryModule } from '../../../../../helpers/modules/cloudinary/clou
 			UsersFindModule,
 			RolesModule,
 			CloudinaryModule,
+			SendersModule,
+		
 		],
 	providers: [ UsersCreateService ],
 	exports: [ UsersCreateService ],
