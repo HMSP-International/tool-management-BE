@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import * as PaticipantDTO from './classes/paticipants.dto';
-import { Args } from '@nestjs/graphql';
 import { PaticipantsCreateService } from './services.helper/create/paticipants.create.service';
 import { PaticipantsFindService } from './services.helper/find/paticipants.find.service';
 import { PaticipantsResolverFieldService } from './services.helper/resolveField/paticipants.resolveField.service';
 import { IPayLoadToken } from 'helpers/modules/token/token.interface';
 import { PaticipantsDeleteService } from './services.helper/delete/paticipants.delete.service';
+import { PaticipantsPutService } from './services.helper/put/paticipants.put.service';
 
 @Injectable()
 export class PaticipantsService {
@@ -13,6 +13,7 @@ export class PaticipantsService {
 		private readonly paticipantsCreateService: PaticipantsCreateService,
 		private readonly paticipantsDeleteService: PaticipantsDeleteService,
 		private readonly paticipantsFindService: PaticipantsFindService,
+		private readonly paticipantsPutService: PaticipantsPutService,
 		private readonly paticipantsResolveFieldService: PaticipantsResolverFieldService,
 	) {}
 
@@ -35,8 +36,15 @@ export class PaticipantsService {
 		return this.paticipantsFindService.getProjectsBySpacesAndMember(projectsBySpacesAndMemberInput, _memberId);
 	}
 
-	getUsersBelongSpace (getUsersBelongProjectInput: PaticipantDTO.GetUsersBelongProjectInput) {
+	getUsersBelongProject (getUsersBelongProjectInput: PaticipantDTO.GetUsersBelongProjectInput) {
 		return this.paticipantsFindService.getUsersBelongProject(getUsersBelongProjectInput);
+	}
+
+	changeRoleOfMemberOnPaticipant (
+		changeRoleOfMemberInput: PaticipantDTO.ChangeRoleOfMemberInput,
+		user: IPayLoadToken,
+	) {
+		return this.paticipantsPutService.changeRoleOfMemberOnPaticipant(changeRoleOfMemberInput, user);
 	}
 
 	getCollaborator (_id: string) {

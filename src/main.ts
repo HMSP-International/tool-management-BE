@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
 import * as bodyParser from 'body-parser';
 
-async function DucHuyRunning () {
+(async function DucHuyRunning () {
 	const app = await NestFactory.create(AppModule);
 	const configService: ConfigService = app.get(ConfigService);
 
@@ -18,6 +18,4 @@ async function DucHuyRunning () {
 	await app.listen(port, () => {
 		console.log(`http://localhost:${port}/graphql`);
 	});
-}
-
-DucHuyRunning();
+})();

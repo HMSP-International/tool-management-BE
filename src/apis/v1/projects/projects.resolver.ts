@@ -18,7 +18,7 @@ export class ProjectsResolver {
 	}
 
 	@Query(() => Project)
-	async getProject (@Args('getProjectInput') getProjectInput: ProjectDTO.GetProjectInput) {
+	async getProjectById (@Args('getProjectInput') getProjectInput: ProjectDTO.GetProjectInput) {
 		return this.projectsService.findById(getProjectInput._projectId);
 	}
 

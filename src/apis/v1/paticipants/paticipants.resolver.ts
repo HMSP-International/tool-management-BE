@@ -41,7 +41,15 @@ export class PaticipantsResolver {
 	getUsersBelongProject (
 		@Args('getUsersBelongProjectInput') getUsersBelongProjectInput: PaticipantDTO.GetUsersBelongProjectInput,
 	) {
-		return this.paticipantsService.getUsersBelongSpace(getUsersBelongProjectInput);
+		return this.paticipantsService.getUsersBelongProject(getUsersBelongProjectInput);
+	}
+
+	@Mutation(() => Paticipant)
+	changeRoleOfMemberOnPaticipant (
+		@CurrentUser() user: IPayLoadToken,
+		@Args('changeRoleOfMemberInput') changeRoleOfMemberInput: PaticipantDTO.ChangeRoleOfMemberInput,
+	) {
+		return this.paticipantsService.changeRoleOfMemberOnPaticipant(changeRoleOfMemberInput, user);
 	}
 
 	@ResolveField(() => Collaborator)

@@ -1,0 +1,19 @@
+[{
+  "_id": {
+    "$oid": "61c0251fb7ae1f8f80d7e568"
+  },
+  "name": "SUPER_ADMIN",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61c02542b7ae1f8f80d7e569"
+  },
+  "name": "ADMIN",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61c02563b7ae1f8f80d7e56a"
+  },
+  "name": "STAFF",
+  "__v": 0
+}]

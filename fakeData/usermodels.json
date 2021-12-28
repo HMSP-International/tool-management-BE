@@ -1,0 +1,16 @@
+[{
+  "_id": {
+    "$oid": "61c97ada9b22541c404e3dd7"
+  },
+  "title": "Web Dev",
+  "position": "Junior",
+  "department": "GoVap",
+  "_roleId": {
+    "$oid": "61c0251fb7ae1f8f80d7e568"
+  },
+  "displayName": "PDH",
+  "password": "$2b$10$mYTyPo6/lhZ/fud81BfJFeJ.9SefbnYm1bowxhjpMm1ois3KYhKKq",
+  "email": "phamduchuy372000h@gmail.com",
+  "avatar": "avatars/tjcano50qgmsud8tfdt3",
+  "__v": 0
+}]

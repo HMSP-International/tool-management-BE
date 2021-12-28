@@ -42,3 +42,19 @@ export class GetUsersBelongProjectInput {
 	@Field(() => String)
 	_projectId: string;
 }
+
+@InputType()
+export class ChangeRoleOfMemberInput {
+	@IsString()
+	@Field(() => String)
+	_collaboratorId: string;
+
+	@IsString()
+	@Field(() => String)
+	_projectId: string;
+
+	@IsString()
+	@IsEnum(ROLE, { message: 'only have values ​​like ' + JSON.stringify(ROLE) })
+	@Field(() => String)
+	role: string;
+}
