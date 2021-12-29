@@ -14,7 +14,7 @@ export class CollaboratorsDeleteService {
 		await this.collaboratorEntity.deleteMany({ _workSpaceId });
 	}
 
-	async deleteByUserAndSpace (
+	async deleteByMemberAndSpace (
 		{ _memberId, _workSpaceId }: CollaboratorDTO.DeleteByUserAndSpaceInput,
 		user: IPayLoadToken,
 	): Promise<CollaboratorDocument> {
@@ -26,4 +26,9 @@ export class CollaboratorsDeleteService {
 
 		return await this.collaboratorEntity.findByIdAndDelete(collaborator._id);
 	}
+
+	deleteByMemberId = async (_memberId: string): Promise<void> => {
+		const collaborators = await this.collaboratorEntity.deleteMany({ _memberId });
+		console.log('delete collaborator when delete user', collaborators);
+	};
 }

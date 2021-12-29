@@ -17,7 +17,10 @@ export class PaticipantsDeleteService {
 		private readonly projectsService: ProjectsService,
 	) {}
 
-	async delete (data: PaticipantDTO.DeletePaticipantInput, user: IPayLoadToken): Promise<PaticipantDocument> {
+	async deleteByMemberAndProject (
+		data: PaticipantDTO.DeletePaticipantInput,
+		user: IPayLoadToken,
+	): Promise<PaticipantDocument> {
 		const { _memberId, _projectId } = data;
 
 		const project = await this.projectsService.findById(_projectId);
@@ -39,7 +42,13 @@ export class PaticipantsDeleteService {
 		return await this.paticipantEntity.findByIdAndDelete(paticipant._id);
 	}
 
-	async findByProjectAndDelete (_projectId: string): Promise<void> {
+	async deleteByProjectId (_projectId: string): Promise<void> {
 		await this.paticipantEntity.deleteMany({ _projectId });
+	}
+
+	async deleteByCollboratorId (_collaboratorsId: string[]): Promise<void> {
+		const deleted = await this.paticipantEntity.deleteMany({ _collaboratorId: _collaboratorsId });
+
+		console.log('delete paticipant when delete user: ', deleted);
 	}
 }

@@ -27,6 +27,10 @@ export class CollaboratorsService {
 		return this.collaboratorsFindService.findById(_id);
 	}
 
+	async findByMemberId (_memberId: string) {
+		return this.collaboratorsFindService.findByMemberId(_memberId);
+	}
+
 	findUsersBySpaceId (_spaceId: string) {
 		return this.collaboratorsFindService.findUsersBySpaceId(_spaceId);
 	}
@@ -55,9 +59,13 @@ export class CollaboratorsService {
 		return this.collaboratorsDeleteService.deleteBySpaceId(_workSpaceId);
 	};
 
-	deleteByUserAndSpace = (deleteByUserAndSpace: CollaboratorDTO.DeleteByUserAndSpaceInput, user: IPayLoadToken) => {
-		return this.collaboratorsDeleteService.deleteByUserAndSpace(deleteByUserAndSpace, user);
+	deleteByMemberAndSpace = (deleteByUserAndSpace: CollaboratorDTO.DeleteByUserAndSpaceInput, user: IPayLoadToken) => {
+		return this.collaboratorsDeleteService.deleteByMemberAndSpace(deleteByUserAndSpace, user);
 	};
+
+	async deleteByMemberId (_memberId: string) {
+		return this.collaboratorsDeleteService.deleteByMemberId(_memberId);
+	}
 
 	// async putInvitedSpaces (user: IPayLoadToken, putInvitedSpaceInput: CollaboratorDTO.PutInvitedSpaceInput) {
 	// 	return this.collaboratorsInviteService.putInvitedSpaces(user, putInvitedSpaceInput);

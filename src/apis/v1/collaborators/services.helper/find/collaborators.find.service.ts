@@ -38,6 +38,12 @@ export class CollaboratorsFindService {
 		return collaborator;
 	};
 
+	findByMemberId = async (_memberId: string): Promise<CollaboratorDocument[]> => {
+		const collaborators = await this.collaboratorEntity.find({ _memberId });
+
+		return collaborators;
+	};
+
 	async findUsersBySpaceId (_spaceId: string): Promise<CollaboratorDocument[]> {
 		return await this.collaboratorEntity.find({ _workSpaceId: _spaceId });
 	}

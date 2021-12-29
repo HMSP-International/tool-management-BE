@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { forwardRef, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 // services
 import { UsersService } from '../../../users/users.service';
 import { SpacesService } from '../../../spaces/spaces.service';
@@ -8,7 +8,11 @@ import { UserModel } from '../../../users/classes/user.model';
 
 @Injectable()
 export class CollaboratorsResolverFieldService {
-	constructor (private usersService: UsersService, private spacesService: SpacesService) {}
+	constructor (
+		@Inject(forwardRef(() => UsersService))
+		private usersService: UsersService,
+		private spacesService: SpacesService,
+	) {}
 
 	async getSpace (_id: string): Promise<Space> {
 		return await this.spacesService.findById(_id);

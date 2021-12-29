@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -16,7 +16,7 @@ import { CollaboratorsCreateService } from './collaborators.create.service';
 	imports:
 		[
 			MongooseModule.forFeature([ { name: CollaboratorModel.name, schema: CollaboratorSchema } ]),
-			UsersModule,
+			forwardRef(() => UsersModule),
 			CollaboratorsFindModule,
 			SendersModule,
 			JwtModule.registerAsync({

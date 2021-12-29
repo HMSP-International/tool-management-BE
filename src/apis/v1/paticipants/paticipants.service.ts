@@ -21,12 +21,16 @@ export class PaticipantsService {
 		return this.paticipantsCreateService.create(data, user);
 	}
 
-	deletePaticipant (data: PaticipantDTO.DeletePaticipantInput, user: IPayLoadToken) {
-		return this.paticipantsDeleteService.delete(data, user);
+	deleteByMemberAndProject (data: PaticipantDTO.DeletePaticipantInput, user: IPayLoadToken) {
+		return this.paticipantsDeleteService.deleteByMemberAndProject(data, user);
 	}
 
-	findByProjectAndDelete (_projectId: string) {
-		return this.paticipantsDeleteService.findByProjectAndDelete(_projectId);
+	deleteByProjectId (_projectId: string) {
+		return this.paticipantsDeleteService.deleteByProjectId(_projectId);
+	}
+
+	deleteByCollboratorsId (_collaboratorsId: string[]) {
+		return this.paticipantsDeleteService.deleteByCollboratorId(_collaboratorsId);
 	}
 
 	getProjectsBySpacesAndMember (

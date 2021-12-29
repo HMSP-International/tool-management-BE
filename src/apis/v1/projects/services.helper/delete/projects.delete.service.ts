@@ -23,7 +23,7 @@ export class ProjectsDeleteService {
 		}
 
 		this.listsService.deleteByProjectId(_projectId);
-		this.paticipantsService.findByProjectAndDelete(_projectId);
+		this.paticipantsService.deleteByProjectId(_projectId);
 
 		return projectDeleted;
 	}

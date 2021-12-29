@@ -9,10 +9,10 @@ import { CollaboratorsDeleteModule } from './services.helper/delete/collaborator
 @Module({
 	imports:
 		[
-			CollaboratorsResolverFieldModule,
+			CollaboratorsCreateModule,
 			CollaboratorsDeleteModule,
 			CollaboratorsFindModule,
-			CollaboratorsCreateModule,
+			CollaboratorsResolverFieldModule,
 		],
 	providers: [ CollaboratorsResolver, CollaboratorsService ],
 	exports: [ CollaboratorsService ],

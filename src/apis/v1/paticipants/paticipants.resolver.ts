@@ -25,7 +25,7 @@ export class PaticipantsResolver {
 		@CurrentUser() user: IPayLoadToken,
 		@Args('deletePaticipantInput') deletePaticipantInput: PaticipantDTO.DeletePaticipantInput,
 	) {
-		return this.paticipantsService.deletePaticipant(deletePaticipantInput, user);
+		return this.paticipantsService.deleteByMemberAndProject(deletePaticipantInput, user);
 	}
 
 	@Mutation(() => [ Project ])

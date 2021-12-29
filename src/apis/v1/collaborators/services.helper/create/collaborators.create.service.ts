@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { forwardRef, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 // mongoose
 import { InjectModel } from '@nestjs/mongoose';
@@ -17,6 +17,7 @@ import { UsersService } from '../../../users/users.service';
 export class CollaboratorsCreateService {
 	constructor (
 		@InjectModel(CollaboratorModel.name) private collaboratorEntity: Model<CollaboratorDocument>,
+		@Inject(forwardRef(() => UsersService))
 		private readonly usersService: UsersService,
 		private readonly collaboratorsFindService: CollaboratorsFindService,
 		// private readonly sendersService: SendersService,

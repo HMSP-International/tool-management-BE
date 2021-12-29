@@ -48,7 +48,7 @@ export class CollaboratorsResolver {
 		@CurrentUser() user: IPayLoadToken,
 		@Args('deleteByUserAndSpaceInput') deleteByUserAndSpace: CollaboratorDTO.DeleteByUserAndSpaceInput,
 	) {
-		return this.collaboratorsService.deleteByUserAndSpace(deleteByUserAndSpace, user);
+		return this.collaboratorsService.deleteByMemberAndSpace(deleteByUserAndSpace, user);
 	}
 	// Mutation ---end
 
