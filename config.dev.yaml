@@ -8,7 +8,7 @@ db:
 
 jwt:
   secret: 'privateKey'
-  expiresIn: '604800s'
+  expiresIn: '2419200s'
   
 sendGrid:
   apiKey: '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'

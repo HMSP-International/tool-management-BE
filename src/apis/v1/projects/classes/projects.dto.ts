@@ -28,3 +28,13 @@ export class DeleteProjectInput {
 	@Field(() => String)
 	_projectId: string;
 }
+
+@InputType()
+export class ChangeNameProjectInput {
+	@Field(() => String)
+	_projectId: string;
+
+	@Length(1, 20)
+	@Field(() => String)
+	name: string;
+}

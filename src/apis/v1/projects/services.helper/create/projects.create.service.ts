@@ -2,7 +2,6 @@ import { forwardRef, HttpException, HttpStatus, Inject, Injectable } from '@nest
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as ProjectDTO from '../../classes/projects.dto';
-import { Project } from '../../classes/project.entity';
 import { ProjectModel, ProjectDocument } from '../../classes/project.model';
 import { IPayLoadToken } from '../../../../../helpers/modules/token/token.interface';
 import { SpacesService } from '../../../spaces/spaces.service';
@@ -15,7 +14,7 @@ export class ProjectsCreateService {
 		private readonly spacesService: SpacesService,
 	) {}
 
-	async create (createSpaceInput: ProjectDTO.CreateProjectInput, user: IPayLoadToken): Promise<Project[]> {
+	async create (createSpaceInput: ProjectDTO.CreateProjectInput, user: IPayLoadToken): Promise<ProjectDocument> {
 		const { _spaceId } = createSpaceInput;
 
 		const space = await this.spacesService.findBySpaceAndOwner(_spaceId, user._id);
@@ -24,9 +23,6 @@ export class ProjectsCreateService {
 
 		const order = await this.projectEntity.countDocuments({ _spaceId });
 
-		const newProject = new this.projectEntity({ order, owner: user._id, ...createSpaceInput });
-		await newProject.save();
-
-		return this.projectEntity.find({ _spaceId }).sort('order');
+		return await new this.projectEntity({ order, owner: user._id, ...createSpaceInput }).save();
 	}
 }

@@ -5,9 +5,10 @@ import { ProjectsResolver } from './projects.resolver';
 import { ProjectsCreateModule } from './services.helper/create/projects.create.module';
 import { ProjectsFindModule } from './services.helper/find/projects.find.module';
 import { ProjectsDeleteModule } from './services.helper/delete/projects.delete.module';
+import { ProjectsPutModule } from './services.helper/put/projects.put.module';
 
 @Module({
-	imports: [ ProjectsCreateModule, ProjectsDeleteModule, ProjectsFindModule ],
+	imports: [ ProjectsCreateModule, ProjectsDeleteModule, ProjectsFindModule, ProjectsPutModule ],
 	providers: [ ProjectsResolver, ProjectsService ],
 	exports: [ ProjectsService ],
 })

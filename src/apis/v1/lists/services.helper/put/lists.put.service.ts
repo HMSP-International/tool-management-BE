@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import * as ListDTO from '../../classes/lists.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ListModel, ListDocument } from '../../classes/list.model';
@@ -15,5 +15,13 @@ export class ListsPutService {
 			lists[i].order = i;
 			await lists[i].save();
 		}
+	}
+
+	async changeNameList ({ name, _listId }: ListDTO.ChangeNameListInput): Promise<ListDocument> {
+		const list = await this.listEntity.findByIdAndUpdate(_listId, { name }, { new: true });
+
+		if (list === null) throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+
+		return list;
 	}
 }

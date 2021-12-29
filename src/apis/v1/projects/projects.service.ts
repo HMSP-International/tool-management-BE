@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
-
-import { Project } from './classes/project.entity';
 import * as ProjectDTO from './classes/projects.dto';
 import { IPayLoadToken } from '../../../helpers/modules/token/token.interface';
 
 import { ProjectsCreateService } from './services.helper/create/projects.create.service';
 import { ProjectsDeleteService } from './services.helper/delete/projects.delete.service';
 import { ProjectsFindService } from './services.helper/find/projects.find.service';
+import { ProjectsPutService } from './services.helper/put/projects.put.service';
 
 @Injectable()
 export class ProjectsService {
@@ -14,6 +13,7 @@ export class ProjectsService {
 		private readonly projectsCreateService: ProjectsCreateService,
 		private readonly projectsDeleteService: ProjectsDeleteService,
 		private readonly projectsFindService: ProjectsFindService,
+		private readonly projectsPutService: ProjectsPutService,
 	) {}
 
 	async findAll (_spacesId: string[], _userId: string) {
@@ -38,5 +38,9 @@ export class ProjectsService {
 
 	async deleteProjectById (_projectId: string) {
 		return await this.projectsDeleteService.deleteProjectById(_projectId);
+	}
+
+	async changeNameProject (changeNameProject: ProjectDTO.ChangeNameProjectInput) {
+		return await this.projectsPutService.changeNameProject(changeNameProject);
 	}
 }

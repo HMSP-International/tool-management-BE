@@ -21,4 +21,9 @@ export class ListsResolver {
 	deleteList (@Args('deleteListInput') deleteListInput: ListDTO.DeleteListInput) {
 		return this.listsService.deleteListById(deleteListInput._listId);
 	}
+
+	@Mutation(() => List)
+	changeNameList (@Args('changeNameListInput') changeNameList: ListDTO.ChangeNameListInput) {
+		return this.listsService.changeNameList(changeNameList);
+	}
 }

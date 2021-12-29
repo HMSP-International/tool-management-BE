@@ -31,3 +31,12 @@ export class DeleteListInput {
 	@Field(() => String)
 	_listId: string;
 }
+
+@InputType()
+export class ChangeNameListInput {
+	@Field(() => String)
+	name: string;
+
+	@Field(() => String)
+	_listId: string;
+}

@@ -1,12 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { ListDocument } from './classes/list.model';
-
 import * as ListDTO from './classes/lists.dto';
-import { List } from './classes/list.entity';
 
 import { ListsCreateService } from './services.helper/create/lists.create.service';
 import { ListsDeleteService } from './services.helper/delete/lists.delete.service';
 import { ListsFindService } from './services.helper/find/lists.find.service';
+import { ListsPutService } from './services.helper/put/lists.put.service';
 
 @Injectable()
 export class ListsService {
@@ -14,25 +12,30 @@ export class ListsService {
 		private readonly listsCreateService: ListsCreateService,
 		private readonly listsDeleteService: ListsDeleteService,
 		private readonly listsFindService: ListsFindService,
+		private readonly listsPutService: ListsPutService,
 	) {}
 
-	async create (createListInput: ListDTO.CreateListInput): Promise<List> {
+	async create (createListInput: ListDTO.CreateListInput) {
 		return await this.listsCreateService.create(createListInput);
 	}
 
-	async findAllByProjectId (getListsInput: ListDTO.GetListsInput): Promise<ListDocument[]> {
+	async findAllByProjectId (getListsInput: ListDTO.GetListsInput) {
 		return await this.listsFindService.findAllByProjectId(getListsInput);
 	}
 
-	async findById (_id: string): Promise<ListDocument | null> {
+	async findById (_id: string) {
 		return await this.listsFindService.findById(_id);
 	}
 
-	async deleteListById (_listId: string): Promise<List> {
+	async deleteListById (_listId: string) {
 		return await this.listsDeleteService.deleteListById(_listId);
 	}
 
-	async deleteByProjectId (_projectId: string): Promise<void> {
+	async deleteByProjectId (_projectId: string) {
 		return await this.listsDeleteService.deleteByProjectId(_projectId);
+	}
+
+	async changeNameList (changeNameListInput: ListDTO.ChangeNameListInput) {
+		return this.listsPutService.changeNameList(changeNameListInput);
 	}
 }

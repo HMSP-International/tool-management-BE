@@ -27,7 +27,7 @@ export class ProjectsResolver {
 		return this.projectsService.findAllByCollaborator(getProjectsInput);
 	}
 
-	@Mutation(() => [ Project ])
+	@Mutation(() => Project)
 	async createProject (
 		@CurrentUser() user: IPayLoadToken,
 		@Args('createProjectInput') createSpaceInput: ProjectDTO.CreateProjectInput,
@@ -38,5 +38,10 @@ export class ProjectsResolver {
 	@Mutation(() => Project)
 	async deleteProject (@Args('deleteProjectInput') deleteProjectInput: ProjectDTO.DeleteProjectInput) {
 		return this.projectsService.deleteProjectById(deleteProjectInput._projectId);
+	}
+
+	@Mutation(() => Project)
+	async changeNameProject (@Args('changeNameProjectInput') changeNameProject: ProjectDTO.ChangeNameProjectInput) {
+		return this.projectsService.changeNameProject(changeNameProject);
 	}
 }
