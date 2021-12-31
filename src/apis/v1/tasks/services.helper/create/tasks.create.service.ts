@@ -7,7 +7,7 @@ import { TaskModel, TaskDocument } from '../../classes/task.model';
 import * as TaskDto from '../../classes/tasks.dto';
 import { Task } from '../../classes/task.entity';
 
-import { ListsService } from '../../../lists/lists.service';
+import { ListsService } from 'apis/v1/lists/lists.service';
 
 @Injectable()
 export class TasksCreateService {

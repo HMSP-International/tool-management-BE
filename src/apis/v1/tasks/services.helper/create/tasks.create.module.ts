@@ -5,7 +5,7 @@ import { TaskModel, TaskSchema } from '../../classes/task.model';
 
 import { TasksCreateService } from './tasks.create.service';
 
-import { ListsModule } from '../../../lists/lists.module';
+import { ListsModule } from 'apis/v1/lists/lists.module';
 
 @Module({
 	imports:

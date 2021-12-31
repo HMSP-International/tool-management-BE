@@ -3,8 +3,8 @@ import { Module, forwardRef } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PaticipantModel, PaticipantSchema } from '../../classes/paticipant.model';
 // module
-import { ProjectsModule } from '../../../projects/projects.module';
-import { CollaboratorsModule } from '../../../collaborators/collaborators.module';
+import { ProjectsModule } from 'apis/v1/projects/projects.module';
+import { CollaboratorsModule } from 'apis/v1/collaborators/collaborators.module';
 // services
 import { PaticipantsFindService } from './paticipants.find.service';
 

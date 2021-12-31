@@ -1,8 +1,8 @@
 import { Resolver, Args, Query, Mutation } from '@nestjs/graphql';
 import { ProjectsService } from './projects.service';
 import { Project } from './classes/project.entity';
-import { CurrentUser } from '../../../common/decorator/CurrentUser.decorator';
-import { IPayLoadToken } from '../../../helpers/modules/token/token.interface';
+import { CurrentUser } from 'common/decorator/CurrentUser.decorator';
+import { IPayLoadToken } from 'helpers/modules/token/token.interface';
 import * as ProjectDTO from './classes/projects.dto';
 
 @Resolver(() => Project)
@@ -36,12 +36,18 @@ export class ProjectsResolver {
 	}
 
 	@Mutation(() => Project)
-	async deleteProject (@Args('deleteProjectInput') deleteProjectInput: ProjectDTO.DeleteProjectInput) {
-		return this.projectsService.deleteProjectById(deleteProjectInput._projectId);
+	async deleteProject (
+		@Args('deleteProjectInput') deleteProjectInput: ProjectDTO.DeleteProjectInput,
+		@CurrentUser() user: IPayLoadToken,
+	) {
+		return this.projectsService.deleteProjectById(deleteProjectInput._projectId, user);
 	}
 
 	@Mutation(() => Project)
-	async changeNameProject (@Args('changeNameProjectInput') changeNameProject: ProjectDTO.ChangeNameProjectInput) {
-		return this.projectsService.changeNameProject(changeNameProject);
+	async changeNameProject (
+		@Args('changeNameProjectInput') changeNameProject: ProjectDTO.ChangeNameProjectInput,
+		@CurrentUser() user: IPayLoadToken,
+	) {
+		return this.projectsService.changeNameProject(changeNameProject, user);
 	}
 }

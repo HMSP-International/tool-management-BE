@@ -6,7 +6,7 @@ import { PaticipantDocument, PaticipantModel } from '../../classes/paticipant.mo
 // interfaces
 import { IPayLoadToken } from 'helpers/modules/token/token.interface';
 import * as PaticipantDTO from '../../classes/paticipants.dto';
-import { CollaboratorsService } from '../../../collaborators/collaborators.service';
+import { CollaboratorsService } from 'apis/v1/collaborators/collaborators.service';
 // services
 // classes
 

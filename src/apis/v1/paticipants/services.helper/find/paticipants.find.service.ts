@@ -1,13 +1,13 @@
 import { Injectable, forwardRef, Inject, HttpException, HttpStatus } from '@nestjs/common';
 // classes
 import * as PaticipantDTO from '../../classes/paticipants.dto';
-import { CollaboratorsService } from '../../../collaborators/collaborators.service';
+import { CollaboratorsService } from 'apis/v1/collaborators/collaborators.service';
+import { IPayLoadToken } from 'helpers/modules/token/token.interface';
+import { ProjectsService } from 'apis/v1/projects/projects.service';
 // mongoose
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { PaticipantDocument, PaticipantModel } from '../../classes/paticipant.model';
-import { ProjectsService } from '../../../projects/projects.service';
-import { IPayLoadToken } from '../../../../../helpers/modules/token/token.interface';
 
 @Injectable()
 export class PaticipantsFindService {

@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { RoleModel } from '../../roles/classes/role.model';
+import { RoleModel } from 'apis/v1/roles/classes/role.model';
 
 export type PermissionDocument = PermissionModel & mongoose.Document;
 const ObjectId = mongoose.Schema.Types.ObjectId;

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as ProjectDTO from './classes/projects.dto';
-import { IPayLoadToken } from '../../../helpers/modules/token/token.interface';
+import { IPayLoadToken } from 'helpers/modules/token/token.interface';
 
 import { ProjectsCreateService } from './services.helper/create/projects.create.service';
 import { ProjectsDeleteService } from './services.helper/delete/projects.delete.service';
@@ -36,11 +36,11 @@ export class ProjectsService {
 		return await this.projectsCreateService.create(createSpaceInput, user);
 	}
 
-	async deleteProjectById (_projectId: string) {
-		return await this.projectsDeleteService.deleteProjectById(_projectId);
+	async deleteProjectById (_projectId: string, user: IPayLoadToken) {
+		return await this.projectsDeleteService.deleteProjectById(_projectId, user);
 	}
 
-	async changeNameProject (changeNameProject: ProjectDTO.ChangeNameProjectInput) {
-		return await this.projectsPutService.changeNameProject(changeNameProject);
+	async changeNameProject (changeNameProject: ProjectDTO.ChangeNameProjectInput, user: IPayLoadToken) {
+		return await this.projectsPutService.changeNameProject(changeNameProject, user);
 	}
 }

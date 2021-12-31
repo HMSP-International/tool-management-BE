@@ -2,10 +2,10 @@ import { Resolver, Mutation, Args, Parent, ResolveField, Query } from '@nestjs/g
 import { CollaboratorsService } from './collaborators.service';
 import { Collaborator } from './classes/collaborator.entity';
 import * as CollaboratorDTO from './classes/collaborators.dto';
-import { CurrentUser } from '../../../common/decorator/CurrentUser.decorator';
-import { IPayLoadToken } from '../../../helpers/modules/token/token.interface';
-import { Space } from '../spaces/classes/space.entity';
-import { User } from '../users/classes/user.entity';
+import { CurrentUser } from 'common/decorator/CurrentUser.decorator';
+import { IPayLoadToken } from 'helpers/modules/token/token.interface';
+import { Space } from 'apis/v1/spaces/classes/space.entity';
+import { User } from 'apis/v1/users/classes/user.entity';
 
 @Resolver(() => Collaborator)
 export class CollaboratorsResolver {

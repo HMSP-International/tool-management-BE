@@ -1,5 +1,5 @@
 import { ObjectType, Field } from '@nestjs/graphql';
-import { Role } from '../../roles/classes/role.entity';
+import { Role } from 'apis/v1/roles/classes/role.entity';
 
 @ObjectType()
 export class User {

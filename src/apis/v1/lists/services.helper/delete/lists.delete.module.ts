@@ -5,8 +5,9 @@ import { ListModel, ListSchema } from '../../classes/list.model';
 
 import { ListsDeleteService } from './lists.delete.service';
 
-import { TasksModule } from '../../../tasks/tasks.module';
 import { ListsPutModule } from '../put/lists.put.module';
+import { TasksModule } from 'apis/v1/tasks/tasks.module';
+import { ProjectsModule } from 'apis/v1/projects/projects.module';
 
 @Module({
 	imports:
@@ -14,6 +15,7 @@ import { ListsPutModule } from '../put/lists.put.module';
 			MongooseModule.forFeature([ { name: ListModel.name, schema: ListSchema } ]),
 			forwardRef(() => TasksModule),
 			ListsPutModule,
+			forwardRef(() => ProjectsModule),
 		],
 	providers: [ ListsDeleteService ],
 	exports: [ ListsDeleteService ],

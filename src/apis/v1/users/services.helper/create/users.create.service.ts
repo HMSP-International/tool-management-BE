@@ -1,12 +1,12 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { RolesService } from '../../../roles/roles.service';
+import { RolesService } from 'apis/v1/roles/roles.service';
 import { UserModel, UserDocument } from '../../classes/user.model';
 import { CreateUserInput } from '../../classes/users.dto';
 import { UsersFindService } from '../find/users.find.service';
-import { CloudinaryService } from '../../../../../helpers/modules/cloudinary/cloudinary.service';
-import { SendersService } from '../../../../../helpers/modules/senders/senders.service';
+import { CloudinaryService } from 'helpers/modules/cloudinary/cloudinary.service';
+import { SendersService } from 'helpers/modules/senders/senders.service';
 
 @Injectable()
 export class UsersCreateService {

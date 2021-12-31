@@ -2,9 +2,9 @@ import { Resolver, Query, Mutation, Args, ResolveField, Parent } from '@nestjs/g
 import { UsersService } from './users.service';
 import { User } from './classes/user.entity';
 import * as UserDto from './classes/users.dto';
-import { IPayLoadToken } from '../../../helpers/modules/token/token.interface';
-import { CurrentUser } from '../../../common/decorator/CurrentUser.decorator';
-import { PERMISSIONS } from '../../../common/decorator/permissions.decorator';
+import { IPayLoadToken } from 'helpers/modules/token/token.interface';
+import { CurrentUser } from 'common/decorator/CurrentUser.decorator';
+import { PERMISSIONS } from 'common/decorator/permissions.decorator';
 import { UserModel } from './classes/user.model';
 
 @Resolver(() => User)

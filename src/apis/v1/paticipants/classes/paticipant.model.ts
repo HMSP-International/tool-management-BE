@@ -1,8 +1,8 @@
-import { UserModel } from './../../users/classes/user.model';
 import * as mongoose from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { ProjectModel } from '../../projects/classes/project.model';
-import { CollaboratorModel } from '../../collaborators/classes/collaborator.model';
+import { UserModel } from 'apis/v1/users/classes/user.model';
+import { ProjectModel } from 'apis/v1/projects/classes/project.model';
+import { CollaboratorModel } from 'apis/v1/collaborators/classes/collaborator.model';
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
 export type PaticipantDocument = PaticipantModel & mongoose.Document;

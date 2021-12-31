@@ -1,7 +1,7 @@
-import { Collaborator } from '../../collaborators/classes/collaborator.entity';
+import { Collaborator } from 'apis/v1/collaborators/classes/collaborator.entity';
 import { ObjectType, Field } from '@nestjs/graphql';
-import { Project } from '../../projects/classes/project.entity';
-import { User } from '../../users/classes/user.entity';
+import { Project } from 'apis/v1/projects/classes/project.entity';
+import { User } from 'apis/v1/users/classes/user.entity';
 
 @ObjectType()
 export class Paticipant {

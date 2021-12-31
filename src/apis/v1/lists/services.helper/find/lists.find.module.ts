@@ -5,7 +5,7 @@ import { ListModel, ListSchema } from '../../classes/list.model';
 
 import { ListsFindService } from './lists.find.service';
 
-import { ProjectsModule } from '../../../projects/projects.module';
+import { ProjectsModule } from 'apis/v1/projects/projects.module';
 
 @Module({
 	imports:

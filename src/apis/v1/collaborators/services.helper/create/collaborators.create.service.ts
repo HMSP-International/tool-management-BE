@@ -6,12 +6,12 @@ import { Model } from 'mongoose';
 import { CollaboratorDocument, CollaboratorModel } from '../../classes/collaborator.model';
 // helpers
 // import { SendersService } from '../../../../../helpers/modules/senders/senders.service';
-import { IPayLoadToken } from '../../../../../helpers/modules/token/token.interface';
+import { IPayLoadToken } from 'helpers/modules/token/token.interface';
 // classes
 import * as CollaboratorDTO from '../../classes/collaborators.dto';
 // services
 import { CollaboratorsFindService } from '../find/collaborators.find.service';
-import { UsersService } from '../../../users/users.service';
+import { UsersService } from 'apis/v1/users/users.service';
 
 @Injectable()
 export class CollaboratorsCreateService {

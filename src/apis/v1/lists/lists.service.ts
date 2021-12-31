@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { IPayLoadToken } from 'helpers/modules/token/token.interface';
 import * as ListDTO from './classes/lists.dto';
 
 import { ListsCreateService } from './services.helper/create/lists.create.service';
@@ -15,8 +16,8 @@ export class ListsService {
 		private readonly listsPutService: ListsPutService,
 	) {}
 
-	async create (createListInput: ListDTO.CreateListInput) {
-		return await this.listsCreateService.create(createListInput);
+	async create (createListInput: ListDTO.CreateListInput, user: IPayLoadToken) {
+		return await this.listsCreateService.create(createListInput, user);
 	}
 
 	async findAllByProjectId (getListsInput: ListDTO.GetListsInput) {
@@ -27,15 +28,15 @@ export class ListsService {
 		return await this.listsFindService.findById(_id);
 	}
 
-	async deleteListById (_listId: string) {
-		return await this.listsDeleteService.deleteListById(_listId);
+	async deleteListById (_listId: string, user: IPayLoadToken) {
+		return await this.listsDeleteService.deleteListById(_listId, user);
 	}
 
-	async deleteByProjectId (_projectId: string) {
-		return await this.listsDeleteService.deleteByProjectId(_projectId);
+	async deleteByProjectId (_projectId: string, user: IPayLoadToken) {
+		return await this.listsDeleteService.deleteByProjectId(_projectId, user);
 	}
 
-	async changeNameList (changeNameListInput: ListDTO.ChangeNameListInput) {
-		return this.listsPutService.changeNameList(changeNameListInput);
+	async changeNameList (changeNameListInput: ListDTO.ChangeNameListInput, user: IPayLoadToken) {
+		return this.listsPutService.changeNameList(changeNameListInput, user);
 	}
 }

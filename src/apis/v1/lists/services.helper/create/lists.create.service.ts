@@ -1,13 +1,12 @@
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { forwardRef, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ListModel, ListDocument } from '../../classes/list.model';
-
 import * as ListDTO from '../../classes/lists.dto';
-import { List } from '../../classes/list.entity';
 
-import { ProjectsService } from '../../../projects/projects.service';
+import { ProjectsService } from 'apis/v1/projects/projects.service';
+import { IPayLoadToken } from 'helpers/modules/token/token.interface';
 
 @Injectable()
 export class ListsCreateService {
@@ -17,10 +16,13 @@ export class ListsCreateService {
 		private readonly projectsService: ProjectsService,
 	) {}
 
-	async create (createListInput: ListDTO.CreateListInput): Promise<List> {
+	async create (createListInput: ListDTO.CreateListInput, user: IPayLoadToken): Promise<ListDocument> {
 		const { _projectId } = createListInput;
 
-		await this.projectsService.findById(_projectId);
+		const project = await this.projectsService.findById(_projectId);
+		if (project.owner.toString() !== user._id) {
+			throw new HttpException('FORBIDDEN', HttpStatus.FORBIDDEN);
+		}
 
 		const order = await this.listEntity.countDocuments({ _projectId });
 

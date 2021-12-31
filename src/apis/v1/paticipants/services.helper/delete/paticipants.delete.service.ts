@@ -4,8 +4,8 @@ import { Model } from 'mongoose';
 import { PaticipantDocument, PaticipantModel } from '../../classes/paticipant.model';
 import * as PaticipantDTO from '../../classes/paticipants.dto';
 import { IPayLoadToken } from 'helpers/modules/token/token.interface';
-import { CollaboratorsService } from '../../../collaborators/collaborators.service';
-import { ProjectsService } from '../../../projects/projects.service';
+import { CollaboratorsService } from 'apis/v1/collaborators/collaborators.service';
+import { ProjectsService } from 'apis/v1/projects/projects.service';
 
 @Injectable()
 export class PaticipantsDeleteService {

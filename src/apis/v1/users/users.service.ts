@@ -1,12 +1,10 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateUserInput } from './classes/users.dto';
 import * as UserDto from './classes/users.dto';
 import { UsersPutService } from './services.helper/put/users.put.service';
 import { UsersFindService } from './services.helper/find/users.find.service';
 import { UsersDeleteService } from './services.helper/delete/users.delete.service';
 import { UsersCreateService } from './services.helper/create/users.create.service';
-import { UserDocument } from './classes/user.model';
-import { RoleModel } from '../roles/classes/role.model';
 
 @Injectable()
 export class UsersService {

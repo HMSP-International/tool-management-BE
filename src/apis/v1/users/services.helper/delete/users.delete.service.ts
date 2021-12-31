@@ -1,10 +1,10 @@
 import { forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { CloudinaryService } from '../../../../../helpers/modules/cloudinary/cloudinary.service';
+import { CloudinaryService } from 'helpers/modules/cloudinary/cloudinary.service';
 import { UserModel, UserDocument } from '../../classes/user.model';
-import { CollaboratorsService } from '../../../collaborators/collaborators.service';
-import { PaticipantsService } from '../../../paticipants/paticipants.service';
+import { CollaboratorsService } from 'apis/v1/collaborators/collaborators.service';
+import { PaticipantsService } from 'apis/v1/paticipants/paticipants.service';
 
 @Injectable()
 export class UsersDeleteService {

@@ -7,9 +7,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 // Middleware
 import * as compression from 'compression';
-import { JwtMiddleware } from '../common/middleware/jwt.middleware';
+import { JwtMiddleware } from 'common/middleware/jwt.middleware';
 // Common
-import configuration from '../common/config/configuration';
+import configuration from 'common/config/configuration';
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
 
 @Global()

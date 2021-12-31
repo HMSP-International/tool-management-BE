@@ -1,10 +1,10 @@
 import { forwardRef, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 // services
-import { UsersService } from '../../../users/users.service';
-import { SpacesService } from '../../../spaces/spaces.service';
+import { UsersService } from 'apis/v1/users/users.service';
+import { SpacesService } from 'apis/v1/spaces/spaces.service';
 // classes
-import { Space } from '../../../spaces/classes/space.entity';
-import { UserModel } from '../../../users/classes/user.model';
+import { Space } from 'apis/v1/spaces/classes/space.entity';
+import { UserModel } from 'apis/v1/users/classes/user.model';
 
 @Injectable()
 export class CollaboratorsResolverFieldService {

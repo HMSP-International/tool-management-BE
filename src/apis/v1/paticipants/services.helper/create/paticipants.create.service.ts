@@ -1,14 +1,14 @@
 import { HttpException, HttpStatus, Injectable, forwardRef, Inject } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { ProjectsService } from '../../../projects/projects.service';
+import { ProjectsService } from 'apis/v1/projects/projects.service';
 import { Model } from 'mongoose';
-import { CollaboratorsService } from '../../../collaborators/collaborators.service';
+import { CollaboratorsService } from 'apis/v1/collaborators/collaborators.service';
 import { PaticipantDocument, PaticipantModel } from '../../classes/paticipant.model';
 import * as PaticipantDTO from '../../classes/paticipants.dto';
 import { IPayLoadToken } from 'helpers/modules/token/token.interface';
-import { CollaboratorDocument } from '../../../collaborators/classes/collaborator.model';
-import { UsersService } from '../../../users/users.service';
-import { UserDocument } from '../../../users/classes/user.model';
+import { CollaboratorDocument } from 'apis/v1/collaborators/classes/collaborator.model';
+import { UsersService } from 'apis/v1/users/users.service';
+import { UserDocument } from 'apis/v1/users/classes/user.model';
 
 @Injectable()
 export class PaticipantsCreateService {

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Space } from './classes/space.entity';
-import { IPayLoadToken } from '../../../helpers/modules/token/token.interface';
+import { IPayLoadToken } from 'helpers/modules/token/token.interface';
 import * as SpaceDTO from './classes/spaces.dto';
 import { SpacesCreateService } from './services.helper/create/spaces.create.service';
 import { SpacesDeleteService } from './services.helper/delete/spaces.delete.service';

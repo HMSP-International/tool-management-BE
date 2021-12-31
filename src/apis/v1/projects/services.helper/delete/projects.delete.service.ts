@@ -5,6 +5,7 @@ import { Project } from '../../classes/project.entity';
 import { ProjectModel, ProjectDocument } from '../../classes/project.model';
 import { ListsService } from '../../../lists/lists.service';
 import { PaticipantsService } from '../../../paticipants/paticipants.service';
+import { IPayLoadToken } from '../../../../../helpers/modules/token/token.interface';
 
 @Injectable()
 export class ProjectsDeleteService {
@@ -16,13 +17,18 @@ export class ProjectsDeleteService {
 		private readonly paticipantsService: PaticipantsService,
 	) {}
 
-	async deleteProjectById (_projectId: string): Promise<Project> {
-		const projectDeleted = await this.projectEntity.findByIdAndDelete(_projectId);
-		if (projectDeleted === null) {
+	async deleteProjectById (_projectId: string, user: IPayLoadToken): Promise<Project> {
+		const project = await this.projectEntity.findById(_projectId);
+		if (project === null) {
 			throw new HttpException('Not Found _projectId', HttpStatus.NOT_FOUND);
 		}
+		if (project.owner.toString() !== user._id) {
+			throw new HttpException('FORBIDDEN', HttpStatus.FORBIDDEN);
+		}
 
-		this.listsService.deleteByProjectId(_projectId);
+		const projectDeleted = await this.projectEntity.findByIdAndDelete(_projectId);
+
+		this.listsService.deleteByProjectId(_projectId, user);
 		this.paticipantsService.deleteByProjectId(_projectId);
 
 		return projectDeleted;

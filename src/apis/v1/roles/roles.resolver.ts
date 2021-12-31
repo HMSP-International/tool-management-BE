@@ -1,5 +1,5 @@
 import { Query, Resolver } from '@nestjs/graphql';
-import { PERMISSIONS } from '../../../common/decorator/permissions.decorator';
+import { PERMISSIONS } from 'common/decorator/permissions.decorator';
 import { Role } from './classes/role.entity';
 import { RolesService } from './roles.service';
 

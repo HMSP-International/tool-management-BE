@@ -1,8 +1,8 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UsersModule } from '../../../users/users.module';
-import { CollaboratorsModule } from '../../../collaborators/collaborators.module';
-import { ProjectsModule } from '../../../projects/projects.module';
+import { UsersModule } from 'apis/v1/users/users.module';
+import { CollaboratorsModule } from 'apis/v1/collaborators/collaborators.module';
+import { ProjectsModule } from 'apis/v1/projects/projects.module';
 import { PaticipantModel, PaticipantSchema } from '../../classes/paticipant.model';
 import { PaticipantsCreateService } from './paticipants.create.service';
 

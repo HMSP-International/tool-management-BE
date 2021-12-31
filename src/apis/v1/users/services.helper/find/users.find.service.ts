@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { RoleDocument } from '../../../roles/classes/role.model';
-import { RolesService } from '../../../roles/roles.service';
+import { RoleDocument } from 'apis/v1/roles/classes/role.model';
+import { RolesService } from 'apis/v1/roles/roles.service';
 import { UserModel, UserDocument } from '../../classes/user.model';
 
 @Injectable()

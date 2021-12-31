@@ -1,6 +1,6 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CollaboratorsModule } from '../../../collaborators/collaborators.module';
+import { CollaboratorsModule } from 'apis/v1/collaborators/collaborators.module';
 import { PaticipantModel, PaticipantSchema } from '../../classes/paticipant.model';
 // modules
 // services

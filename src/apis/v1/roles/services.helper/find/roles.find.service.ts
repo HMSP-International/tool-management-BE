@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Role } from '../../classes/role.entity';
 import { RoleDocument, RoleModel } from '../../classes/role.model';
 
 @Injectable()

@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 // classes
-import { IPayLoadToken } from '../../../../../helpers/modules/token/token.interface';
+import { IPayLoadToken } from 'helpers/modules/token/token.interface';
 // mongoose
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';

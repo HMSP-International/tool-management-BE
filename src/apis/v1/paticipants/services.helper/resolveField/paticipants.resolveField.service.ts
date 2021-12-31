@@ -1,8 +1,8 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 // services
-import { UsersService } from '../../../users/users.service';
-import { CollaboratorsService } from '../../../collaborators/collaborators.service';
-import { ProjectsService } from '../../../projects/projects.service';
+import { UsersService } from 'apis/v1/users/users.service';
+import { CollaboratorsService } from 'apis/v1/collaborators/collaborators.service';
+import { ProjectsService } from 'apis/v1/projects/projects.service';
 // classes
 
 @Injectable()

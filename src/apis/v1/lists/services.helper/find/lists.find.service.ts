@@ -6,7 +6,7 @@ import { ListModel, ListDocument } from '../../classes/list.model';
 
 import * as ListDTO from '../../classes/lists.dto';
 
-import { ProjectsService } from '../../../projects/projects.service';
+import { ProjectsService } from 'apis/v1/projects/projects.service';
 
 @Injectable()
 export class ListsFindService {

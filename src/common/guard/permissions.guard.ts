@@ -1,7 +1,7 @@
 import { Injectable, CanActivate, HttpException, HttpStatus } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import { PermissionsService } from '../../apis/v1/permissions/permissions.service';
+import { PermissionsService } from 'apis/v1/permissions/permissions.service';
 import { PERMISSIONS, ROLES_KEY } from '../decorator/permissions.decorator';
 
 // @Global()

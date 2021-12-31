@@ -1,6 +1,6 @@
 import { InputType, Field } from '@nestjs/graphql';
 import { Type } from 'class-transformer';
-import { IsString, IsEnum, IsArray } from 'class-validator';
+import { IsString, IsArray } from 'class-validator';
 
 @InputType()
 export class InviteSpaceInput {
