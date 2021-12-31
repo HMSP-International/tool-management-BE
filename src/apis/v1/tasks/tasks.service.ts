@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
-
-import { Task } from './classes/task.entity';
+import { IPayLoadToken } from 'helpers/modules/token/token.interface';
 import * as TaskDto from './classes/tasks.dto';
 
 import { TasksCreateService } from './services.helper/create/tasks.create.service';
@@ -14,20 +13,20 @@ export class TasksService {
 		private readonly tasksDeleteService: TasksDeleteService,
 		private readonly tasksFindService: TasksFindService,
 	) {}
-		
-	async findTasksByListId (getTasksInput: TaskDto.GetTasksInput): Promise<Task[]> {
+
+	async findTasksByListId (getTasksInput: TaskDto.GetTasksInput) {
 		return await this.tasksFindService.findTasksByListId(getTasksInput);
 	}
 
-	async createTask (getTasksInput: TaskDto.CreateTaskInput): Promise<Task> {
-		return await this.tasksCreateService.createTask(getTasksInput);
+	async createTask (getTasksInput: TaskDto.CreateTaskInput, user: IPayLoadToken) {
+		return await this.tasksCreateService.createTask(getTasksInput, user);
 	}
 
-	async deleteTasks (deleteTaskInput: TaskDto.DeleteTaskInput): Promise<Task[]> {
-		return await this.tasksDeleteService.deleteTasks(deleteTaskInput);
+	async deleteTasks (deleteTaskInput: TaskDto.DeleteTaskInput, user: IPayLoadToken) {
+		return await this.tasksDeleteService.deleteTasks(deleteTaskInput, user);
 	}
 
-	async deleteTasksByListId (_listId: string): Promise<void> {
+	async deleteTasksByListId (_listId: string) {
 		return await this.tasksDeleteService.deleteTasksByListId(_listId);
 	}
 }

@@ -3,7 +3,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { CollaboratorsService } from 'apis/v1/collaborators/collaborators.service';
 import { Model } from 'mongoose';
 import { ProjectsService } from 'apis/v1/projects/projects.service';
-import { Space } from '../../classes/space.entity';
 import { SpaceModel, SpaceDocument } from '../../classes/space.model';
 import { SpacesFindService } from '../find/spaces.find.service';
 
@@ -18,7 +17,7 @@ export class SpacesDeleteService {
 		private readonly collaboratorsService: CollaboratorsService,
 	) {}
 
-	async deleteSpaceById (_workSpaceId: string, _userId: string): Promise<Space> {
+	async deleteSpaceById (_workSpaceId: string, _userId: string): Promise<SpaceDocument> {
 		const space = await this.spacesFindService.findById(_workSpaceId);
 		if (space.owner.toString() !== _userId) {
 			throw new HttpException('This space is not your', HttpStatus.BAD_REQUEST);

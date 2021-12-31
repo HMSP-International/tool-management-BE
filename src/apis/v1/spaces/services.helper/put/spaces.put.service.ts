@@ -9,7 +9,7 @@ import * as SpaceDTO from '../../classes/spaces.dto';
 export class SpacesPutService {
 	constructor (@InjectModel(SpaceModel.name) private spaceEntity: Model<SpaceDocument>) {}
 
-	async changeName (changeNameSpaceInput: SpaceDTO.ChangeNameSpaceInput): Promise<Space> {
+	async changeName (changeNameSpaceInput: SpaceDTO.ChangeNameSpaceInput): Promise<SpaceDocument> {
 		const { _id, ...rest } = changeNameSpaceInput;
 
 		const space = await this.spaceEntity.findByIdAndUpdate(_id, rest, { new: true });

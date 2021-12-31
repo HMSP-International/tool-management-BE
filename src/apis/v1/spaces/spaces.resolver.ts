@@ -11,29 +11,27 @@ export class SpacesResolver {
 
 	// Query ---- start
 	@Query(() => [ Space ])
-	async getSpaces (@CurrentUser() user: IPayLoadToken): Promise<Space[]> {
+	getSpaces (@CurrentUser() user: IPayLoadToken) {
 		return this.spacesService.findAll(user);
 	}
 	// Query ---- end
 
 	// Mutation ---- start
 	@Mutation(() => [ Space ])
-	async createSpace (
+	createSpace (
 		@CurrentUser() user: IPayLoadToken,
 		@Args('createSpaceInput') createSpaceInput: SpaceDTO.CreateSpaceInput,
-	): Promise<Space[]> {
+	) {
 		return this.spacesService.create(createSpaceInput.name, user);
 	}
 
 	@Mutation(() => Space)
-	async changeNameSpace (
-		@Args('changeNameSpaceInput') changeNameSpaceInput: SpaceDTO.ChangeNameSpaceInput,
-	): Promise<Space> {
+	changeNameSpace (@Args('changeNameSpaceInput') changeNameSpaceInput: SpaceDTO.ChangeNameSpaceInput) {
 		return this.spacesService.changeName(changeNameSpaceInput);
 	}
 
 	@Mutation(() => Space)
-	async deleteSpaceById (
+	deleteSpaceById (
 		@Args('deleteSpaceInput') deleteSpaceInput: SpaceDTO.DeleteSpaceInput,
 		@CurrentUser() user: IPayLoadToken,
 	) {

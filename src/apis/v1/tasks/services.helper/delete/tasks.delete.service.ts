@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
 
 import { InjectModel } from '@nestjs/mongoose';
+import { IPayLoadToken } from 'helpers/modules/token/token.interface';
 import { Model } from 'mongoose';
 import { TaskModel, TaskDocument } from '../../classes/task.model';
 
 import * as TaskDto from '../../classes/tasks.dto';
-import { Task } from '../../classes/task.entity';
 
 @Injectable()
 export class TasksDeleteService {
 	constructor (@InjectModel(TaskModel.name) private taskEntity: Model<TaskDocument>) {}
 
-	async deleteTasks (deleteTaskInput: TaskDto.DeleteTaskInput): Promise<Task[]> {
+	async deleteTasks (deleteTaskInput: TaskDto.DeleteTaskInput, user: IPayLoadToken): Promise<TaskDocument[]> {
 		const { _taskIds } = deleteTaskInput;
 
 		// check _listId

@@ -15,6 +15,11 @@ export class CreateTaskInput {
 	@Field(() => String)
 	_listId: string;
 
+	@Length(24, 24)
+	@IsString()
+	@Field(() => String)
+	assignee: string;
+
 	@Length(1)
 	@IsString()
 	@Field(() => String)
