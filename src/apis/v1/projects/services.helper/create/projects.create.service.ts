@@ -5,6 +5,7 @@ import * as ProjectDTO from '../../classes/projects.dto';
 import { ProjectModel, ProjectDocument } from '../../classes/project.model';
 import { IPayLoadToken } from '../../../../../helpers/modules/token/token.interface';
 import { SpacesService } from '../../../spaces/spaces.service';
+// import { PaticipantsService } from '../../../paticipants/paticipants.service';
 
 @Injectable()
 export class ProjectsCreateService {
@@ -12,6 +13,8 @@ export class ProjectsCreateService {
 		@InjectModel(ProjectModel.name) private projectEntity: Model<ProjectDocument>,
 		@Inject(forwardRef(() => SpacesService))
 		private readonly spacesService: SpacesService,
+		// @Inject(forwardRef(() => PaticipantsService))
+		// private readonly paticipantsService: PaticipantsService,
 	) {}
 
 	async create (createSpaceInput: ProjectDTO.CreateProjectInput, user: IPayLoadToken): Promise<ProjectDocument> {
@@ -23,6 +26,13 @@ export class ProjectsCreateService {
 
 		const order = await this.projectEntity.countDocuments({ _spaceId });
 
-		return await new this.projectEntity({ order, owner: user._id, ...createSpaceInput }).save();
+		const project = await new this.projectEntity({ order, owner: user._id, ...createSpaceInput }).save();
+
+		// await this.paticipantsService.createPaticipant(
+		// 	{ _memberId: user._id, _projectId: project._id, role: 'owner' },
+		// 	user,
+		// );
+
+		return project;
 	}
 }

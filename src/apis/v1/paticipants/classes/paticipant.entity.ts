@@ -1,6 +1,7 @@
-import { Collaborator } from './../../collaborators/classes/collaborator.entity';
+import { Collaborator } from '../../collaborators/classes/collaborator.entity';
 import { ObjectType, Field } from '@nestjs/graphql';
 import { Project } from '../../projects/classes/project.entity';
+import { User } from '../../users/classes/user.entity';
 
 @ObjectType()
 export class Paticipant {
@@ -15,4 +16,7 @@ export class Paticipant {
 
 	@Field(() => String)
 	role: string;
+
+	@Field(() => User)
+	_memberId: string;
 }

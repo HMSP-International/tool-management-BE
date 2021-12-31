@@ -39,10 +39,15 @@ export class PaticipantsCreateService {
 			collaborator = await this.collaboratorsService.inviteSpace({ _workSpaceId, _memberId, role }, user);
 		}
 
-		const paticipant = await this.paticipantEntity.findOne({ _projectId, role, _collaboratorId: collaborator._id });
+		const paticipant = await this.paticipantEntity.findOne({
+			_projectId,
+			role,
+			_collaboratorId: collaborator._id,
+			_memberId,
+		});
 
 		if (paticipant === null) {
-			await new this.paticipantEntity({ _projectId, role, _collaboratorId: collaborator._id }).save();
+			await new this.paticipantEntity({ _projectId, role, _collaboratorId: collaborator._id, _memberId }).save();
 		}
 
 		return this.usersService.findById(_adminId);

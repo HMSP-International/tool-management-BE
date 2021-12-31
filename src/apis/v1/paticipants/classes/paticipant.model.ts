@@ -1,3 +1,4 @@
+import { UserModel } from './../../users/classes/user.model';
 import * as mongoose from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ProjectModel } from '../../projects/classes/project.model';
@@ -18,6 +19,9 @@ export class PaticipantModel {
 
 	@Prop({ type: String, default: 'member' })
 	role: string;
+
+	@Prop({ type: ObjectId, required: true, ref: UserModel.name })
+	_memberId: string;
 }
 
 export const PaticipantSchema = SchemaFactory.createForClass(PaticipantModel);

@@ -44,6 +44,13 @@ export class PaticipantsService {
 		return this.paticipantsFindService.getUsersBelongProject(getUsersBelongProjectInput);
 	}
 
+	async findPaticipantByProjectAndMember (
+		x: PaticipantDTO.GetPaticipantByProjectAndMemberInput,
+		user: IPayLoadToken,
+	) {
+		return this.paticipantsFindService.findPaticipantByProjectAndMember(x, user);
+	}
+
 	changeRoleOfMemberOnPaticipant (
 		changeRoleOfMemberInput: PaticipantDTO.ChangeRoleOfMemberInput,
 		user: IPayLoadToken,
@@ -57,5 +64,9 @@ export class PaticipantsService {
 
 	getProject (_id: string) {
 		return this.paticipantsResolveFieldService.getProject(_id);
+	}
+
+	getUser (_id: string) {
+		return this.paticipantsResolveFieldService.getUser(_id);
 	}
 }

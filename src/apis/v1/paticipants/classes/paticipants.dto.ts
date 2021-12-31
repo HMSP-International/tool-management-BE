@@ -58,3 +58,10 @@ export class ChangeRoleOfMemberInput {
 	@Field(() => String)
 	role: string;
 }
+
+@InputType()
+export class GetPaticipantByProjectAndMemberInput {
+	@IsString()
+	@Field(() => String)
+	_projectId: string;
+}

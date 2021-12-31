@@ -45,6 +45,15 @@ export class PaticipantsResolver {
 	}
 
 	@Mutation(() => Paticipant)
+	findPaticipantByProjectAndMember (
+		@Args('getPaticipantByProjectAndMemberInput')
+		getPaticipantByProjectAndMemberInput: PaticipantDTO.GetPaticipantByProjectAndMemberInput,
+		@CurrentUser() user: IPayLoadToken,
+	) {
+		return this.paticipantsService.findPaticipantByProjectAndMember(getPaticipantByProjectAndMemberInput, user);
+	}
+
+	@Mutation(() => Paticipant)
 	changeRoleOfMemberOnPaticipant (
 		@CurrentUser() user: IPayLoadToken,
 		@Args('changeRoleOfMemberInput') changeRoleOfMemberInput: PaticipantDTO.ChangeRoleOfMemberInput,
@@ -60,5 +69,10 @@ export class PaticipantsResolver {
 	@ResolveField(() => Project)
 	_projectId (@Parent() paticipant: Paticipant) {
 		return this.paticipantsService.getProject(paticipant._projectId);
+	}
+
+	@ResolveField(() => User)
+	_memberId (@Parent() paticipant: Paticipant) {
+		return this.paticipantsService.getUser(paticipant._memberId);
 	}
 }

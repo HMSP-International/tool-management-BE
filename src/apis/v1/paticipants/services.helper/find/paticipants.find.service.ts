@@ -1,4 +1,4 @@
-import { Injectable, forwardRef, Inject } from '@nestjs/common';
+import { Injectable, forwardRef, Inject, HttpException, HttpStatus } from '@nestjs/common';
 // classes
 import * as PaticipantDTO from '../../classes/paticipants.dto';
 import { CollaboratorsService } from '../../../collaborators/collaborators.service';
@@ -7,6 +7,7 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { PaticipantDocument, PaticipantModel } from '../../classes/paticipant.model';
 import { ProjectsService } from '../../../projects/projects.service';
+import { IPayLoadToken } from '../../../../../helpers/modules/token/token.interface';
 
 @Injectable()
 export class PaticipantsFindService {
@@ -50,5 +51,18 @@ export class PaticipantsFindService {
 		_projectId,
 	}: PaticipantDTO.GetUsersBelongProjectInput): Promise<PaticipantDocument[]> {
 		return await this.paticipantEntity.find({ _projectId });
+	}
+
+	async findPaticipantByProjectAndMember (
+		{ _projectId }: PaticipantDTO.GetPaticipantByProjectAndMemberInput,
+		user: IPayLoadToken,
+	): Promise<PaticipantDocument> {
+		const paticipant = await this.paticipantEntity.findOne({ _projectId, _memberId: user._id });
+
+		if (paticipant === null) {
+			throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+		}
+
+		return paticipant;
 	}
 }
