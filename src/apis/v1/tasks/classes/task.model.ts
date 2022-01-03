@@ -36,6 +36,7 @@ export const TaskSchema = SchemaFactory.createForClass(TaskModel);
 
 TaskSchema.pre<TaskModel>('updateOne', function (next: Function) {
 	this.timestamp.updateAt = new Date();
+	console.log(this.timestamp.updateAt);
 
 	next();
 });

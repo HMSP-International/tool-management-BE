@@ -37,7 +37,7 @@ export class TasksPutService {
 			user,
 			true,
 		);
-		if (paticipant.role === 'member') count++;
+		if (paticipant === null || paticipant.role === 'member') count++;
 		if (count === 2) throw new HttpException('FORBIDDEN', HttpStatus.FORBIDDEN);
 
 		return await this.taskEntity.findByIdAndUpdate(_taskId, { name }, { new: true });
