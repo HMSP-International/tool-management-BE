@@ -47,8 +47,9 @@ export class PaticipantsService {
 	async findPaticipantByProjectAndMember (
 		x: PaticipantDTO.GetPaticipantByProjectAndMemberInput,
 		user: IPayLoadToken,
+		returnNull: boolean,
 	) {
-		return this.paticipantsFindService.findPaticipantByProjectAndMember(x, user);
+		return this.paticipantsFindService.findPaticipantByProjectAndMember(x, user, returnNull);
 	}
 
 	changeRoleOfMemberOnPaticipant (

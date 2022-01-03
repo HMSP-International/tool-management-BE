@@ -34,8 +34,9 @@ export class TasksCreateService {
 		const paticipant = await this.paticipantsService.findPaticipantByProjectAndMember(
 			{ _projectId: project._id },
 			user,
+			true,
 		);
-		if (paticipant.role === 'member') count++;
+		if (!paticipant || (paticipant && paticipant.role === 'member')) count++;
 
 		if (count === 2) throw new HttpException('FORBIDDEN', HttpStatus.FORBIDDEN);
 
@@ -45,7 +46,7 @@ export class TasksCreateService {
 			_listId,
 			name,
 			assignee,
-			_projectId: paticipant._projectId,
+			_projectId: project._id,
 			reporter: user._id,
 			order,
 		});

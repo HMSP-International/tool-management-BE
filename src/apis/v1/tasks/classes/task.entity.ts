@@ -1,6 +1,7 @@
 import { ObjectType, Field } from '@nestjs/graphql';
 import { Project } from 'apis/v1/projects/classes/project.entity';
 import { User } from 'apis/v1/users/classes/user.entity';
+import { Timestamp } from './timestamp';
 
 @ObjectType()
 export class Task {
@@ -19,8 +20,8 @@ export class Task {
 	@Field(() => User)
 	reporter: string;
 
-	@Field(() => User)
-	timestamp: string;
+	@Field(() => Timestamp)
+	timestamp: Timestamp;
 
 	@Field(() => Project)
 	_projectId: string;

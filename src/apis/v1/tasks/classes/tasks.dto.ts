@@ -1,5 +1,5 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { IsString, Length } from 'class-validator';
+import { IsString, Length, IsOptional } from 'class-validator';
 
 @InputType()
 export class GetTasksInput {
@@ -15,9 +15,10 @@ export class CreateTaskInput {
 	@Field(() => String)
 	_listId: string;
 
+	@IsOptional()
 	@Length(24, 24)
 	@IsString()
-	@Field(() => String)
+	@Field(() => String, { nullable: true })
 	assignee: string;
 
 	@Length(1)
@@ -30,4 +31,31 @@ export class CreateTaskInput {
 export class DeleteTaskInput {
 	@Field(() => [ String ])
 	_taskIds: string[];
+}
+
+@InputType()
+export class ChangeTaskNameInput {
+	@Length(24, 24)
+	@IsString()
+	@Field(() => String)
+	_taskId: string;
+
+	@Length(1)
+	@IsString()
+	@Field(() => String)
+	name: string;
+}
+
+
+@InputType()
+export class ChangeAssigneeInput {
+	@Length(24, 24)
+	@IsString()
+	@Field(() => String)
+	_taskId: string;
+
+	@Length(24, 24)
+	@IsString()
+	@Field(() => String)
+	assignee: string;
 }

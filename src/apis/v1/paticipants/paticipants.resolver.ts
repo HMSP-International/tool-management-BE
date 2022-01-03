@@ -50,7 +50,11 @@ export class PaticipantsResolver {
 		getPaticipantByProjectAndMemberInput: PaticipantDTO.GetPaticipantByProjectAndMemberInput,
 		@CurrentUser() user: IPayLoadToken,
 	) {
-		return this.paticipantsService.findPaticipantByProjectAndMember(getPaticipantByProjectAndMemberInput, user);
+		return this.paticipantsService.findPaticipantByProjectAndMember(
+			getPaticipantByProjectAndMemberInput,
+			user,
+			false,
+		);
 	}
 
 	@Mutation(() => Paticipant)

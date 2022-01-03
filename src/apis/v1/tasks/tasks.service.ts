@@ -5,6 +5,8 @@ import * as TaskDto from './classes/tasks.dto';
 import { TasksCreateService } from './services.helper/create/tasks.create.service';
 import { TasksDeleteService } from './services.helper/delete/tasks.delete.service';
 import { TasksFindService } from './services.helper/find/tasks.find.service';
+import { TasksPutService } from './services.helper/put/tasks.put.service';
+import { TasksResolverFieldService } from './services.helper/resolvedField/tasks.resolveField.service';
 
 @Injectable()
 export class TasksService {
@@ -12,21 +14,39 @@ export class TasksService {
 		private readonly tasksCreateService: TasksCreateService,
 		private readonly tasksDeleteService: TasksDeleteService,
 		private readonly tasksFindService: TasksFindService,
+		private readonly tasksPutService: TasksPutService,
+		private readonly tasksResolverFieldService: TasksResolverFieldService,
 	) {}
 
-	async findTasksByListId (getTasksInput: TaskDto.GetTasksInput) {
-		return await this.tasksFindService.findTasksByListId(getTasksInput);
+	findTasksByListId (getTasksInput: TaskDto.GetTasksInput) {
+		return this.tasksFindService.findTasksByListId(getTasksInput);
 	}
 
-	async createTask (getTasksInput: TaskDto.CreateTaskInput, user: IPayLoadToken) {
-		return await this.tasksCreateService.createTask(getTasksInput, user);
+	createTask (getTasksInput: TaskDto.CreateTaskInput, user: IPayLoadToken) {
+		return this.tasksCreateService.createTask(getTasksInput, user);
 	}
 
-	async deleteTasks (deleteTaskInput: TaskDto.DeleteTaskInput, user: IPayLoadToken) {
-		return await this.tasksDeleteService.deleteTasks(deleteTaskInput, user);
+	deleteTasks (deleteTaskInput: TaskDto.DeleteTaskInput, user: IPayLoadToken) {
+		return this.tasksDeleteService.deleteTasks(deleteTaskInput, user);
 	}
 
-	async deleteTasksByListId (_listId: string) {
-		return await this.tasksDeleteService.deleteTasksByListId(_listId);
+	deleteTasksByListId (_listId: string) {
+		return this.tasksDeleteService.deleteTasksByListId(_listId);
+	}
+
+	changeTaskName (changeTaskNameInput: TaskDto.ChangeTaskNameInput, user: IPayLoadToken) {
+		return this.tasksPutService.changeTaskName(changeTaskNameInput, user);
+	}
+
+	changeAssignee (changeAssigneeInput: TaskDto.ChangeAssigneeInput, user: IPayLoadToken) {
+		return this.tasksPutService.changeAssignee(changeAssigneeInput, user);
+	}
+
+	getProject (_id: string) {
+		return this.tasksResolverFieldService.getProject(_id);
+	}
+
+	getUser (_id: string) {
+		return this.tasksResolverFieldService.getUser(_id);
 	}
 }

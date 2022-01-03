@@ -56,11 +56,12 @@ export class PaticipantsFindService {
 	async findPaticipantByProjectAndMember (
 		{ _projectId }: PaticipantDTO.GetPaticipantByProjectAndMemberInput,
 		user: IPayLoadToken,
-	): Promise<PaticipantDocument> {
+		returnNull: boolean,
+	): Promise<PaticipantDocument | null> {
 		const paticipant = await this.paticipantEntity.findOne({ _projectId, _memberId: user._id });
 
-		if (paticipant === null) {
-			throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+		if (paticipant === null && !returnNull) {
+			throw new HttpException('Not Found findPaticipantByProjectAndMember', HttpStatus.NOT_FOUND);
 		}
 
 		return paticipant;
