@@ -1,4 +1,4 @@
-import { Resolver, Args, Query, Mutation } from '@nestjs/graphql';
+import { Resolver, Args, Mutation } from '@nestjs/graphql';
 import { ProjectsService } from './projects.service';
 import { Project } from './classes/project.entity';
 import { CurrentUser } from 'common/decorator/CurrentUser.decorator';
@@ -17,7 +17,7 @@ export class ProjectsResolver {
 		return this.projectsService.findAll(getProjectsInput._spacesId, user._id);
 	}
 
-	@Query(() => Project)
+	@Mutation(() => Project)
 	async getProjectById (@Args('getProjectInput') getProjectInput: ProjectDTO.GetProjectInput) {
 		return this.projectsService.findById(getProjectInput._projectId);
 	}

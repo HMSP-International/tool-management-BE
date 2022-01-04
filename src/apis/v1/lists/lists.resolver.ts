@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { ListsService } from './lists.service';
 import { List } from './classes/list.entity';
 import * as ListDTO from './classes/lists.dto';
@@ -14,7 +14,7 @@ export class ListsResolver {
 		return this.listsService.create(createListInput, user);
 	}
 
-	@Query(() => [ List ])
+	@Mutation(() => [ List ])
 	getLists (@Args('getListsInput') getListsInput: ListDTO.GetListsInput) {
 		return this.listsService.findAllByProjectId(getListsInput);
 	}
