@@ -21,15 +21,17 @@ export class UsersPutService {
 			throw new NotFoundException('Password Invalid');
 		}
 
-		return await this.userEntity.findByIdAndUpdate(_id, { password: newPassword }, { new: true });
+		user.password = newPassword;
+		return await user.save();
 	}
 
 	async changePasswordByAdmin (changePasswordInputByAdmin: UserDto.ChangePasswordInputByAdmin): Promise<UserModel> {
 		const { newPassword, _id } = changePasswordInputByAdmin;
-		const user = await this.userEntity.findByIdAndUpdate(_id, { password: newPassword }, { new: true });
+		const user = await this.userEntity.findById(_id);
 		if (!user) throw new NotFoundException('This user not found');
 
-		return user;
+		user.password = newPassword;
+		return await user.save();
 	}
 
 	async changeInformation (_id: string, changeInformationInput: UserDto.ChangeInformationInput): Promise<UserModel> {
