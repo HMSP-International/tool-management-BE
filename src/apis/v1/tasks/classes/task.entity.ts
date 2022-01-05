@@ -28,4 +28,7 @@ export class Task {
 
 	@Field(() => User, { nullable: true })
 	assignee: string;
+
+	@Field(() => [ String ])
+	descriptions: string[];
 }

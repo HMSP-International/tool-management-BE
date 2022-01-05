@@ -30,6 +30,9 @@ export class TaskModel {
 
 	@Prop({ type: ObjectId, ref: UserModel.name }) //
 	assignee: string;
+
+	@Prop({ type: [ String ], default: [] }) //
+	descriptions: string[];
 }
 
 export const TaskSchema = SchemaFactory.createForClass(TaskModel);

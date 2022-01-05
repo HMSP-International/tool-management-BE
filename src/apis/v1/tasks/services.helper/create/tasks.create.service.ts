@@ -21,7 +21,7 @@ export class TasksCreateService {
 	) {}
 
 	async createTask (getTasksInput: TaskDto.CreateTaskInput, user: IPayLoadToken): Promise<TaskDocument> {
-		const { _listId, name, assignee } = getTasksInput;
+		const { _listId, name, assignee, descriptions } = getTasksInput;
 		// check _listId
 		const list = await this.listsService.findById(_listId);
 
@@ -49,6 +49,7 @@ export class TasksCreateService {
 			_projectId: project._id,
 			reporter: user._id,
 			order,
+			descriptions,
 		});
 
 		return await newTask.save();

@@ -1,5 +1,5 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { IsString, Length, IsOptional } from 'class-validator';
+import { IsString, Length, IsOptional, IsArray } from 'class-validator';
 
 @InputType()
 export class GetTasksInput {
@@ -25,6 +25,10 @@ export class CreateTaskInput {
 	@IsString()
 	@Field(() => String)
 	name: string;
+
+	@IsArray()
+	@Field(() => [ String ])
+	descriptions: string[];
 }
 
 @InputType()
@@ -45,7 +49,6 @@ export class ChangeTaskNameInput {
 	@Field(() => String)
 	name: string;
 }
-
 
 @InputType()
 export class ChangeAssigneeInput {
