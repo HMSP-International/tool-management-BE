@@ -1,6 +1,6 @@
+import * as ListDTO from './classes/lists.dto';
 import { Injectable } from '@nestjs/common';
 import { IPayLoadToken } from 'helpers/modules/token/token.interface';
-import * as ListDTO from './classes/lists.dto';
 
 import { ListsCreateService } from './services.helper/create/lists.create.service';
 import { ListsDeleteService } from './services.helper/delete/lists.delete.service';

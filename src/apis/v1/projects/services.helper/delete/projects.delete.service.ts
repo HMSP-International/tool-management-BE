@@ -19,6 +19,7 @@ export class ProjectsDeleteService {
 
 	async deleteProjectById (_projectId: string, user: IPayLoadToken): Promise<Project> {
 		const project = await this.projectEntity.findById(_projectId);
+
 		if (project === null) {
 			throw new HttpException('Not Found _projectId', HttpStatus.NOT_FOUND);
 		}
@@ -26,10 +27,10 @@ export class ProjectsDeleteService {
 			throw new HttpException('FORBIDDEN', HttpStatus.FORBIDDEN);
 		}
 
-		const projectDeleted = await this.projectEntity.findByIdAndDelete(_projectId);
+		await this.listsService.deleteByProjectId(_projectId, user);
+		await this.paticipantsService.deleteByProjectId(_projectId);
 
-		this.listsService.deleteByProjectId(_projectId, user);
-		this.paticipantsService.deleteByProjectId(_projectId);
+		const projectDeleted = await this.projectEntity.findByIdAndDelete(_projectId);
 
 		return projectDeleted;
 	}
