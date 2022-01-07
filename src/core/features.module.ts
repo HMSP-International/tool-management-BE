@@ -4,6 +4,7 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 // Module
 import { AuthModule } from 'apis/v1/auth/auth.module';
 import { CollaboratorsModule } from 'apis/v1/collaborators/collaborators.module';
+import { CommentsModule } from 'apis/v1/comments/comments.module';
 import { ListsModule } from 'apis/v1/lists/lists.module';
 import { PaticipantsModule } from 'apis/v1/paticipants/paticipants.module';
 import { PermissionsModule } from 'apis/v1/permissions/permissions.module';
@@ -18,6 +19,7 @@ import { UsersModule } from 'apis/v1/users/users.module';
 		[
 			AuthModule,
 			CollaboratorsModule,
+			CommentsModule,
 			ListsModule,
 			PaticipantsModule,
 			PermissionsModule,

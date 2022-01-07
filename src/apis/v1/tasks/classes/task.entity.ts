@@ -1,6 +1,7 @@
 import { ObjectType, Field } from '@nestjs/graphql';
 import { Project } from 'apis/v1/projects/classes/project.entity';
 import { User } from 'apis/v1/users/classes/user.entity';
+import { Comment } from 'apis/v1/comments/classes/comment.entity';
 import { Timestamp } from './timestamp';
 
 @ObjectType()
@@ -31,4 +32,7 @@ export class Task {
 
 	@Field(() => String)
 	descriptions: string;
+
+	@Field(() => [ Comment ])
+	comments: string[];
 }

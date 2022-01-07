@@ -57,4 +57,8 @@ export class TasksService {
 	getUser (_id: string) {
 		return this.tasksResolverFieldService.getUser(_id);
 	}
+
+	getComments (ids: string[]) {
+		return this.tasksResolverFieldService.getComments(ids);
+	}
 }

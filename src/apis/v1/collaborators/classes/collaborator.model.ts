@@ -3,7 +3,6 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 import { SpaceModel } from 'apis/v1/spaces/classes/space.model';
 import { UserModel } from 'apis/v1/users/classes/user.model';
-import { ProjectModel } from 'apis/v1/projects/classes/project.model';
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
 export type CollaboratorDocument = CollaboratorModel & mongoose.Document;

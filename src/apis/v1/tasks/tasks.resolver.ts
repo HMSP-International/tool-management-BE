@@ -6,6 +6,7 @@ import { CurrentUser } from 'common/decorator/CurrentUser.decorator';
 import { IPayLoadToken } from 'helpers/modules/token/token.interface';
 import { User } from '../users/classes/user.entity';
 import { Project } from '../projects/classes/project.entity';
+import { Comment } from '../comments/classes/comment.entity';
 
 @Resolver(() => Task)
 export class TasksResolver {
@@ -71,5 +72,10 @@ export class TasksResolver {
 	@ResolveField(() => User)
 	reporter (@Parent() task: Task) {
 		return this.tasksService.getUser(task.reporter);
+	}
+
+	@ResolveField(() => [ Comment ])
+	comments (@Parent() task: Task) {
+		return this.tasksService.getComments(task.comments);
 	}
 }

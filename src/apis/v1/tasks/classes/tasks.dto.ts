@@ -34,6 +34,8 @@ export class CreateTaskInput {
 	@Field(() => String)
 	name: string;
 
+	@Length(0, 1000)
+	@IsString()
 	@Field(() => String)
 	descriptions: string;
 }
@@ -77,6 +79,7 @@ export class ChangeDescriptionsInput {
 	@Field(() => String)
 	_taskId: string;
 
+	@Length(0, 1000)
 	@IsString()
 	@Field(() => String)
 	descriptions: string;
