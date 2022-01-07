@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -14,5 +14,15 @@ export class TasksFindService {
 		const { _listId } = getTasksInput;
 
 		return await this.taskEntity.find({ _listId });
+	}
+
+	async findById ({ _taskId }: TaskDto.GetTaskByIdInput): Promise<TaskDocument> {
+		const task = await this.taskEntity.findById(_taskId);
+
+		if (task === null) {
+			throw new HttpException('Not Found taskId', HttpStatus.NOT_FOUND);
+		}
+
+		return task;
 	}
 }

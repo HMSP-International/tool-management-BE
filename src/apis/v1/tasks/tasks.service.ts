@@ -22,6 +22,10 @@ export class TasksService {
 		return this.tasksFindService.findTasksByListId(getTasksInput);
 	}
 
+	findById (getTaskByIdInput: TaskDto.GetTaskByIdInput) {
+		return this.tasksFindService.findById(getTaskByIdInput);
+	}
+
 	createTask (getTasksInput: TaskDto.CreateTaskInput, user: IPayLoadToken) {
 		return this.tasksCreateService.createTask(getTasksInput, user);
 	}
@@ -40,6 +44,10 @@ export class TasksService {
 
 	changeAssignee (changeAssigneeInput: TaskDto.ChangeAssigneeInput, user: IPayLoadToken) {
 		return this.tasksPutService.changeAssignee(changeAssigneeInput, user);
+	}
+
+	changeDescriptions (changeAssigneeInput: TaskDto.ChangeDescriptionsInput, user: IPayLoadToken) {
+		return this.tasksPutService.changeDescriptions(changeAssigneeInput, user);
 	}
 
 	getProject (_id: string) {

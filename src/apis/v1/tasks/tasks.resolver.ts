@@ -12,8 +12,13 @@ export class TasksResolver {
 	constructor (private readonly tasksService: TasksService) {}
 
 	@Mutation(() => [ Task ])
-	getTasksByListId (@Args('getTasksInput') getTasksInput: TaskDto.GetTasksInput, @CurrentUser() user: IPayLoadToken) {
+	getTasksByListId (@Args('getTasksInput') getTasksInput: TaskDto.GetTasksInput) {
 		return this.tasksService.findTasksByListId(getTasksInput);
+	}
+
+	@Mutation(() => Task)
+	getTaskById (@Args('getTaskByIdInput') getTaskByIdInput: TaskDto.GetTaskByIdInput) {
+		return this.tasksService.findById(getTaskByIdInput);
 	}
 
 	@Mutation(() => Task)
@@ -43,6 +48,14 @@ export class TasksResolver {
 		@CurrentUser() user: IPayLoadToken,
 	) {
 		return this.tasksService.changeAssignee(changeAssigneeInput, user);
+	}
+
+	@Mutation(() => Task)
+	changeDescriptions (
+		@Args('changeDescriptionsInput') changeDescriptionsInput: TaskDto.ChangeDescriptionsInput,
+		@CurrentUser() user: IPayLoadToken,
+	) {
+		return this.tasksService.changeDescriptions(changeDescriptionsInput, user);
 	}
 
 	@ResolveField(() => Project)

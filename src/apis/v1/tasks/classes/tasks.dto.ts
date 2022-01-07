@@ -9,6 +9,14 @@ export class GetTasksInput {
 }
 
 @InputType()
+export class GetTaskByIdInput {
+	@Length(24, 24)
+	@IsString()
+	@Field(() => String)
+	_taskId: string;
+}
+
+@InputType()
 export class CreateTaskInput {
 	@Length(24, 24)
 	@IsString()
@@ -26,9 +34,8 @@ export class CreateTaskInput {
 	@Field(() => String)
 	name: string;
 
-	@IsArray()
-	@Field(() => [ String ])
-	descriptions: string[];
+	@Field(() => String)
+	descriptions: string;
 }
 
 @InputType()
@@ -61,4 +68,16 @@ export class ChangeAssigneeInput {
 	@IsString()
 	@Field(() => String)
 	assignee: string;
+}
+
+@InputType()
+export class ChangeDescriptionsInput {
+	@Length(24, 24)
+	@IsString()
+	@Field(() => String)
+	_taskId: string;
+
+	@IsString()
+	@Field(() => String)
+	descriptions: string;
 }
