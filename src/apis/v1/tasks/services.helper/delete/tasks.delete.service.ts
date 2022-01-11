@@ -39,4 +39,12 @@ export class TasksDeleteService {
 
 		await Promise.all(tasksDeleted);
 	}
+
+	async removeComment (_taskId: string, _commentId: string): Promise<void> {
+		const task = await this.taskEntity.findById(_taskId);
+
+		task.comments = task.comments.filter(c => c.toString() !== _commentId);
+
+		task.save();
+	}
 }

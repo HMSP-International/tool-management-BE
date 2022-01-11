@@ -19,6 +19,22 @@ export class CommentsResolver {
 		return this.commentsService.create(createCommentInput, user);
 	}
 
+	@Mutation(() => Comment)
+	deleteCommentById (
+		@Args('deleteCommentInput') deleteCommentInput: commentDTO.DeleteCommentInput,
+		@CurrentUser() user: IPayLoadToken,
+	) {
+		return this.commentsService.deleteTaskById(deleteCommentInput, user);
+	}
+
+	@Mutation(() => Comment)
+	changeContentByCommentId (
+		@Args('putChangeCommentInput') putChangeCommentInput: commentDTO.PutChangeCommentInput,
+		@CurrentUser() user: IPayLoadToken,
+	) {
+		return this.commentsService.changeContentByCommentId(putChangeCommentInput, user);
+	}
+
 	@ResolveField(() => User)
 	_userId (@Parent() comment: Comment) {
 		return this.commentsService.getUser(comment._userId);

@@ -38,6 +38,10 @@ export class TasksService {
 		return this.tasksDeleteService.deleteTasksByListId(_listId);
 	}
 
+	removeComment (_taskId: string, _commentId: string) {
+		return this.tasksDeleteService.removeComment(_taskId, _commentId);
+	}
+
 	changeTaskName (changeTaskNameInput: TaskDto.ChangeTaskNameInput, user: IPayLoadToken) {
 		return this.tasksPutService.changeTaskName(changeTaskNameInput, user);
 	}
