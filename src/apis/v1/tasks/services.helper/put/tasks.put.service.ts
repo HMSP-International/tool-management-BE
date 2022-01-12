@@ -40,7 +40,9 @@ export class TasksPutService {
 	async changeTaskName (getTasksInput: TaskDto.ChangeTaskNameInput, user: IPayLoadToken): Promise<TaskDocument> {
 		const { _taskId, name } = getTasksInput;
 		const task = await this.taskEntity.findById(_taskId);
-
+		if (task === null) {
+			throw new HttpException('Not Found taskId', HttpStatus.NOT_FOUND);
+		}
 		// check permissions
 		this.checkPermistion(task, user);
 
@@ -77,5 +79,34 @@ export class TasksPutService {
 		this.checkPermistion(task, user);
 
 		return await this.taskEntity.findByIdAndUpdate(_taskId, { descriptions }, { new: true });
+	}
+
+	async changeListOfTask (
+		changeListOfTaskInput: TaskDto.ChangeListOfTaskInput,
+		user: IPayLoadToken,
+	): Promise<TaskDocument> {
+		const { _taskId, _listId } = changeListOfTaskInput;
+
+		const task = await this.taskEntity.findById(_taskId);
+		if (task === null) {
+			throw new HttpException('Not Found taskId', HttpStatus.NOT_FOUND);
+		}
+
+		// check permissions
+		const list = await this.listsService.findById(task._listId);
+		// check project
+		let count = 0;
+		const project = await this.projectsService.findById(list._projectId);
+		if (project.owner.toString() !== user._id) count++;
+		// check admin in paticipants
+		const paticipant = await this.paticipantsService.findPaticipantByProjectAndMember(
+			{ _projectId: project._id },
+			user,
+			true,
+		);
+		if (paticipant === null) count++;
+		if (count === 2) throw new HttpException('FORBIDDEN', HttpStatus.FORBIDDEN);
+
+		return await this.taskEntity.findByIdAndUpdate(_taskId, { _listId }, { new: true });
 	}
 }

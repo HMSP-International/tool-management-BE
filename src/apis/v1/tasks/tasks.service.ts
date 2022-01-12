@@ -54,6 +54,10 @@ export class TasksService {
 		return this.tasksPutService.changeDescriptions(changeAssigneeInput, user);
 	}
 
+	changeListOfTask (changeListOfTaskInput: TaskDto.ChangeListOfTaskInput, user: IPayLoadToken) {
+		return this.tasksPutService.changeListOfTask(changeListOfTaskInput, user);
+	}
+
 	getProject (_id: string) {
 		return this.tasksResolverFieldService.getProject(_id);
 	}

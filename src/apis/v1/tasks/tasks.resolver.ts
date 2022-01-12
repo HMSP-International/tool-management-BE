@@ -59,6 +59,14 @@ export class TasksResolver {
 		return this.tasksService.changeDescriptions(changeDescriptionsInput, user);
 	}
 
+	@Mutation(() => Task)
+	changeListOfTask (
+		@Args('changeListOfTaskInput') changeListOfTaskInput: TaskDto.ChangeListOfTaskInput,
+		@CurrentUser() user: IPayLoadToken,
+	) {
+		return this.tasksService.changeListOfTask(changeListOfTaskInput, user);
+	}
+
 	@ResolveField(() => Project)
 	_projectId (@Parent() task: Task) {
 		return this.tasksService.getProject(task._projectId);

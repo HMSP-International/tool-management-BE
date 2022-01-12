@@ -84,3 +84,16 @@ export class ChangeDescriptionsInput {
 	@Field(() => String)
 	descriptions: string;
 }
+
+@InputType()
+export class ChangeListOfTaskInput {
+	@Length(24, 24)
+	@IsString()
+	@Field(() => String)
+	_taskId: string;
+
+	@Length(24, 24)
+	@IsString()
+	@Field(() => String)
+	_listId: string;
+}

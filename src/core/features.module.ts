@@ -1,5 +1,5 @@
 // 3rd dependencies
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { Module, NestModule } from '@nestjs/common';
 
 // Module
 import { AuthModule } from 'apis/v1/auth/auth.module';
@@ -31,5 +31,5 @@ import { UsersModule } from 'apis/v1/users/users.module';
 		],
 })
 export class FeaturesModule implements NestModule {
-	configure (consumer: MiddlewareConsumer) {}
+	configure () {}
 }

@@ -26,8 +26,6 @@ export class JwtMiddleware implements NestMiddleware {
 
 			req.user = decoded;
 		} catch (error) {
-			console.log(error);
-
 			throw new HttpException(error.message, HttpStatus.FORBIDDEN);
 		}
 
