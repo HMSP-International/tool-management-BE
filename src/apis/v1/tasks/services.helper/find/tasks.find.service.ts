@@ -11,7 +11,11 @@ export class TasksFindService {
 	constructor (@InjectModel(TaskModel.name) private taskEntity: Model<TaskDocument>) {}
 
 	async findTasksByListId (getTasksInput: TaskDto.GetTasksInput): Promise<TaskDocument[]> {
-		const { _listId } = getTasksInput;
+		const { _listId, _userIds } = getTasksInput;
+
+		if (_userIds.length > 0) {
+			return await this.taskEntity.find({ _listId, assignee: { $in: _userIds } });
+		}
 
 		return await this.taskEntity.find({ _listId });
 	}

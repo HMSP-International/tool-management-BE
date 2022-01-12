@@ -1,11 +1,15 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { IsString, Length, IsOptional, IsArray } from 'class-validator';
+import { IsString, Length, IsOptional } from 'class-validator';
 
 @InputType()
 export class GetTasksInput {
+	@Length(24, 24)
 	@IsString()
 	@Field(() => String)
 	_listId: string;
+
+	@Field(() => [ String ])
+	_userIds: string[];
 }
 
 @InputType()
