@@ -20,6 +20,18 @@ export class TasksPutService {
 		private readonly paticipantsService: PaticipantsService,
 	) {}
 
+	async resetOrder (_listId: string): Promise<void> {
+		const tasks = await this.taskEntity.find({ _listId });
+
+		const arr = [];
+		for (const task of tasks) {
+			task.order = task.order - 1;
+			arr.push(task.save());
+		}
+
+		Promise.all(arr);
+	}
+
 	async checkPermistion (task: TaskDocument, user: IPayLoadToken) {
 		const list = await this.listsService.findById(task._listId);
 
@@ -106,7 +118,13 @@ export class TasksPutService {
 		);
 		if (paticipant === null) count++;
 		if (count === 2) throw new HttpException('FORBIDDEN', HttpStatus.FORBIDDEN);
+		const order = await this.taskEntity.countDocuments({ _listId });
 
-		return await this.taskEntity.findByIdAndUpdate(_taskId, { _listId }, { new: true });
+		// reset task of old list
+		const oldTasks = await this.taskEntity.find({ _listId: task._listId, order: { $gt: task.order } });
+
+		const taskUpdated = await this.taskEntity.findByIdAndUpdate(_taskId, { _listId, order }, { new: true });
+
+		return taskUpdated;
 	}
 }
