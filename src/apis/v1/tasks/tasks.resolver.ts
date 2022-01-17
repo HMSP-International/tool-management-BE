@@ -1,6 +1,6 @@
 import { Args, Mutation, Parent, ResolveField, Resolver } from '@nestjs/graphql';
 import { TasksService } from './tasks.service';
-import { Task } from './classes/task.entity';
+import { Task, DragAndDrop } from './classes/task.entity';
 import * as TaskDto from './classes/tasks.dto';
 import { CurrentUser } from 'common/decorator/CurrentUser.decorator';
 import { IPayLoadToken } from 'helpers/modules/token/token.interface';
@@ -65,6 +65,15 @@ export class TasksResolver {
 		@CurrentUser() user: IPayLoadToken,
 	) {
 		return this.tasksService.changeListOfTask(changeListOfTaskInput, user);
+	}
+
+	@Mutation(() => DragAndDrop)
+	changeListOfTaskWithDragAndDropInOneList (
+		@Args('changeListOfTaskWithDragAndDropInput')
+		changeListOfTaskWithDragAndDropInput: TaskDto.ChangeListOfTaskWithDragAndDropInput,
+		@CurrentUser() user: IPayLoadToken,
+	) {
+		return this.tasksService.changeListOfTaskWithDragAndDropInOneList(changeListOfTaskWithDragAndDropInput, user);
 	}
 
 	@ResolveField(() => Project)

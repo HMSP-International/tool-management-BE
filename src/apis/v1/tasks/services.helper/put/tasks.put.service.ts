@@ -7,6 +7,7 @@ import * as TaskDto from '../../classes/tasks.dto';
 import { ListsService } from 'apis/v1/lists/lists.service';
 import { ProjectsService } from 'apis/v1/projects/projects.service';
 import { PaticipantsService } from 'apis/v1/paticipants/paticipants.service';
+import { DragAndDrop } from '../../classes/task.entity';
 
 @Injectable()
 export class TasksPutService {
@@ -19,6 +20,10 @@ export class TasksPutService {
 		@Inject(forwardRef(() => PaticipantsService))
 		private readonly paticipantsService: PaticipantsService,
 	) {}
+
+	insertAt (array: any[], index: number, ...elementsArray: any) {
+		array.splice(index, 0, ...elementsArray);
+	}
 
 	async resetOrder (_listId: string): Promise<void> {
 		const tasks = await this.taskEntity.find({ _listId });
@@ -46,6 +51,23 @@ export class TasksPutService {
 			true,
 		);
 		if (paticipant === null || paticipant.role === 'member') count++;
+		if (count === 2) throw new HttpException('FORBIDDEN', HttpStatus.FORBIDDEN);
+	}
+
+	async checkPermistion2 (task: TaskDocument, user: IPayLoadToken) {
+		const list = await this.listsService.findById(task._listId);
+
+		// check project
+		let count = 0;
+		const project = await this.projectsService.findById(list._projectId);
+		if (project.owner.toString() !== user._id) count++;
+		// check admin in paticipants
+		const paticipant = await this.paticipantsService.findPaticipantByProjectAndMember(
+			{ _projectId: project._id },
+			user,
+			true,
+		);
+		if (paticipant === null) count++;
 		if (count === 2) throw new HttpException('FORBIDDEN', HttpStatus.FORBIDDEN);
 	}
 
@@ -104,24 +126,11 @@ export class TasksPutService {
 			throw new HttpException('Not Found taskId', HttpStatus.NOT_FOUND);
 		}
 
-		// check permissions
-		const list = await this.listsService.findById(task._listId);
-		// check project
-		let count = 0;
-		const project = await this.projectsService.findById(list._projectId);
-		if (project.owner.toString() !== user._id) count++;
-		// check admin in paticipants
-		const paticipant = await this.paticipantsService.findPaticipantByProjectAndMember(
-			{ _projectId: project._id },
-			user,
-			true,
-		);
-		if (paticipant === null) count++;
-		if (count === 2) throw new HttpException('FORBIDDEN', HttpStatus.FORBIDDEN);
-		const order = await this.taskEntity.countDocuments({ _listId });
+		this.checkPermistion2(task, user);
 
 		// reset task of old list
 		// all task with order greater than the task you want to change => o order will be minus by 1 => order = order - 1
+		const order = await this.taskEntity.countDocuments({ _listId });
 		const oldTasksOfList = await this.taskEntity.find({ _listId: task._listId, order: { $gt: task.order } });
 
 		for (const oldTask of oldTasksOfList) {
@@ -131,5 +140,47 @@ export class TasksPutService {
 
 		const taskUpdated = await this.taskEntity.findByIdAndUpdate(_taskId, { _listId, order }, { new: true });
 		return taskUpdated;
+	}
+
+	async changeListOfTaskWithDragAndDropInOneList (
+		changeListOfTaskWithDragAndDropInput: TaskDto.ChangeListOfTaskWithDragAndDropInput,
+		user: IPayLoadToken,
+	): Promise<DragAndDrop> {
+		const { _taskId, destination } = changeListOfTaskWithDragAndDropInput;
+
+		const task = await this.taskEntity.findById(_taskId);
+		if (task === null) {
+			throw new HttpException('Not Found taskId', HttpStatus.NOT_FOUND);
+		}
+		const source = {
+			_listId: task._listId,
+			index: task.order,
+		};
+
+		this.checkPermistion2(task, user);
+
+		// reset task of old list
+		const TasksOfList = await this.taskEntity.find({ _listId: task._listId });
+		const indexTask = TasksOfList.findIndex(item => item._id.toString() === _taskId);
+
+		if (indexTask >= 0) {
+			const [ taskRemoved ] = TasksOfList.splice(indexTask, 1);
+
+			const min = Math.min(destination.index, source.index);
+			const max = Math.max(destination.index, source.index);
+			this.insertAt(TasksOfList, destination.index, taskRemoved);
+			for (let i = min; i <= max; i++) {
+				TasksOfList[i].order = i;
+				TasksOfList[i].save();
+			}
+
+			const dragAndDrop = {
+				_taskId,
+				destination: { ...destination, _listId: task._listId },
+				source,
+			};
+
+			return dragAndDrop;
+		}
 	}
 }

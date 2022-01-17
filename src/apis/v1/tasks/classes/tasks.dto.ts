@@ -101,3 +101,22 @@ export class ChangeListOfTaskInput {
 	@Field(() => String)
 	_listId: string;
 }
+
+export interface IDraggableLocation {
+	index: number;
+}
+@InputType()
+export class DraggableLocation {
+	@Field(() => Number)
+	index: number;
+}
+@InputType()
+export class ChangeListOfTaskWithDragAndDropInput {
+	@Field(() => DraggableLocation)
+	destination: IDraggableLocation;
+
+	@Length(24, 24)
+	@IsString()
+	@Field(() => String)
+	_taskId: string;
+}

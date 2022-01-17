@@ -58,6 +58,16 @@ export class TasksService {
 		return this.tasksPutService.changeListOfTask(changeListOfTaskInput, user);
 	}
 
+	changeListOfTaskWithDragAndDropInOneList (
+		changeListOfTaskWithDragAndDropInput: TaskDto.ChangeListOfTaskWithDragAndDropInput,
+		user: IPayLoadToken,
+	) {
+		return this.tasksPutService.changeListOfTaskWithDragAndDropInOneList(
+			changeListOfTaskWithDragAndDropInput,
+			user,
+		);
+	}
+
 	getProject (_id: string) {
 		return this.tasksResolverFieldService.getProject(_id);
 	}
