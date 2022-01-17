@@ -143,7 +143,7 @@ export class TasksPutService {
 	}
 
 	async changeListOfTaskWithDragAndDropInOneList (
-		changeListOfTaskWithDragAndDropInput: TaskDto.ChangeListOfTaskWithDragAndDropInput,
+		changeListOfTaskWithDragAndDropInput: TaskDto.ChangeListOfTaskWithDragAndDropIn1ListInput,
 		user: IPayLoadToken,
 	): Promise<DragAndDrop> {
 		const { _taskId, destination } = changeListOfTaskWithDragAndDropInput;
@@ -160,23 +160,69 @@ export class TasksPutService {
 		this.checkPermistion2(task, user);
 
 		// reset task of old list
-		const TasksOfList = await this.taskEntity.find({ _listId: task._listId });
-		const indexTask = TasksOfList.findIndex(item => item._id.toString() === _taskId);
+		const tasksOfList = await this.taskEntity.find({ _listId: task._listId });
+		const indexTask = tasksOfList.findIndex(item => item._id.toString() === _taskId);
 
 		if (indexTask >= 0) {
-			const [ taskRemoved ] = TasksOfList.splice(indexTask, 1);
+			const [ taskRemoved ] = tasksOfList.splice(indexTask, 1);
 
 			const min = Math.min(destination.index, source.index);
 			const max = Math.max(destination.index, source.index);
-			this.insertAt(TasksOfList, destination.index, taskRemoved);
+			this.insertAt(tasksOfList, destination.index, taskRemoved);
 			for (let i = min; i <= max; i++) {
-				TasksOfList[i].order = i;
-				TasksOfList[i].save();
+				tasksOfList[i].order = i;
+				tasksOfList[i].save();
 			}
 
 			const dragAndDrop = {
 				_taskId,
 				destination: { ...destination, _listId: task._listId },
+				source,
+			};
+
+			return dragAndDrop;
+		}
+	}
+
+	async changeListOfTaskWithDragAndDropInAnotherList (
+		changeListOfTaskWithDragAndDropInAnotherListInput: TaskDto.ChangeListOfTaskWithDragAndDropInAnotherListInput,
+		user: IPayLoadToken,
+	): Promise<DragAndDrop> {
+		const { _taskId, destination } = changeListOfTaskWithDragAndDropInAnotherListInput;
+
+		const task = await this.taskEntity.findById(_taskId);
+		if (task === null) {
+			throw new HttpException('Not Found taskId', HttpStatus.NOT_FOUND);
+		}
+		const source = {
+			_listId: task._listId,
+			index: task.order,
+		};
+
+		this.checkPermistion2(task, user);
+
+		// reset task of old list
+		const tasksOfOldList = await this.taskEntity.find({ _listId: task._listId });
+		const tasksOfNewList = await this.taskEntity.find({ _listId: destination._listId });
+		const indexTask = tasksOfOldList.findIndex(item => item._id.toString() === _taskId);
+
+		if (indexTask >= 0) {
+			const [ taskRemoved ] = tasksOfOldList.splice(indexTask, 1);
+			taskRemoved._listId = destination._listId;
+
+			for (let i = indexTask; i < tasksOfOldList.length; i++) {
+				tasksOfOldList[i].order = i;
+				tasksOfOldList[i].save();
+			}
+			this.insertAt(tasksOfNewList, destination.index, taskRemoved);
+			for (let i = destination.index; i < tasksOfNewList.length; i++) {
+				tasksOfNewList[i].order = i;
+				tasksOfNewList[i].save();
+			}
+
+			const dragAndDrop = {
+				_taskId,
+				destination,
 				source,
 			};
 

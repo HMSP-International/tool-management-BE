@@ -3,7 +3,7 @@ import { Project } from 'apis/v1/projects/classes/project.entity';
 import { User } from 'apis/v1/users/classes/user.entity';
 import { Comment } from 'apis/v1/comments/classes/comment.entity';
 import { Timestamp } from './timestamp';
-import { IDraggableLocation } from './tasks.dto';
+import { DraggableLocationAnotherList } from './tasks.dto';
 
 @ObjectType()
 export class Task {
@@ -50,10 +50,10 @@ export class Draggable {
 @ObjectType()
 export class DragAndDrop {
 	@Field(() => Draggable)
-	destination: IDraggableLocation;
+	destination: DraggableLocationAnotherList;
 
 	@Field(() => Draggable)
-	source: IDraggableLocation;
+	source: DraggableLocationAnotherList;
 
 	@Field(() => String)
 	_taskId: string;

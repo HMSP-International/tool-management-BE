@@ -59,11 +59,21 @@ export class TasksService {
 	}
 
 	changeListOfTaskWithDragAndDropInOneList (
-		changeListOfTaskWithDragAndDropInput: TaskDto.ChangeListOfTaskWithDragAndDropInput,
+		changeListOfTaskWithDragAndDropInput: TaskDto.ChangeListOfTaskWithDragAndDropIn1ListInput,
 		user: IPayLoadToken,
 	) {
 		return this.tasksPutService.changeListOfTaskWithDragAndDropInOneList(
 			changeListOfTaskWithDragAndDropInput,
+			user,
+		);
+	}
+
+	changeListOfTaskWithDragAndDropInAnotherList (
+		changeListOfTaskWithDragAndDropInAnotherListInput: TaskDto.ChangeListOfTaskWithDragAndDropInAnotherListInput,
+		user: IPayLoadToken,
+	) {
+		return this.tasksPutService.changeListOfTaskWithDragAndDropInAnotherList(
+			changeListOfTaskWithDragAndDropInAnotherListInput,
 			user,
 		);
 	}

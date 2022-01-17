@@ -69,11 +69,26 @@ export class TasksResolver {
 
 	@Mutation(() => DragAndDrop)
 	changeListOfTaskWithDragAndDropInOneList (
-		@Args('changeListOfTaskWithDragAndDropInput')
-		changeListOfTaskWithDragAndDropInput: TaskDto.ChangeListOfTaskWithDragAndDropInput,
+		@Args('changeListOfTaskWithDragAndDropIn1ListInput')
+		changeListOfTaskWithDragAndDropIn1ListInput: TaskDto.ChangeListOfTaskWithDragAndDropIn1ListInput,
 		@CurrentUser() user: IPayLoadToken,
 	) {
-		return this.tasksService.changeListOfTaskWithDragAndDropInOneList(changeListOfTaskWithDragAndDropInput, user);
+		return this.tasksService.changeListOfTaskWithDragAndDropInOneList(
+			changeListOfTaskWithDragAndDropIn1ListInput,
+			user,
+		);
+	}
+
+	@Mutation(() => DragAndDrop)
+	changeListOfTaskWithDragAndDropInAnotherList (
+		@Args('changeListOfTaskWithDragAndDropInAnotherListInput')
+		changeListOfTaskWithDragAndDropInAnotherListInput: TaskDto.ChangeListOfTaskWithDragAndDropInAnotherListInput,
+		@CurrentUser() user: IPayLoadToken,
+	) {
+		return this.tasksService.changeListOfTaskWithDragAndDropInAnotherList(
+			changeListOfTaskWithDragAndDropInAnotherListInput,
+			user,
+		);
 	}
 
 	@ResolveField(() => Project)
