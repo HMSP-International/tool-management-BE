@@ -121,10 +121,15 @@ export class TasksPutService {
 		const order = await this.taskEntity.countDocuments({ _listId });
 
 		// reset task of old list
-		const oldTasks = await this.taskEntity.find({ _listId: task._listId, order: { $gt: task.order } });
+		// all task with order greater than the task you want to change => o order will be minus by 1 => order = order - 1
+		const oldTasksOfList = await this.taskEntity.find({ _listId: task._listId, order: { $gt: task.order } });
+
+		for (const oldTask of oldTasksOfList) {
+			oldTask.order = oldTask.order - 1;
+			oldTask.save();
+		}
 
 		const taskUpdated = await this.taskEntity.findByIdAndUpdate(_taskId, { _listId, order }, { new: true });
-
 		return taskUpdated;
 	}
 }
