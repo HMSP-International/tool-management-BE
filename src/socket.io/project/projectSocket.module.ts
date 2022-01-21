@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { ProjectConnectionModule } from './projectConnection/projectConnection.module';
+import { ProjectSocketGateWay } from './projectSocket.gateway';
 
 @Module({
-	imports: [ ProjectConnectionModule ],
+	imports: [ ProjectSocketGateWay ],
 })
 export class ProjectSocketModule {}

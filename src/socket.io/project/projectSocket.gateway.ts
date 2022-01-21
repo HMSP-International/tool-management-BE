@@ -7,7 +7,7 @@ import { Server, Socket } from 'socket.io';
 			origin: '*',
 		},
 })
-export class ProjectConnectionGateWay {
+export class ProjectSocketGateWay {
 	@WebSocketServer() server: Server;
 
 	@SubscribeMessage('connectionToProject')
