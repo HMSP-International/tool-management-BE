@@ -21,4 +21,12 @@ export class ProjectSocketGateWay {
 		const { data: { _projectId } } = input;
 		socket.leave(_projectId);
 	}
+
+	// Start delete Project
+	@SubscribeMessage('handleDeleteProject')
+	async deleteProject (@MessageBody() input: any, @ConnectedSocket() socket: Socket): Promise<void> {
+		const { data, _projectId } = input;
+		socket.to(_projectId).emit('handleDeleteProject', data);
+	}
+	// End delete Project
 }
