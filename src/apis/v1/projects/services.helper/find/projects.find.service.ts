@@ -33,7 +33,6 @@ export class ProjectsFindService {
 
 	async findAllByCollaborator (getProjectsInput: ProjectDTO.GetProjectsInput): Promise<ProjectDocument[]> {
 		const projects = await this.projectEntity.find({ _spaceId: getProjectsInput._spacesId }).sort('_spaceId order');
-
 		return projects;
 	}
 }

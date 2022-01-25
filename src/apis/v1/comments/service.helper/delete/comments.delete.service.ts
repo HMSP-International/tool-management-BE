@@ -32,4 +32,11 @@ export class CommentsDeleteService {
 
 		return await this.commentEntity.findByIdAndDelete(_commentId);
 	}
+
+	async deleteByTaskId (_taskId: string): Promise<void> {
+		const comments = await this.commentEntity.find({ _taskId });
+		for (let c of comments) {
+			await this.commentEntity.findByIdAndDelete(c._id);
+		}
+	}
 }

@@ -30,13 +30,12 @@ export class PaticipantsFindService {
 		});
 
 		// get list paticipant
-		const paticipantsPromise = [];
+		const paticipants = [];
 		for (let coll of collaborators) {
-			const paticipant = this.paticipantEntity.findOne({ _collaboratorId: coll._id });
+			const paticipant = await this.paticipantEntity.find({ _collaboratorId: coll._id });
 
-			paticipantsPromise.push(paticipant);
+			paticipants.push(...paticipant);
 		}
-		const paticipants = await Promise.all(paticipantsPromise);
 
 		// get list projectId
 		const projectIds: string[] = paticipants.filter(p => p !== null).map(p => p._projectId);
