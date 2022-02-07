@@ -52,6 +52,10 @@ export class PaticipantsFindService {
 		return await this.paticipantEntity.find({ _projectId });
 	}
 
+	async getProjectByMemberId (_memberId: string): Promise<PaticipantDocument[]> {
+		return await this.paticipantEntity.find({ _memberId });
+	}
+
 	async findPaticipantByProjectAndMember (
 		{ _projectId }: PaticipantDTO.GetPaticipantByProjectAndMemberInput,
 		user: IPayLoadToken,

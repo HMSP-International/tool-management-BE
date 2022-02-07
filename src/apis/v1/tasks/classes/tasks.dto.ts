@@ -145,3 +145,11 @@ export class ChangeListOfTaskWithDragAndDropInAnotherListInput {
 	@Field(() => String)
 	_taskId: string;
 }
+
+@InputType()
+export class GetByUserId {
+	@Length(24, 24)
+	@IsString()
+	@Field(() => String)
+	_: string;
+}

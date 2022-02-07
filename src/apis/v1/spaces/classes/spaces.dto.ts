@@ -27,3 +27,11 @@ export class DeleteSpaceInput {
 	@Field(() => String)
 	_spaceId: string;
 }
+
+@InputType()
+export class FindByMemberId {
+	@Length(24, 24)
+	@IsString()
+	@Field(() => String)
+	_memberId: string;
+}

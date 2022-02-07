@@ -32,6 +32,10 @@ export class ProjectsService {
 		return await this.projectsFindService.findAllByCollaborator(getProjectsInput);
 	}
 
+	async findByMemberIdAndSpaceId (findByMemberIdAndSpaceId: ProjectDTO.FindByMemberIdAndSpaceIdInput) {
+		return await this.projectsFindService.findByMemberIdAndSpaceId(findByMemberIdAndSpaceId);
+	}
+
 	async create (createSpaceInput: ProjectDTO.CreateProjectInput, user: IPayLoadToken) {
 		return await this.projectsCreateService.create(createSpaceInput, user);
 	}

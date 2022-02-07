@@ -14,6 +14,14 @@ export class SpacesResolver {
 	getSpaces (@CurrentUser() user: IPayLoadToken) {
 		return this.spacesService.findAll(user);
 	}
+
+	@Mutation(() => [ Space ])
+	getSpacesByMemberId (
+		@CurrentUser() user: IPayLoadToken,
+		@Args('findByMemberId') findByMemberId: SpaceDTO.FindByMemberId,
+	) {
+		return this.spacesService.findByMemberId(findByMemberId, user);
+	}
 	// Query ---- end
 
 	// Mutation ---- start

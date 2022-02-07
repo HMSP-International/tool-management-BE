@@ -1,6 +1,8 @@
 import { Injectable, HttpException, HttpStatus, forwardRef, Inject } from '@nestjs/common';
 
 import { InjectModel } from '@nestjs/mongoose';
+import { PaticipantsService } from 'apis/v1/paticipants/paticipants.service';
+import { IPayLoadToken } from 'helpers/modules/token/token.interface';
 import { Model } from 'mongoose';
 import { TaskModel, TaskDocument } from '../../classes/task.model';
 
@@ -8,7 +10,11 @@ import * as TaskDto from '../../classes/tasks.dto';
 
 @Injectable()
 export class TasksFindService {
-	constructor (@InjectModel(TaskModel.name) private taskEntity: Model<TaskDocument>) {}
+	constructor (
+		@InjectModel(TaskModel.name) private taskEntity: Model<TaskDocument>,
+		@Inject(forwardRef(() => PaticipantsService))
+		private readonly paticipantsService: PaticipantsService,
+	) {}
 
 	async findTasksByListId (getTasksInput: TaskDto.GetTasksInput): Promise<TaskDocument[]> {
 		const { _listId, _userIds } = getTasksInput;
@@ -28,5 +34,9 @@ export class TasksFindService {
 		}
 
 		return task;
+	}
+
+	async findTaskByUserId ({ _ }: TaskDto.GetByUserId, user: IPayLoadToken): Promise<void> {
+		// const paticipants = await this.paticipantsService.fin
 	}
 }

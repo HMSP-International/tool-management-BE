@@ -1,5 +1,5 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { Length } from 'class-validator';
+import { Length, IsOptional } from 'class-validator';
 
 @InputType()
 export class CreateProjectInput {
@@ -37,4 +37,15 @@ export class ChangeNameProjectInput {
 	@Length(1, 20)
 	@Field(() => String)
 	name: string;
+}
+
+@InputType()
+export class FindByMemberIdAndSpaceIdInput {
+	@Length(24, 24)
+	@Field(() => String)
+	_memberId: string;
+
+	@IsOptional()
+	@Field(() => String, { nullable: true })
+	_spaceId: string;
 }
