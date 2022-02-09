@@ -51,12 +51,27 @@ export class ProjectsFindService {
 		_spaceId,
 	}: ProjectDTO.FindByMemberIdAndSpaceIdInput): Promise<ProjectDocument[]> {
 		const paticipants = await this.paticipantsService.getProjectsByMemberId(_memberId);
-		
 		const projects = [];
-		for (let i = 0; i < paticipants.length; i++) {
-			const project = await this.projectEntity.findOne({ _id: paticipants[i]._projectId.toString(), _spaceId });
-			if (project !== null) {
-				projects.push(project);
+
+		if (_spaceId.length === 24) {
+			for (let i = 0; i < paticipants.length; i++) {
+				const project = await this.projectEntity.findOne({
+					_id: paticipants[i]._projectId.toString(),
+					_spaceId,
+				});
+				if (project !== null) {
+					projects.push(project);
+				}
+			}
+		}
+		else {
+			for (let i = 0; i < paticipants.length; i++) {
+				const project = await this.projectEntity.findOne({
+					_id: paticipants[i]._projectId.toString(),
+				});
+				if (project !== null) {
+					projects.push(project);
+				}
 			}
 		}
 
