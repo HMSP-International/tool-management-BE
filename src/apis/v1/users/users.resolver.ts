@@ -18,6 +18,12 @@ export class UsersResolver {
 		return this.usersService.findById(user._id);
 	}
 
+	@PERMISSIONS({ resolverName: 'getUserById' })
+	@Query(() => User)
+	async getUserById (@Args('getUserByIdInput') getUserById: UserDto.GetUserByIdInput): Promise<UserModel> {
+		return this.usersService.findById(getUserById._userId);
+	}
+
 	// --------------------------------------- End Query --------------------------------------- //
 
 	// ---------------------------------------- Mutaion ---------------------------------------- //

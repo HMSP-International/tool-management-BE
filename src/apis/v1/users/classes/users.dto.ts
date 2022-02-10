@@ -120,3 +120,11 @@ export class DeleteUserOutput {
 	@Field(() => Boolean)
 	status: boolean;
 }
+
+@InputType()
+export class GetUserByIdInput {
+	@IsString()
+	@Length(24,24)
+	@Field(() => String)
+	_userId: string;
+}
