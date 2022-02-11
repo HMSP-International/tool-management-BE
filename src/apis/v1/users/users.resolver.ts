@@ -74,6 +74,22 @@ export class UsersResolver {
 		);
 	}
 
+	@Mutation(() => User)
+	async changeAvatar (
+		@Args('changeAvatarInput') changeAvatar: UserDto.ChangeAvatarInput,
+		@CurrentUser() user: IPayLoadToken,
+	) {
+		return this.usersService.changeAvatar(changeAvatar, user);
+	}
+
+	@Mutation(() => User)
+	async changeEmail (
+		@Args('changeEmailInput') changeEmail: UserDto.ChangeEmailInput,
+		@CurrentUser() user: IPayLoadToken,
+	) {
+		return this.usersService.changeEmail(changeEmail, user);
+	}
+
 	@PERMISSIONS({ resolverName: 'deleteUser' })
 	@Mutation(() => User)
 	async deleteUser (@Args('deleteUserInput') deleteUserInput: UserDto.DeleteUserInput) {

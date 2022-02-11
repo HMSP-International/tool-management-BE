@@ -5,6 +5,7 @@ import { UsersPutService } from './services.helper/put/users.put.service';
 import { UsersFindService } from './services.helper/find/users.find.service';
 import { UsersDeleteService } from './services.helper/delete/users.delete.service';
 import { UsersCreateService } from './services.helper/create/users.create.service';
+import { IPayLoadToken } from 'helpers/modules/token/token.interface';
 
 @Injectable()
 export class UsersService {
@@ -49,6 +50,14 @@ export class UsersService {
 
 	async changeInformationByAdmin (_id: string, changeInformationInputByAdmin: UserDto.ChangeInformationInputByAdmin) {
 		return await this.usersPutService.changeInformationByAdmin(_id, changeInformationInputByAdmin);
+	}
+
+	changeAvatar (changeAvatar: UserDto.ChangeAvatarInput, user: IPayLoadToken) {
+		return this.usersPutService.changeAvatar(changeAvatar, user);
+	}
+
+	changeEmail (changeEmail: UserDto.ChangeEmailInput, user: IPayLoadToken) {
+		return this.usersPutService.changeEmail(changeEmail, user);
 	}
 
 	async getRole (_id: string) {

@@ -124,7 +124,27 @@ export class DeleteUserOutput {
 @InputType()
 export class GetUserByIdInput {
 	@IsString()
-	@Length(24,24)
+	@Length(24, 24)
 	@Field(() => String)
 	_userId: string;
+}
+
+@InputType()
+export class ChangeAvatarInput {
+	@IsString()
+	@Field(() => String)
+	avatar: string;
+}
+
+@InputType()
+export class ChangeEmailInput {
+	@Length(0, 40)
+	@IsEmail()
+	@Field(() => String)
+	newEmail: string;
+
+	@IsString()
+	@Length(6, 20)
+	@Field(() => String)
+	password: string;
 }
