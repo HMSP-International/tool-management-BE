@@ -1,10 +1,21 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { v2 } from 'cloudinary';
 
 @Injectable()
 export class CloudinaryService {
-	async uploadImage (file: string): Promise<string> {
-		const uploadResImage = await v2.uploader.upload(file, { load_preset: 'avatars', use_filename: true });
+	constructor (private readonly configService: ConfigService) {}
+
+	async uploadImageUser (file: string): Promise<string> {
+		const avatar_staff = this.configService.get<string>('cloudinary.load_preset.avatar_staff');
+		const uploadResImage = await v2.uploader.upload(file, { load_preset: avatar_staff, use_filename: true });
+
+		return uploadResImage.public_id;
+	}
+
+	async uploadImageCustomer (file: string): Promise<string> {
+		const avatar_customer = this.configService.get<string>('cloudinary.load_preset.avatar_customer');
+		const uploadResImage = await v2.uploader.upload(file, { load_preset: avatar_customer, use_filename: true });
 
 		return uploadResImage.public_id;
 	}

@@ -74,7 +74,7 @@ export class UsersPutService {
 		if (!user) throw new NotFoundException('This user not found');
 
 		const oldAvatar = user.avatar;
-		const public_id = await this.cloudinary.uploadImage(avatar);
+		const public_id = await this.cloudinary.uploadImageUser(avatar);
 		user.avatar = public_id;
 
 		// delete old avatar

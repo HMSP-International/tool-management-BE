@@ -30,7 +30,7 @@ export class UsersCreateService {
 		}
 
 		{
-			const public_id = await this.cloudinary.uploadImage(createUserInput.avatar);
+			const public_id = await this.cloudinary.uploadImageUser(createUserInput.avatar);
 			createUserInput.avatar = public_id;
 
 			const newUser = await new this.userEntity(createUserInput).save();
