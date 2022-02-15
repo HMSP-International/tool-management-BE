@@ -1,31 +1,31 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCustomerByAdminInput } from './classes/customers.dto';
 import { CustomersCreateService } from './services.helper/create/customers.create.service';
+import { CustomersFindService } from './services.helper/find/customers.find.service';
+import { CustomersDeleteService } from './services.helper/delete/customers.delete.service';
 // import { CustomersPutService } from './services.helper/put/customers.put.service';
-// import { CustomersFindService } from './services.helper/find/customers.find.service';
-// import { CustomersDeleteService } from './services.helper/delete/customers.delete.service';
 // import { IPayLoadToken } from 'helpers/modules/token/token.interface';
 
 @Injectable()
 export class CustomersService {
 	constructor (
 		private readonly customersCreateService: CustomersCreateService,
-		// private readonly customersDeleteService: CustomersDeleteService,
-		// private readonly customersFindService: CustomersFindService,
+		private readonly customersDeleteService: CustomersDeleteService,
 		// private readonly customersPutService: CustomersPutService,
+		private readonly customersFindService: CustomersFindService,
 	) {}
 
 	async createCustomerByAdmin (createUserInput: CreateCustomerByAdminInput) {
 		return await this.customersCreateService.createCustomerByAdmin(createUserInput);
 	}
 
-	// async deleteById (_id: string) {
-	// 	return await this.customersDeleteService.deleteById(_id);
-	// }
+	async deleteById (_id: string) {
+		return await this.customersDeleteService.deleteById(_id);
+	}
 
-	// async findAll () {
-	// 	return await this.customersFindService.findAll();
-	// }
+	async findAll () {
+		return this.customersFindService.findAll();
+	}
 
 	// async findById (_id: string, getPassword: Boolean = false) {
 	// 	return await this.customersFindService.findById(_id, getPassword);

@@ -21,11 +21,11 @@ export class CustomersResolver {
 	// // --------------------------------------- End Query --------------------------------------- //
 
 	// // ---------------------------------------- Mutaion ---------------------------------------- //
-	// @PERMISSIONS({ resolverName: 'getUsers' })
-	// @Mutation(() => [ Customer ])
-	// async getUsers () {
-	// 	return this.customersService.findAll();
-	// }
+	@PERMISSIONS({ resolverName: 'getCustomers' })
+	@Mutation(() => [ Customer ])
+	async getCustomers () {
+		return this.customersService.findAll();
+	}
 
 	@PERMISSIONS({ resolverName: 'createCustomerByAdminInput' })
 	@Mutation(() => Customer)
@@ -63,11 +63,11 @@ export class CustomersResolver {
 	// 	return this.customersService.changeAvatar(changeAvatar, user);
 	// }
 
-	// @PERMISSIONS({ resolverName: 'deleteUser' })
-	// @Mutation(() => Customer)
-	// async deleteUser (@Args('deleteUserInput') deleteUserInput: UserDto.DeleteCustomerInput) {
-	// 	return this.customersService.deleteById(deleteUserInput._id);
-	// }
+	@PERMISSIONS({ resolverName: 'deleteCustomer' })
+	@Mutation(() => Customer)
+	async deleteCustomer (@Args('deleteCustomerInput') deleteCustomer: UserDto.DeleteCustomerInput) {
+		return this.customersService.deleteById(deleteCustomer._id);
+	}
 
 	// -------------------------------------- End Mutaion -------------------------------------- //
 

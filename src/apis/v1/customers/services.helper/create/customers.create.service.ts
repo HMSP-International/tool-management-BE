@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CustomerModel, UserDocument } from '../../classes/customers.model';
+import { CustomerModel, CustomerDocument } from '../../classes/customers.model';
 import { CreateCustomerByAdminInput } from '../../classes/customers.dto';
 import { CustomersFindService } from '../find/customers.find.service';
 import { CloudinaryService } from 'helpers/modules/cloudinary/cloudinary.service';
@@ -10,10 +10,10 @@ import { CloudinaryService } from 'helpers/modules/cloudinary/cloudinary.service
 @Injectable()
 export class CustomersCreateService {
 	constructor (
-		@InjectModel(CustomerModel.name) private userEntity: Model<UserDocument>,
+		@InjectModel(CustomerModel.name) private userEntity: Model<CustomerDocument>,
+		// private readonly sendersService: SendersService,
 		private readonly customersFindService: CustomersFindService,
 		private readonly cloudinary: CloudinaryService,
-		// private readonly sendersService: SendersService,
 	) {}
 
 	async createCustomerByAdmin (createCustomerInput: CreateCustomerByAdminInput): Promise<CustomerModel> {

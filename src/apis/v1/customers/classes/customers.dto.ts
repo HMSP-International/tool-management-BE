@@ -22,11 +22,11 @@ export class CreateCustomerByAdminInput {
 	displayName: string;
 }
 
-// @InputType()
-// export class DeleteCustomerInput {
-// 	@Field(() => String)
-// 	_id: string;
-// }
+@InputType()
+export class DeleteCustomerInput {
+	@Field(() => String)
+	_id: string;
+}
 
 // @InputType()
 // export class ChangePasswordCustomerInputByAdmin {

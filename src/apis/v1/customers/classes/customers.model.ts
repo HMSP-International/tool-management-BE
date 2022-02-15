@@ -1,9 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import * as bcrypt from 'bcrypt';
-import { RoleModel } from 'apis/v1/roles/classes/role.model';
-const ObjectId = mongoose.Schema.Types.ObjectId;
-export type UserDocument = CustomerModel & mongoose.Document;
+// const ObjectId = mongoose.Schema.Types.ObjectId;
+export type CustomerDocument = CustomerModel & mongoose.Document;
 
 @Schema()
 export class CustomerModel {
