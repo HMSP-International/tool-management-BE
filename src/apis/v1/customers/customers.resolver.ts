@@ -1,11 +1,13 @@
-import { Resolver, Mutation, Args } from '@nestjs/graphql';
-import { CustomersService } from './customers.service';
+import * as CustomerDto from './classes/customers.dto';
 import { Customer } from './classes/customers.entity';
-import * as UserDto from './classes/customers.dto';
+import { CustomersService } from './customers.service';
+import { CustomerModel } from './classes/customers.model';
+import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { PERMISSIONS } from 'common/decorator/permissions.decorator';
+import { CurrentUser } from 'common/decorator/CurrentUser.decorator';
+import { IPayLoadToken } from 'helpers/modules/token/token.interface';
 // import { IPayLoadToken } from 'helpers/modules/token/token.interface';
 // import { CurrentUser } from 'common/decorator/CurrentUser.decorator';
-import { CustomerModel } from './classes/customers.model';
 
 @Resolver(() => Customer)
 export class CustomersResolver {
@@ -30,30 +32,30 @@ export class CustomersResolver {
 	@PERMISSIONS({ resolverName: 'createCustomerByAdminInput' })
 	@Mutation(() => Customer)
 	async createCustomerByAdmin (
-		@Args('createCustomerByAdminInput') createCustomerByAdmin: UserDto.CreateCustomerByAdminInput,
+		@Args('createCustomerByAdminInput') createCustomerByAdmin: CustomerDto.CreateCustomerByAdminInput,
 	): Promise<CustomerModel> {
 		return this.customersService.createCustomerByAdmin(createCustomerByAdmin);
 	}
 
-	// @PERMISSIONS({ resolverName: 'chagePasswordByAdmin' })
-	// @Mutation(() => Customer)
-	// async chagePasswordByAdmin (
-	// 	@Args('changePasswordInputByAdmin') changePasswordInputByAdmin: UserDto.ChangePasswordCustomerInputByAdmin,
-	// ) {
-	// 	return this.customersService.changePasswordByAdmin(changePasswordInputByAdmin);
-	// }
+	@PERMISSIONS({ resolverName: 'chagePasswordOfCustomerByAdmin' })
+	@Mutation(() => Customer)
+	async chagePasswordOfCustomerByAdmin (
+		@Args('changePasswordOfCustomerByAdminInput')
+		changePasswordOfCustomerByAdmin: CustomerDto.ChangePasswordOfCustomerByAdminInput,
+		@CurrentUser() user: IPayLoadToken,
+	) {
+		return this.customersService.changePasswordOfCustomerByAdmin(changePasswordOfCustomerByAdmin, user);
+	}
 
-	// @PERMISSIONS({ resolverName: 'chageInformationByAdmin' })
-	// @Mutation(() => Customer)
-	// async chageInformationByAdmin (
-	// 	@Args('changeInformationInputByAdmin')
-	// 	changeInformationInputByAdmin: UserDto.ChangeInformationCustomerInputByAdmin,
-	// ) {
-	// 	return this.customersService.changeInformationByAdmin(
-	// 		changeInformationInputByAdmin._id,
-	// 		changeInformationInputByAdmin,
-	// 	);
-	// }
+	@PERMISSIONS({ resolverName: 'chageInformationOfCustomerByAdmin' })
+	@Mutation(() => Customer)
+	async chageInformationOfCustomerByAdmin (
+		@Args('changeInformationOfCustomerByAdminInput')
+		changeInformationOfCustomerByAdmin: CustomerDto.ChangeInformationOfCustomerByAdminInput,
+		@CurrentUser() user: IPayLoadToken,
+	) {
+		return this.customersService.changeInformationOfCustomerByAdmin(changeInformationOfCustomerByAdmin, user);
+	}
 
 	// @Mutation(() => Customer)
 	// async changeAvatar (
@@ -65,7 +67,7 @@ export class CustomersResolver {
 
 	@PERMISSIONS({ resolverName: 'deleteCustomer' })
 	@Mutation(() => Customer)
-	async deleteCustomer (@Args('deleteCustomerInput') deleteCustomer: UserDto.DeleteCustomerInput) {
+	async deleteCustomer (@Args('deleteCustomerInput') deleteCustomer: CustomerDto.DeleteCustomerInput) {
 		return this.customersService.deleteById(deleteCustomer._id);
 	}
 

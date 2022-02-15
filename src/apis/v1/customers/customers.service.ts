@@ -1,17 +1,18 @@
 import { Injectable } from '@nestjs/common';
+import * as CustomerDto from './classes/customers.dto';
 import { CreateCustomerByAdminInput } from './classes/customers.dto';
-import { CustomersCreateService } from './services.helper/create/customers.create.service';
+import { IPayLoadToken } from 'helpers/modules/token/token.interface';
+import { CustomersPutService } from './services.helper/put/customers.put.service';
 import { CustomersFindService } from './services.helper/find/customers.find.service';
 import { CustomersDeleteService } from './services.helper/delete/customers.delete.service';
-// import { CustomersPutService } from './services.helper/put/customers.put.service';
-// import { IPayLoadToken } from 'helpers/modules/token/token.interface';
+import { CustomersCreateService } from './services.helper/create/customers.create.service';
 
 @Injectable()
 export class CustomersService {
 	constructor (
 		private readonly customersCreateService: CustomersCreateService,
 		private readonly customersDeleteService: CustomersDeleteService,
-		// private readonly customersPutService: CustomersPutService,
+		private readonly customersPutService: CustomersPutService,
 		private readonly customersFindService: CustomersFindService,
 	) {}
 
@@ -35,16 +36,19 @@ export class CustomersService {
 	// 	return await this.customersFindService.findByEmail(email);
 	// }
 
-	// async changePasswordByAdmin (changePasswordInputByAdmin: UserDto.ChangePasswordCustomerInputByAdmin) {
-	// 	return await this.customersPutService.changePasswordByAdmin(changePasswordInputByAdmin);
-	// }
+	async changePasswordOfCustomerByAdmin (
+		changePasswordInputByAdmin: CustomerDto.ChangePasswordOfCustomerByAdminInput,
+		user: IPayLoadToken,
+	) {
+		return await this.customersPutService.changePasswordOfCustomerByAdmin(changePasswordInputByAdmin, user);
+	}
 
-	// async changeInformationByAdmin (
-	// 	_id: string,
-	// 	changeInformationInputByAdmin: UserDto.ChangeInformationCustomerInputByAdmin,
-	// ) {
-	// 	return await this.customersPutService.changeInformationByAdmin(_id, changeInformationInputByAdmin);
-	// }
+	async changeInformationOfCustomerByAdmin (
+		changeInformationInputByAdmin: CustomerDto.ChangeInformationOfCustomerByAdminInput,
+		user: IPayLoadToken,
+	) {
+		return await this.customersPutService.changeInformationOfCustomerByAdmin(changeInformationInputByAdmin, user);
+	}
 
 	// changeAvatar (changeAvatar: UserDto.ChangeAvatarCustomerInput, user: IPayLoadToken) {
 	// 	return this.customersPutService.changeAvatar(changeAvatar, user);

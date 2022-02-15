@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 import { CustomersPutService } from './customers.put.service';
-// import { MongooseModule } from '@nestjs/mongoose';
-// import { CloudinaryModule } from 'helpers/modules/cloudinary/cloudinary.module';
-// import { CustomerModel, UserSchema } from '../../classes/customers.model';
+import { CustomerModel, CustomerSchema } from '../../classes/customers.model';
 
 @Module({
-	// imports: [ MongooseModule.forFeature([ { name: CustomerModel.name, schema: UserSchema } ]), CloudinaryModule, ],
+	imports: [ MongooseModule.forFeature([ { name: CustomerModel.name, schema: CustomerSchema } ]) ],
 	providers: [ CustomersPutService ],
 	exports: [ CustomersPutService ],
 })

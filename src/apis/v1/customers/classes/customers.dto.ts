@@ -28,51 +28,35 @@ export class DeleteCustomerInput {
 	_id: string;
 }
 
-// @InputType()
-// export class ChangePasswordCustomerInputByAdmin {
-// 	@IsString()
-// 	@Field(() => String)
-// 	_id: string;
+@InputType()
+export class ChangePasswordOfCustomerByAdminInput {
+	@IsString()
+	@Field(() => String)
+	_id: string;
 
-// 	@IsString()
-// 	@Length(6, 20)
-// 	@Field(() => String)
-// 	newPassword: string;
-// }
+	@IsString()
+	@Length(6, 20)
+	@Field(() => String)
+	newPassword: string;
+}
 
-// @InputType()
-// export class ChangeInformationCustomerInputByAdmin {
-// 	@Length(1, 30)
-// 	@IsString()
-// 	@Field(() => String)
-// 	displayName: string;
+@InputType()
+export class ChangeInformationOfCustomerByAdminInput {
+	@Length(1, 30)
+	@IsString()
+	@Field(() => String)
+	displayName: string;
 
-// 	@IsString()
-// 	@Field(() => String)
-// 	_id: string;
+	@IsString()
+	@Field(() => String)
+	_id: string;
 
-// 	@Length(0, 40)
-// 	@IsEmail()
-// 	@IsString()
-// 	@Field(() => String)
-// 	email: string;
-
-// 	@IsString()
-// 	@Field(() => String)
-// 	title: string;
-
-// 	@IsString()
-// 	@Field(() => String)
-// 	position: string;
-
-// 	@IsString()
-// 	@Field(() => String)
-// 	department: string;
-
-// 	@IsString()
-// 	@Field(() => String)
-// 	_roleId: string;
-// }
+	@Length(0, 40)
+	@IsEmail()
+	@IsString()
+	@Field(() => String)
+	email: string;
+}
 
 // @ObjectType()
 // export class DeleteCustomerOutput {
