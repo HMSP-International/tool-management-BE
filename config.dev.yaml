@@ -4,7 +4,7 @@ http:
 
 db:
   mongodb:
-    host: 'http://cluster0.lgvwy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+    host: 'mongodb+srv://huy:TcrazyloveH37@cluster0.lgvwy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 
 jwt:
   secret: 'privateKey'
