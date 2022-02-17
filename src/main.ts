@@ -8,7 +8,7 @@ import * as bodyParser from 'body-parser';
 	const app = await NestFactory.create(AppModule);
 	const configService: ConfigService = app.get(ConfigService);
 
-	const port = configService.get<string>('http.port');
+	const port = configService.get<string>('http.port') || parseInt(`${process.env.PORT}`) || 3000;
 	const limitReq = configService.get<string>('app.limit_req');
 
 	app.use(bodyParser.json({ limit: limitReq }));
