@@ -11,8 +11,8 @@ jwt:
   expiresIn: '2419200s'
   
 sendGrid:
-  apiKey: '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'
-  customerEmail: 'info@hmsp.com.au'
+  apiKey: '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'
+  customerEmail: 'pdh372@gmail.com'
   jwt:
     secret: 'privateKeySendGrid'
     expiresIn: '1000s'
