@@ -3,8 +3,8 @@ import { UsersService } from './users.service';
 import { User } from './classes/user.entity';
 import * as UserDto from './classes/users.dto';
 import { IPayLoadToken } from 'helpers/modules/token/token.interface';
-import { CurrentUser } from '../../../common/decorator/CurrentUser.decorator';
-import { PERMISSIONS } from 'common/decorator/permissions.decorator';
+import { CurrentUser } from '../../../commons/decorator/CurrentUser.decorator';
+import { PERMISSIONS } from 'commons/decorator/permissions.decorator';
 import { UserModel } from './classes/user.model';
 
 @Resolver(() => User)

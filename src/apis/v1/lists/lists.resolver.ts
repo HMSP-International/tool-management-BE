@@ -2,7 +2,7 @@ import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { ListsService } from './lists.service';
 import { List } from './classes/list.entity';
 import * as ListDTO from './classes/lists.dto';
-import { CurrentUser } from '../../../common/decorator/CurrentUser.decorator';
+import { CurrentUser } from '../../../commons/decorator/CurrentUser.decorator';
 import { IPayLoadToken } from 'helpers/modules/token/token.interface';
 
 @Resolver(() => List)
