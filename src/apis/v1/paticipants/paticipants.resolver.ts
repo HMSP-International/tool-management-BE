@@ -2,7 +2,7 @@ import { Resolver, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql'
 import { Paticipant } from './classes/paticipant.entity';
 import { PaticipantsService } from './paticipants.service';
 import { IPayLoadToken } from 'helpers/modules/token/token.interface';
-import { CurrentUser } from 'common/decorator/CurrentUser.decorator';
+import { CurrentUser } from '../../../common/decorator/CurrentUser.decorator';
 import * as PaticipantDTO from './classes/paticipants.dto';
 import { Collaborator } from 'apis/v1/collaborators/classes/collaborator.entity';
 import { Project } from 'apis/v1/projects/classes/project.entity';

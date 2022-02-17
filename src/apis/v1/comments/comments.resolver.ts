@@ -3,7 +3,7 @@ import { CommentsService } from './comments.service';
 import { Comment } from './classes/comment.entity';
 import * as commentDTO from './classes/comments.dto';
 import { IPayLoadToken } from 'helpers/modules/token/token.interface';
-import { CurrentUser } from 'common/decorator/CurrentUser.decorator';
+import { CurrentUser } from '../../../common/decorator/CurrentUser.decorator';
 import { Task } from '../tasks/classes/task.entity';
 import { User } from '../users/classes/user.entity';
 

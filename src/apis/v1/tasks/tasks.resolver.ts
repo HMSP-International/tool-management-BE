@@ -2,7 +2,7 @@ import { Args, Mutation, Parent, ResolveField, Resolver } from '@nestjs/graphql'
 import { TasksService } from './tasks.service';
 import { Task, DragAndDrop } from './classes/task.entity';
 import * as TaskDto from './classes/tasks.dto';
-import { CurrentUser } from 'common/decorator/CurrentUser.decorator';
+import { CurrentUser } from '../../../common/decorator/CurrentUser.decorator';
 import { IPayLoadToken } from 'helpers/modules/token/token.interface';
 import { User } from '../users/classes/user.entity';
 import { Project } from '../projects/classes/project.entity';
