@@ -1,1 +1,0 @@
-{"version":3,"file":"listSocket.module.js","sourceRoot":"","sources":["../../../src/socket.io/list/listSocket.module.ts"],"names":[],"mappings":";;;;;;;;;AAAA,2CAAwC;AACxC,6DAAyD;AAKzD,IAAa,gBAAgB,GAA7B,MAAa,gBAAgB;CAAG,CAAA;AAAnB,gBAAgB;IAH5B,IAAA,eAAM,EAAC;QACP,OAAO,EAAE,CAAE,sCAAiB,CAAE;KAC9B,CAAC;GACW,gBAAgB,CAAG;AAAnB,4CAAgB"}
