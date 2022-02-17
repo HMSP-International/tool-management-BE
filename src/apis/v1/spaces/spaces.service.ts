@@ -27,6 +27,10 @@ export class SpacesService {
 		return await this.spacesFindService.findById(_id);
 	}
 
+	async findByMemberId (findByMemberId: SpaceDTO.FindByMemberId, user: IPayLoadToken) {
+		return await this.spacesFindService.findByMemberId(findByMemberId, user);
+	}
+
 	async create (name: string, user: IPayLoadToken) {
 		return await this.spacesCreateService.create(name, user);
 	}

@@ -24,7 +24,7 @@ export class CommentsResolver {
 		@Args('deleteCommentInput') deleteCommentInput: commentDTO.DeleteCommentInput,
 		@CurrentUser() user: IPayLoadToken,
 	) {
-		return this.commentsService.deleteTaskById(deleteCommentInput, user);
+		return this.commentsService.deleteById(deleteCommentInput, user);
 	}
 
 	@Mutation(() => Comment)

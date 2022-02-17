@@ -23,6 +23,13 @@ export class ProjectsResolver {
 	}
 
 	@Mutation(() => [ Project ])
+	async getProjectByMemberIdAndSpaceId (
+		@Args('findByMemberIdAndSpaceIdInput') findByMemberIdAndSpaceId: ProjectDTO.FindByMemberIdAndSpaceIdInput,
+	) {
+		return this.projectsService.findByMemberIdAndSpaceId(findByMemberIdAndSpaceId);
+	}
+
+	@Mutation(() => [ Project ])
 	async getProjectsByCollaborator (@Args('getProjectsInput') getProjectsInput: ProjectDTO.GetProjectsInput) {
 		return this.projectsService.findAllByCollaborator(getProjectsInput);
 	}

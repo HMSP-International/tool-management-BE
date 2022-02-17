@@ -3,6 +3,7 @@ import { Project } from 'apis/v1/projects/classes/project.entity';
 import { User } from 'apis/v1/users/classes/user.entity';
 import { Comment } from 'apis/v1/comments/classes/comment.entity';
 import { Timestamp } from './timestamp';
+import { DraggableLocationAnotherList } from './tasks.dto';
 
 @ObjectType()
 export class Task {
@@ -35,4 +36,25 @@ export class Task {
 
 	@Field(() => [ Comment ])
 	comments: string[];
+}
+
+@ObjectType()
+export class Draggable {
+	@Field(() => String)
+	_listId: string;
+
+	@Field(() => Number)
+	index: number;
+}
+
+@ObjectType()
+export class DragAndDrop {
+	@Field(() => Draggable)
+	destination: DraggableLocationAnotherList;
+
+	@Field(() => Draggable)
+	source: DraggableLocationAnotherList;
+
+	@Field(() => String)
+	_taskId: string;
 }

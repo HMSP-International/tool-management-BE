@@ -55,7 +55,7 @@ import { GraphQLError, GraphQLFormattedError } from 'graphql';
 						};
 					},
 				inject: [ ConfigService ],
-			}),		
+			}),
 		],
 	exports: [ ConfigModule, JwtModule ],
 })
@@ -63,6 +63,8 @@ export class CoresModule implements NestModule {
 	configure (consumer: MiddlewareConsumer) {
 		consumer
 			.apply(compression(), JwtMiddleware)
-			.forRoutes({ path: '*', method: RequestMethod.POST });
+			.forRoutes({ path: 'graphql', method: RequestMethod.POST })
+			.apply(compression(), JwtMiddleware)
+			.forRoutes({ path: '*', method: RequestMethod.GET });
 	}
 }

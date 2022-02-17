@@ -18,6 +18,12 @@ export class UsersResolver {
 		return this.usersService.findById(user._id);
 	}
 
+	@PERMISSIONS({ resolverName: 'getUserById' })
+	@Query(() => User)
+	async getUserById (@Args('getUserByIdInput') getUserById: UserDto.GetUserByIdInput): Promise<UserModel> {
+		return this.usersService.findById(getUserById._userId);
+	}
+
 	// --------------------------------------- End Query --------------------------------------- //
 
 	// ---------------------------------------- Mutaion ---------------------------------------- //
@@ -66,6 +72,22 @@ export class UsersResolver {
 			changeInformationInputByAdmin._id,
 			changeInformationInputByAdmin,
 		);
+	}
+
+	@Mutation(() => User)
+	async changeAvatar (
+		@Args('changeAvatarInput') changeAvatar: UserDto.ChangeAvatarInput,
+		@CurrentUser() user: IPayLoadToken,
+	) {
+		return this.usersService.changeAvatar(changeAvatar, user);
+	}
+
+	@Mutation(() => User)
+	async changeEmail (
+		@Args('changeEmailInput') changeEmail: UserDto.ChangeEmailInput,
+		@CurrentUser() user: IPayLoadToken,
+	) {
+		return this.usersService.changeEmail(changeEmail, user);
 	}
 
 	@PERMISSIONS({ resolverName: 'deleteUser' })

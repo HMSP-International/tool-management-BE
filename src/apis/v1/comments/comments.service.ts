@@ -21,8 +21,12 @@ export class CommentsService {
 		return this.commentsCreateService.create(createCommentInput, user);
 	}
 
-	deleteTaskById (comment: commentDTO.DeleteCommentInput, user: IPayLoadToken) {
+	deleteById (comment: commentDTO.DeleteCommentInput, user: IPayLoadToken) {
 		return this.commentsDeleteService.deleteById(comment, user);
+	}
+
+	deleteByTaskId (_taskId: string) {
+		return this.commentsDeleteService.deleteByTaskId(_taskId);
 	}
 
 	changeContentByCommentId (comment: commentDTO.PutChangeCommentInput, user: IPayLoadToken) {

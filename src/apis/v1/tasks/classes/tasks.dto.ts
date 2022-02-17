@@ -101,3 +101,55 @@ export class ChangeListOfTaskInput {
 	@Field(() => String)
 	_listId: string;
 }
+
+export interface IDraggableLocation1List {
+	index: number;
+}
+@InputType()
+export class DraggableLocation1List {
+	@Field(() => Number)
+	index: number;
+}
+@InputType()
+export class ChangeListOfTaskWithDragAndDropIn1ListInput {
+	@Field(() => DraggableLocation1List)
+	destination: IDraggableLocation1List;
+
+	@Length(24, 24)
+	@IsString()
+	@Field(() => String)
+	_taskId: string;
+}
+
+export interface IDraggableLocationAnotherList {
+	index: number;
+	_listId: string;
+}
+@InputType()
+export class DraggableLocationAnotherList {
+	@Field(() => Number)
+	index: number;
+
+	@Length(24, 24)
+	@IsString()
+	@Field(() => String)
+	_listId: string;
+}
+@InputType()
+export class ChangeListOfTaskWithDragAndDropInAnotherListInput {
+	@Field(() => DraggableLocationAnotherList)
+	destination: IDraggableLocationAnotherList;
+
+	@Length(24, 24)
+	@IsString()
+	@Field(() => String)
+	_taskId: string;
+}
+
+@InputType()
+export class GetByUserId {
+	@Length(24, 24)
+	@IsString()
+	@Field(() => String)
+	_: string;
+}

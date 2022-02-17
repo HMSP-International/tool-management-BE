@@ -40,6 +40,10 @@ export class PaticipantsService {
 		return this.paticipantsFindService.getProjectsBySpacesAndMember(projectsBySpacesAndMemberInput, _memberId);
 	}
 
+	getProjectsByMemberId (_memberId: string) {
+		return this.paticipantsFindService.getProjectByMemberId(_memberId);
+	}
+
 	getUsersBelongProject (getUsersBelongProjectInput: PaticipantDTO.GetUsersBelongProjectInput) {
 		return this.paticipantsFindService.getUsersBelongProject(getUsersBelongProjectInput);
 	}

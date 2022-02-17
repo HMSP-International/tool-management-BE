@@ -58,6 +58,26 @@ export class TasksService {
 		return this.tasksPutService.changeListOfTask(changeListOfTaskInput, user);
 	}
 
+	changeListOfTaskWithDragAndDropInOneList (
+		changeListOfTaskWithDragAndDropInput: TaskDto.ChangeListOfTaskWithDragAndDropIn1ListInput,
+		user: IPayLoadToken,
+	) {
+		return this.tasksPutService.changeListOfTaskWithDragAndDropInOneList(
+			changeListOfTaskWithDragAndDropInput,
+			user,
+		);
+	}
+
+	changeListOfTaskWithDragAndDropInAnotherList (
+		changeListOfTaskWithDragAndDropInAnotherListInput: TaskDto.ChangeListOfTaskWithDragAndDropInAnotherListInput,
+		user: IPayLoadToken,
+	) {
+		return this.tasksPutService.changeListOfTaskWithDragAndDropInAnotherList(
+			changeListOfTaskWithDragAndDropInAnotherListInput,
+			user,
+		);
+	}
+
 	getProject (_id: string) {
 		return this.tasksResolverFieldService.getProject(_id);
 	}
