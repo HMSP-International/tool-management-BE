@@ -3,5 +3,5 @@
 /node_modules
 
 schema.gql
-
+.env
 config.prod.yaml
