@@ -35,10 +35,10 @@ export class UsersCreateService {
 
 			const newUser = await new this.userEntity(createUserInput).save();
 			// invite email
-			await this.sendersService.sendCreateUser({
-				email: newUser.email,
-				password: createUserInput.password,
-			});
+			// await this.sendersService.sendCreateUser({
+			// 	email: newUser.email,
+			// 	password: createUserInput.password,
+			// });
 
 			newUser.password = null;
 
