@@ -80,7 +80,13 @@ export class UsersPutService {
 		// delete old avatar
 		this.cloudinary.deleteImage(oldAvatar);
 
-		return await user.save();
+		return await this.userEntity.findByIdAndUpdate(
+			_userId,
+			{ avatar: public_id },
+			{
+				new: true,
+			},
+		);
 	}
 
 	async changeEmail (
