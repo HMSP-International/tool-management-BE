@@ -4,7 +4,7 @@ http:
 
 db:
   mongodb:
-    host: 'mongodb+srv://hmsp:hmsp@cluster0.lbsfr.mongodb.net/ManagementTool?retryWrites=true&w=majority'
+    host: 'mongodb://localhost/ManagementTool'
 
 jwt:
   secret: 'privateKey'

@@ -12,7 +12,7 @@ const readFile: any = (fileName: string) => {
 export default () => {
 	console.log('🚀 ~ file: configuration.ts ~ line 14 ~ process.env.NODE_ENV', process.env.NODE_ENV);
 	if (process.env.NODE_ENV === 'production') {
-		return readFile(YAML_CONFIG_FILENAME_DEV);
+		return readFile(YAML_CONFIG_FILENAME_PROD);
 	}
 
 	return readFile(YAML_CONFIG_FILENAME_DEV);
