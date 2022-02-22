@@ -5,4 +5,4 @@
 .env
 
 schema.gql
-config.prod.yaml
+# config.prod.yaml

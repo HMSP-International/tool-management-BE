@@ -1,0 +1,32 @@
+http:
+  host: 'localhost'
+  port: 8080
+
+db:
+  mongodb:
+    host: 'mongodb+srv://doadmin:67n9Pbwi1q20N5m3@cluster0.lbsfr.mongodb.net/ManagementTool?retryWrites=true&w=majority'
+
+jwt:
+  secret: 'privateKey'
+  expiresIn: '2419200s'
+  
+sendGrid:
+  apiKey: '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'
+  customerEmail: 'pdh372@gmail.com'
+  jwt:
+    secret: 'privateKeySendGrid'
+    expiresIn: '1000s'
+
+FE:
+  host: 'http://localhost:3000'
+
+app:
+  limit_req: 10mb
+
+cloudinary:
+  cloud_name: 'hmsp-com'
+  api_key: '882426464554745'
+  api_secret: 'YlkQfpQ7PmkSE7bvIQW2ROV65H0'
+  load_preset:
+    avatar_staff: 'avatars'
+    avatar_customer: 'avatars'
