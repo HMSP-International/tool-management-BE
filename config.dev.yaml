@@ -4,15 +4,15 @@ http:
 
 db:
   mongodb:
-    host: 'mongodb://localhost/ManagementTool'
+    host: 'mongodb+srv://hmsp:hmsp@cluster0.lbsfr.mongodb.net/ManagementTool?retryWrites=true&w=majority'
 
 jwt:
   secret: 'privateKey'
   expiresIn: '2419200s'
   
 sendGrid:
-  apiKey: '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'
-  customerEmail: 'pdh372@gmail.com'
+  apiKey: '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'
+  customerEmail: 'info@hmsp.com.au'
   jwt:
     secret: 'privateKeySendGrid'
     expiresIn: '1000s'
@@ -21,12 +21,12 @@ FE:
   host: 'http://localhost:3000'
 
 app:
-  limit_req: 10mb
+  limit_req: '10mb'
 
 cloudinary:
-  cloud_name: 'hmsp-com'
-  api_key: '882426464554745'
-  api_secret: 'YlkQfpQ7PmkSE7bvIQW2ROV65H0'
+  cloud_name: 'hmsp-cloudinary'
+  api_key: '828185581879961'
+  api_secret: 'AqglXRwk3NJHljaDGxjTJxJ0oZw'
   load_preset:
     avatar_staff: 'avatars'
     avatar_customer: 'avatars'

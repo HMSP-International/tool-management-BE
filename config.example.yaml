@@ -1,0 +1,32 @@
+http:
+  host: 'yourhost'
+  port: 'yourport'
+
+db:
+  mongodb:
+    host: 'yourhost'
+
+jwt:
+  secret: '123'
+  expiresIn: '123456s'
+  
+sendGrid:
+  apiKey: ''
+  customerEmail: ''
+  jwt:
+    secret: ''
+    expiresIn: ''
+
+FE:
+  host: ''
+
+app:
+  limit_req: ''
+
+cloudinary:
+  cloud_name: ''
+  api_key: ''
+  api_secret: ''
+  load_preset:
+    avatar_staff: ''
+    avatar_customer: ''
