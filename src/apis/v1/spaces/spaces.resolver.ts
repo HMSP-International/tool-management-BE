@@ -4,6 +4,7 @@ import { Space } from './classes/space.entity';
 import { IPayLoadToken } from 'helpers/modules/token/token.interface';
 import { CurrentUser } from 'apis/v1/currentUser.decorator';
 import * as SpaceDTO from './classes/spaces.dto';
+import { CurrentUserOption } from '../currentUser.decoratorOption';
 
 @Resolver(() => Space)
 export class SpacesResolver {
@@ -11,8 +12,16 @@ export class SpacesResolver {
 
 	// Query ---- start
 	@Query(() => [ Space ])
-	getSpaces (@CurrentUser() user: IPayLoadToken) {
-		return this.spacesService.findAll(user);
+	getSpaces (@CurrentUserOption() user: IPayLoadToken) {
+		if (user === null) {
+			return this.spacesService.findAll({
+				_id: '61c97ada9b22541c404e3dd7',
+				_roleId: '61c0251fb7ae1f8f80d7e568',
+			});
+		}
+		else {
+			return this.spacesService.findAll(user);
+		}
 	}
 
 	@Mutation(() => [ Space ])

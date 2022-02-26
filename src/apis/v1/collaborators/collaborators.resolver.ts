@@ -6,6 +6,7 @@ import { CurrentUser } from '../currentUser.decorator';
 import { IPayLoadToken } from 'helpers/modules/token/token.interface';
 import { Space } from 'apis/v1/spaces/classes/space.entity';
 import { User } from 'apis/v1/users/classes/user.entity';
+import { CurrentUserOption } from '../currentUser.decoratorOption';
 
 @Resolver(() => Collaborator)
 export class CollaboratorsResolver {
@@ -25,9 +26,21 @@ export class CollaboratorsResolver {
 		return this.collaboratorsService.verifyInviteSpace(verifyInviteSpaceInput);
 	}
 
+	// @Query(() => [ Collaborator ])
+	// getInvitedSpaces (@CurrentUser() user: IPayLoadToken) {
+	// 	return this.collaboratorsService.findInvitedSpaces(user);
+	// }
 	@Query(() => [ Collaborator ])
-	getInvitedSpaces (@CurrentUser() user: IPayLoadToken) {
-		return this.collaboratorsService.findInvitedSpaces(user);
+	getInvitedSpaces (@CurrentUserOption() user: IPayLoadToken) {
+		if (user === null) {
+			return this.collaboratorsService.findInvitedSpaces({
+				_id: '6218af3c17c3ddcfb76fb122',
+				_roleId: '61c0251fb7ae1f8f80d7e568',
+			});
+		}
+		else {
+			return this.collaboratorsService.findInvitedSpaces(user);
+		}
 	}
 
 	// @Mutation(() => [ Collaborator ])

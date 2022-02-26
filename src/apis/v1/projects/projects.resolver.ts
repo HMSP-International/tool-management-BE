@@ -14,7 +14,12 @@ export class ProjectsResolver {
 		@CurrentUser() user: IPayLoadToken,
 		@Args('getProjectsInput') getProjectsInput: ProjectDTO.GetProjectsInput,
 	) {
-		return this.projectsService.findAll(getProjectsInput._spacesId, user._id);
+		if (user === null) {
+			return this.projectsService.findAll(getProjectsInput._spacesId, '61c97ada9b22541c404e3dd7');
+		}
+		else {
+			return this.projectsService.findAll(getProjectsInput._spacesId, user._id);
+		}
 	}
 
 	@Mutation(() => Project)

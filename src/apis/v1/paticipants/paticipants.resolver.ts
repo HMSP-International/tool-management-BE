@@ -7,6 +7,7 @@ import * as PaticipantDTO from './classes/paticipants.dto';
 import { Collaborator } from 'apis/v1/collaborators/classes/collaborator.entity';
 import { Project } from 'apis/v1/projects/classes/project.entity';
 import { User } from 'apis/v1/users/classes/user.entity';
+import { CurrentUserOption } from '../currentUser.decoratorOption';
 
 @Resolver(() => Paticipant)
 export class PaticipantsResolver {
@@ -30,11 +31,19 @@ export class PaticipantsResolver {
 
 	@Mutation(() => [ Project ])
 	getProjectsBySpacesAndMember (
-		@CurrentUser() user: IPayLoadToken,
+		@CurrentUserOption() user: IPayLoadToken,
 		@Args('projectsBySpacesAndMemberInput')
 		projectsBySpacesAndMemberInput: PaticipantDTO.ProjectsBySpacesAndMemberInput,
 	) {
-		return this.paticipantsService.getProjectsBySpacesAndMember(projectsBySpacesAndMemberInput, user._id);
+		if (user === null) {
+			return this.paticipantsService.getProjectsBySpacesAndMember(
+				projectsBySpacesAndMemberInput,
+				'6218af3c17c3ddcfb76fb122',
+			);
+		}
+		else {
+			return this.paticipantsService.getProjectsBySpacesAndMember(projectsBySpacesAndMemberInput, user._id);
+		}
 	}
 
 	@Mutation(() => [ Paticipant ])
@@ -48,13 +57,25 @@ export class PaticipantsResolver {
 	findPaticipantByProjectAndMember (
 		@Args('getPaticipantByProjectAndMemberInput')
 		getPaticipantByProjectAndMemberInput: PaticipantDTO.GetPaticipantByProjectAndMemberInput,
-		@CurrentUser() user: IPayLoadToken,
+		@CurrentUserOption() user: IPayLoadToken,
 	) {
-		return this.paticipantsService.findPaticipantByProjectAndMember(
-			getPaticipantByProjectAndMemberInput,
-			user,
-			false,
-		);
+		if (user === null) {
+			return this.paticipantsService.findPaticipantByProjectAndMember(
+				getPaticipantByProjectAndMemberInput,
+				{
+					_id: '61c97ada9b22541c404e3dd7',
+					_roleId: '61c0251fb7ae1f8f80d7e568',
+				},
+				false,
+			);
+		}
+		else {
+			return this.paticipantsService.findPaticipantByProjectAndMember(
+				getPaticipantByProjectAndMemberInput,
+				user,
+				false,
+			);
+		}
 	}
 
 	@Mutation(() => Paticipant)
