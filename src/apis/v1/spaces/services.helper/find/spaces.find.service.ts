@@ -46,4 +46,12 @@ export class SpacesFindService {
 
 		return spaces;
 	}
+
+	async findByProjectId ({ _projectId }: SpaceDTO.FindByProjectId): Promise<SpaceDocument> {
+		const space = await this.spaceEntity.findOne({ _projectId });
+
+		if (space === null) throw new HttpException('Not Found _projectId = ' + _projectId, HttpStatus.NOT_FOUND);
+
+		return space;
+	}
 }

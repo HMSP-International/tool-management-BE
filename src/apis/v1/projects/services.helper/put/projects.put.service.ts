@@ -21,46 +21,4 @@ export class ProjectsPutService {
 
 		return projectEdited;
 	}
-
-	async addNewViewer (
-		{ _projectId, email }: ProjectDTO.AddNewViewerInput,
-		user: IPayLoadToken,
-	): Promise<ProjectDocument> {
-		const project = await this.projectEntity.findById(_projectId);
-		if (project === null) throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
-		if (project.owner.toString() !== user._id) throw new HttpException('FORBIDDEN', HttpStatus.FORBIDDEN);
-
-		const viewers = project.viewers;
-		const index = viewers.findIndex(viewer => viewer === email);
-
-		if (index >= 0) throw new HttpException('Duplicate email', HttpStatus.BAD_REQUEST);
-
-		const projectEdited = await this.projectEntity.findByIdAndUpdate(
-			_projectId,
-			{ viewers: [ ...viewers, email ] },
-			{ new: true },
-		);
-
-		return projectEdited;
-	}
-
-	async removeViewer (
-		{ _projectId, email }: ProjectDTO.RemoveViewerInput,
-		user: IPayLoadToken,
-	): Promise<ProjectDocument> {
-		const project = await this.projectEntity.findById(_projectId);
-		if (project === null) throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
-		if (project.owner.toString() !== user._id) throw new HttpException('FORBIDDEN', HttpStatus.FORBIDDEN);
-
-		const viewers = project.viewers;
-		const newViewers = viewers.filter(viewer => viewer !== email);
-
-		const projectEdited = await this.projectEntity.findByIdAndUpdate(
-			_projectId,
-			{ viewers: newViewers },
-			{ new: true },
-		);
-
-		return projectEdited;
-	}
 }

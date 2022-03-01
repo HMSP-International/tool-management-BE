@@ -62,20 +62,4 @@ export class ProjectsResolver {
 	) {
 		return this.projectsService.changeNameProject(changeNameProject, user);
 	}
-
-	@Mutation(() => Project)
-	async addNewViewerToProject (
-		@Args('addNewViewerInput') addNewViewer: ProjectDTO.AddNewViewerInput,
-		@CurrentUser() user: IPayLoadToken,
-	) {
-		return this.projectsService.addNewViewer(addNewViewer, user);
-	}
-
-	@Mutation(() => Project)
-	async removeViewerFromProject (
-		@Args('removeViewerInput') removeViewer: ProjectDTO.RemoveViewerInput,
-		@CurrentUser() user: IPayLoadToken,
-	) {
-		return this.projectsService.removeViewerFromProject(removeViewer, user);
-	}
 }

@@ -18,9 +18,6 @@ export class ProjectModel {
 
 	@Prop({ type: Number, required: true })
 	order: number;
-
-	@Prop({ type: [ String ], default: [] })
-	viewers: string[];
 }
 
 export const ProjectSchema = SchemaFactory.createForClass(ProjectModel);

@@ -24,6 +24,17 @@ export class SpacesResolver {
 		}
 	}
 
+	// Query ---- start
+	@Mutation(() => [ Space ])
+	getSpacesByEmailViewer () {
+		return [];
+	}
+
+	@Mutation(() => Space)
+	getSpacesByProjectId (@Args('findByProjectId') findByProjectId: SpaceDTO.FindByProjectId) {
+		return this.spacesService.findByProjectId(findByProjectId);
+	}
+
 	@Mutation(() => [ Space ])
 	getSpacesByMemberId (
 		@CurrentUser() user: IPayLoadToken,
@@ -53,6 +64,22 @@ export class SpacesResolver {
 		@CurrentUser() user: IPayLoadToken,
 	) {
 		return this.spacesService.deleteSpaceById(deleteSpaceInput._spaceId, user._id);
+	}
+
+	@Mutation(() => Space)
+	async addNewViewerToProject (
+		@Args('addNewViewerInput') addNewViewer: SpaceDTO.AddNewViewerInput,
+		@CurrentUser() user: IPayLoadToken,
+	) {
+		return this.spacesService.addNewViewer(addNewViewer, user);
+	}
+
+	@Mutation(() => Space)
+	async removeViewerFromProject (
+		@Args('removeViewerInput') removeViewer: SpaceDTO.RemoveViewerInput,
+		@CurrentUser() user: IPayLoadToken,
+	) {
+		return this.spacesService.removeViewerFromProject(removeViewer, user);
 	}
 	// Mutation ---- end
 }

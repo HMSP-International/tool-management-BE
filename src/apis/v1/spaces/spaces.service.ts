@@ -5,7 +5,6 @@ import { SpacesCreateService } from './services.helper/create/spaces.create.serv
 import { SpacesDeleteService } from './services.helper/delete/spaces.delete.service';
 import { SpacesFindService } from './services.helper/find/spaces.find.service';
 import { SpacesPutService } from './services.helper/put/spaces.put.service';
-
 @Injectable()
 export class SpacesService {
 	constructor (
@@ -27,6 +26,10 @@ export class SpacesService {
 		return await this.spacesFindService.findById(_id);
 	}
 
+	async findByProjectId (findByProjectId: SpaceDTO.FindByProjectId) {
+		return await this.spacesFindService.findByProjectId(findByProjectId);
+	}
+
 	async findByMemberId (findByMemberId: SpaceDTO.FindByMemberId, user: IPayLoadToken) {
 		return await this.spacesFindService.findByMemberId(findByMemberId, user);
 	}
@@ -41,5 +44,13 @@ export class SpacesService {
 
 	async deleteSpaceById (_spaceId: string, _userId: string) {
 		return await this.spacesDeleteService.deleteSpaceById(_spaceId, _userId);
+	}
+
+	async addNewViewer (addNewViewerInput: SpaceDTO.AddNewViewerInput, user: IPayLoadToken) {
+		return await this.spacesPutService.addNewViewer(addNewViewerInput, user);
+	}
+
+	async removeViewerFromProject (removeViewerInput: SpaceDTO.RemoveViewerInput, user: IPayLoadToken) {
+		return await this.spacesPutService.removeViewer(removeViewerInput, user);
 	}
 }
