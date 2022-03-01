@@ -49,3 +49,23 @@ export class FindByMemberIdAndSpaceIdInput {
 	@Field(() => String, { nullable: true })
 	_spaceId: string;
 }
+
+@InputType()
+export class AddNewViewerInput {
+	@Length(24, 24)
+	@Field(() => String)
+	_projectId: string;
+
+	@Field(() => String)
+	email: string;
+}
+
+@InputType()
+export class RemoveViewerInput {
+	@Length(24, 24)
+	@Field(() => String)
+	_projectId: string;
+
+	@Field(() => String)
+	email: string;
+}

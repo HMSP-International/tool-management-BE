@@ -47,4 +47,12 @@ export class ProjectsService {
 	async changeNameProject (changeNameProject: ProjectDTO.ChangeNameProjectInput, user: IPayLoadToken) {
 		return await this.projectsPutService.changeNameProject(changeNameProject, user);
 	}
+
+	async addNewViewer (addNewViewerInput: ProjectDTO.AddNewViewerInput, user: IPayLoadToken) {
+		return await this.projectsPutService.addNewViewer(addNewViewerInput, user);
+	}
+
+	async removeViewerFromProject (removeViewerInput: ProjectDTO.RemoveViewerInput, user: IPayLoadToken) {
+		return await this.projectsPutService.removeViewer(removeViewerInput, user);
+	}
 }

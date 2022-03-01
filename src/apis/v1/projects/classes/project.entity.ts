@@ -16,4 +16,7 @@ export class Project {
 
 	@Field(() => Number)
 	order: number;
+
+	@Field(() => [ String ], { nullable: true })
+	viewers: string[];
 }
