@@ -14,3 +14,14 @@ export class RemoveEmailInput {
 	@Field(() => String)
 	email: string;
 }
+
+@InputType()
+export class CheckEmailInViewerInput {
+	@IsString()
+	@Field(() => String)
+	email: string;
+
+	@IsString()
+	@Field(() => String)
+	_userId: string;
+}

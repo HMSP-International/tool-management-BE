@@ -1,13 +1,22 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { AddNewEmailInput, RemoveEmailInput } from './viewers.dto';
+import { AddNewEmailInput, CheckEmailInViewerInput, RemoveEmailInput } from './viewers.dto';
 import { ViewerDocument, ViewerModel } from './viewers.model';
 import { Model } from 'mongoose';
 import { IPayLoadToken } from 'helpers/modules/token/token.interface';
+import { BooleanEntity } from 'helpers/modules/boolean/boolean.entity';
 
 @Injectable()
 export class ViewersService {
 	constructor (@InjectModel(ViewerModel.name) private viewerEntity: Model<ViewerDocument>) {}
+
+	async checkPermission ({ _userId, email }: CheckEmailInViewerInput): Promise<BooleanEntity> {
+		const viewer = await this.viewerEntity.findOne({ _userId });
+
+		const index = viewer.emails.findIndex(e => e === email);
+
+		return index < 0 ? { boolean: false } : { boolean: true };
+	}
 
 	async getViewer (user: IPayLoadToken): Promise<any> {
 		const viewer = await this.viewerEntity.findOne({ _userId: user._id });
