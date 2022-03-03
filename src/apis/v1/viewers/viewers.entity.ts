@@ -6,9 +6,9 @@ export class Viewer {
 	@Field(() => String)
 	_id: string;
 
-	@Field(() => User)
+	@Field(() => String)
 	_userId: string;
 
 	@Field(() => [ String ])
-	viewers: string[];
+	emails: string[];
 }

@@ -44,22 +44,22 @@ export class FindByProjectId {
 	_projectId: string;
 }
 
-@InputType()
-export class AddNewViewerInput {
-	@Length(24, 24)
-	@Field(() => String)
-	_spaceId: string;
+// @InputType()
+// export class AddNewViewerInput {
+// 	@Length(24, 24)
+// 	@Field(() => String)
+// 	_spaceId: string;
 
-	@Field(() => String)
-	email: string;
-}
+// 	@Field(() => String)
+// 	email: string;
+// }
 
-@InputType()
-export class RemoveViewerInput {
-	@Length(24, 24)
-	@Field(() => String)
-	_spaceId: string;
+// @InputType()
+// export class RemoveViewerInput {
+// 	@Length(24, 24)
+// 	@Field(() => String)
+// 	_spaceId: string;
 
-	@Field(() => String)
-	email: string;
-}
+// 	@Field(() => String)
+// 	email: string;
+// }

@@ -14,6 +14,7 @@ import { RolesModule } from 'apis/v1/roles/roles.module';
 import { SpacesModule } from 'apis/v1/spaces/spaces.module';
 import { TasksModule } from 'apis/v1/tasks/tasks.module';
 import { UsersModule } from 'apis/v1/users/users.module';
+import { ViewersModule } from 'apis/v1/viewers/viewers.module';
 
 @Module({
 	imports:
@@ -30,6 +31,7 @@ import { UsersModule } from 'apis/v1/users/users.module';
 			SpacesModule,
 			TasksModule,
 			UsersModule,
+			ViewersModule,
 		],
 })
 export class FeaturesModule implements NestModule {

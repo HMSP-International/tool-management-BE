@@ -15,8 +15,8 @@ export class SpaceModel {
 	@Prop({ type: Number, required: true })
 	order: number;
 
-	@Prop({ type: [ String ], default: [] })
-	viewers: string[];
+	// @Prop({ type: [ String ], default: [] })
+	// viewers: string[];
 }
 
 export const SpaceSchema = SchemaFactory.createForClass(SpaceModel);

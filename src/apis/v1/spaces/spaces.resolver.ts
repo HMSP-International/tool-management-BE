@@ -66,20 +66,20 @@ export class SpacesResolver {
 		return this.spacesService.deleteSpaceById(deleteSpaceInput._spaceId, user._id);
 	}
 
-	@Mutation(() => Space)
-	async addNewViewerToProject (
-		@Args('addNewViewerInput') addNewViewer: SpaceDTO.AddNewViewerInput,
-		@CurrentUser() user: IPayLoadToken,
-	) {
-		return this.spacesService.addNewViewer(addNewViewer, user);
-	}
+	// @Mutation(() => Space)
+	// async addNewViewerToProject (
+	// 	@Args('addNewViewerInput') addNewViewer: SpaceDTO.AddNewViewerInput,
+	// 	@CurrentUser() user: IPayLoadToken,
+	// ) {
+	// 	return this.spacesService.addNewViewer(addNewViewer, user);
+	// }
 
-	@Mutation(() => Space)
-	async removeViewerFromProject (
-		@Args('removeViewerInput') removeViewer: SpaceDTO.RemoveViewerInput,
-		@CurrentUser() user: IPayLoadToken,
-	) {
-		return this.spacesService.removeViewerFromProject(removeViewer, user);
-	}
+	// @Mutation(() => Space)
+	// async removeViewerFromProject (
+	// 	@Args('removeViewerInput') removeViewer: SpaceDTO.RemoveViewerInput,
+	// 	@CurrentUser() user: IPayLoadToken,
+	// ) {
+	// 	return this.spacesService.removeViewerFromProject(removeViewer, user);
+	// }
 	// Mutation ---- end
 }

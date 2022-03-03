@@ -14,6 +14,6 @@ export class Space {
 	@Field(() => Number)
 	order: number;
 
-	@Field(() => [ String ], { nullable: true })
-	viewers: string[];
+	// @Field(() => [ String ], { nullable: true })
+	// viewers: string[];
 }

@@ -11,7 +11,7 @@ export class ViewerModel {
 	_userId: string;
 
 	@Prop({ type: [ String ], default: [] })
-	viewers: string[];
+	emails: string[];
 }
 
 export const ViewerSchema = SchemaFactory.createForClass(ViewerModel);

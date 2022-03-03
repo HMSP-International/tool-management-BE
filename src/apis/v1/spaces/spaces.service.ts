@@ -46,11 +46,11 @@ export class SpacesService {
 		return await this.spacesDeleteService.deleteSpaceById(_spaceId, _userId);
 	}
 
-	async addNewViewer (addNewViewerInput: SpaceDTO.AddNewViewerInput, user: IPayLoadToken) {
-		return await this.spacesPutService.addNewViewer(addNewViewerInput, user);
-	}
+	// async addNewViewer (addNewViewerInput: SpaceDTO.AddNewViewerInput, user: IPayLoadToken) {
+	// 	return await this.spacesPutService.addNewViewer(addNewViewerInput, user);
+	// }
 
-	async removeViewerFromProject (removeViewerInput: SpaceDTO.RemoveViewerInput, user: IPayLoadToken) {
-		return await this.spacesPutService.removeViewer(removeViewerInput, user);
-	}
+	// async removeViewerFromProject (removeViewerInput: SpaceDTO.RemoveViewerInput, user: IPayLoadToken) {
+	// 	return await this.spacesPutService.removeViewer(removeViewerInput, user);
+	// }
 }
