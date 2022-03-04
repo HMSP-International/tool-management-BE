@@ -2,9 +2,9 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { SpacesService } from './spaces.service';
 import { Space } from './classes/space.entity';
 import { IPayLoadToken } from 'helpers/modules/token/token.interface';
-import { CurrentUser } from 'apis/v1/currentUser.decorator';
+import { CurrentUser } from 'commons/decorator/currentUser.decorator';
 import * as SpaceDTO from './classes/spaces.dto';
-import { CurrentUserOption } from '../currentUser.decoratorOption';
+import { CurrentUserOption } from 'commons/decorator/currentUser.decoratorOption';
 
 @Resolver(() => Space)
 export class SpacesResolver {

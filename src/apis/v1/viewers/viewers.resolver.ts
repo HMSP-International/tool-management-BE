@@ -2,7 +2,7 @@ import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { ViewersService } from './viewers.service';
 import { Viewer } from './viewers.entity';
 import { AddNewEmailInput, CheckEmailInViewerInput, RemoveEmailInput } from './viewers.dto';
-import { CurrentUser } from '../currentUser.decorator';
+import { CurrentUser } from '../../../commons/decorator/currentUser.decorator';
 import { IPayLoadToken } from 'helpers/modules/token/token.interface';
 import { BooleanEntity } from 'helpers/modules/boolean/boolean.entity';
 

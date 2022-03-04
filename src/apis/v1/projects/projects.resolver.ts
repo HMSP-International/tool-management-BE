@@ -1,7 +1,7 @@
 import { Resolver, Args, Mutation } from '@nestjs/graphql';
 import { ProjectsService } from './projects.service';
 import { Project } from './classes/project.entity';
-import { CurrentUser } from '../currentUser.decorator';
+import { CurrentUser } from '../../../commons/decorator/currentUser.decorator';
 import { IPayLoadToken } from 'helpers/modules/token/token.interface';
 import * as ProjectDTO from './classes/projects.dto';
 

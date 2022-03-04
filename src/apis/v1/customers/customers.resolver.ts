@@ -4,7 +4,7 @@ import { CustomersService } from './customers.service';
 import { CustomerModel } from './classes/customers.model';
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { PERMISSIONS } from 'commons/decorator/permissions.decorator';
-import { CurrentUser } from '../currentUser.decorator';
+import { CurrentUser } from '../../../commons/decorator/currentUser.decorator';
 import { IPayLoadToken } from 'helpers/modules/token/token.interface';
 // import { IPayLoadToken } from 'helpers/modules/token/token.interface';
 // import { CurrentUser } from 'common/decorator/CurrentUser.decorator';
