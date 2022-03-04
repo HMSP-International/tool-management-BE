@@ -16,4 +16,7 @@ export class Project {
 
 	@Field(() => Number)
 	order: number;
+
+	@Field(() => Number)
+	stt: number;
 }

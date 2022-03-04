@@ -49,3 +49,14 @@ export class FindByMemberIdAndSpaceIdInput {
 	@Field(() => String, { nullable: true })
 	_spaceId: string;
 }
+
+@InputType()
+export class UpdateSTTInput {
+	@Length(24, 24)
+	@Field(() => String)
+	_projectId: string;
+
+	@Length(24, 24)
+	@Field(() => Number)
+	stt: number;
+}

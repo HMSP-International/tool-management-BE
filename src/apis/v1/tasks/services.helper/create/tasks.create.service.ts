@@ -50,7 +50,10 @@ export class TasksCreateService {
 			reporter: user._id,
 			order,
 			descriptions,
+			stt: project.stt + 1,
 		});
+
+		this.projectsService.updateStt({ stt: project.stt + 1, _projectId: project._id.toString() });
 
 		return await newTask.save();
 	}

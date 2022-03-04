@@ -36,6 +36,9 @@ export class Task {
 
 	@Field(() => [ Comment ])
 	comments: string[];
+
+	@Field(() => Number)
+	stt: number;
 }
 
 @ObjectType()

@@ -47,4 +47,8 @@ export class ProjectsService {
 	async changeNameProject (changeNameProject: ProjectDTO.ChangeNameProjectInput, user: IPayLoadToken) {
 		return await this.projectsPutService.changeNameProject(changeNameProject, user);
 	}
+
+	async updateStt (updateStt: ProjectDTO.UpdateSTTInput) {
+		return await this.projectsPutService.updateStt(updateStt);
+	}
 }

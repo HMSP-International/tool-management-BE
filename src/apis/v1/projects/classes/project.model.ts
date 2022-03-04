@@ -18,6 +18,9 @@ export class ProjectModel {
 
 	@Prop({ type: Number, required: true })
 	order: number;
+
+	@Prop({ type: Number, default: 0 })
+	stt: number;
 }
 
 export const ProjectSchema = SchemaFactory.createForClass(ProjectModel);

@@ -21,4 +21,13 @@ export class ProjectsPutService {
 
 		return projectEdited;
 	}
+
+	async updateStt ({ _projectId, stt }: ProjectDTO.UpdateSTTInput): Promise<ProjectDocument> {
+		const project = await this.projectEntity.findById(_projectId);
+		if (project === null) throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+
+		const projectEdited = await this.projectEntity.findByIdAndUpdate(_projectId, { stt }, { new: true });
+
+		return projectEdited;
+	}
 }

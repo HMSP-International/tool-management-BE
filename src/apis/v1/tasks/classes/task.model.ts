@@ -39,6 +39,9 @@ export class TaskModel {
 
 	@Prop([ { type: ObjectId, default: [], ref: CommentModel.name } ])
 	comments: string[];
+
+	@Prop({ type: Number, default: 0 })
+	stt: number;
 }
 
 export const TaskSchema = SchemaFactory.createForClass(TaskModel);
