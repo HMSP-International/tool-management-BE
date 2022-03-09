@@ -51,10 +51,10 @@ export class TasksCreateService {
 			order,
 			descriptions,
 			stt: project.stt + 1,
+			estimatedTime: [ { _listId: _listId, totalTime: 0, lastTime: Date() } ],
 		});
 
 		this.projectsService.updateStt({ stt: project.stt + 1, _projectId: project._id.toString() });
-
 		return await newTask.save();
 	}
 }

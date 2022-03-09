@@ -26,6 +26,12 @@ export class UsersResolver {
 
 	@PERMISSIONS({ resolverName: 'getUserById' })
 	@Mutation(() => User)
+	async getUserByIdM (@Args('getUserByIdInput') getUserById: UserDto.GetUserByIdInput): Promise<UserModel> {
+		return this.usersService.findById(getUserById._userId);
+	}
+
+	@PERMISSIONS({ resolverName: 'getUserById' })
+	@Mutation(() => User)
 	async getUserByIdMutation (@Args('getUserByIdInput') getUserById: UserDto.GetUserByIdInput): Promise<UserModel> {
 		return this.usersService.findById(getUserById._userId);
 	}
@@ -105,10 +111,10 @@ export class UsersResolver {
 	// -------------------------------------- End Mutaion -------------------------------------- //
 
 	// ResolveField ---start
-
 	@ResolveField(() => User)
 	_roleId (@Parent() user: User) {
 		return this.usersService.getRole(user._roleId);
 	}
+
 	// ResolveField ---end
 }

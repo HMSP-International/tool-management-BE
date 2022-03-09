@@ -1,10 +1,10 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
-import { ListModel } from 'apis/v1/lists/classes/list.model';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { TimestampSchema, ITimestamp } from './timestamp';
 import { ProjectModel } from 'apis/v1/projects/classes/project.model';
 import { UserModel } from 'apis/v1/users/classes/user.model';
 import { CommentModel } from 'apis/v1/comments/classes/comment.model';
+import { EstimatedTimeSchema, IEstimatedTime } from './estimatedTime';
 
 const ObjectId = mongoose.SchemaTypes.ObjectId;
 export type TaskDocument = TaskModel & mongoose.Document;
@@ -16,7 +16,7 @@ export class TaskModel {
 	@Prop({ type: String, required: true }) //
 	name: string;
 
-	@Prop({ type: ObjectId, ref: ListModel.name, required: true }) //
+	@Prop({ type: ObjectId, ref: 'listmodels', required: true }) //
 	_listId: string;
 
 	@Prop({ type: Number, required: true })
@@ -42,13 +42,9 @@ export class TaskModel {
 
 	@Prop({ type: Number, default: 0 })
 	stt: number;
+
+	@Prop({ type: [ EstimatedTimeSchema ], default: [] })
+	estimatedTime: IEstimatedTime[];
 }
 
 export const TaskSchema = SchemaFactory.createForClass(TaskModel);
-
-// TaskSchema.pre<TaskModel>('updateOne', function (next: Function) {
-// 	this.timestamp.updateAt = new Date();
-// 	console.log(this.timestamp.updateAt);
-
-// 	next();
-// });

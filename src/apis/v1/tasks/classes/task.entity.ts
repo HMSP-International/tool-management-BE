@@ -1,9 +1,10 @@
-import { ObjectType, Field } from '@nestjs/graphql';
-import { Project } from 'apis/v1/projects/classes/project.entity';
-import { User } from 'apis/v1/users/classes/user.entity';
-import { Comment } from 'apis/v1/comments/classes/comment.entity';
 import { Timestamp } from './timestamp';
+import { EstimatedTime } from './estimatedTime';
+import { ObjectType, Field } from '@nestjs/graphql';
+import { User } from 'apis/v1/users/classes/user.entity';
 import { DraggableLocationAnotherList } from './tasks.dto';
+import { Project } from 'apis/v1/projects/classes/project.entity';
+import { Comment } from 'apis/v1/comments/classes/comment.entity';
 
 @ObjectType()
 export class Task {
@@ -39,6 +40,9 @@ export class Task {
 
 	@Field(() => Number)
 	stt: number;
+
+	@Field(() => [ EstimatedTime ])
+	estimatedTime: EstimatedTime[];
 }
 
 @ObjectType()

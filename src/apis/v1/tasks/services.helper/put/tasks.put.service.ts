@@ -8,6 +8,8 @@ import { ListsService } from 'apis/v1/lists/lists.service';
 import { ProjectsService } from 'apis/v1/projects/projects.service';
 import { PaticipantsService } from 'apis/v1/paticipants/paticipants.service';
 import { DragAndDrop } from '../../classes/task.entity';
+import { IEstimatedTime } from '../../classes/estimatedTime';
+import moment from 'moment';
 
 @Injectable()
 export class TasksPutService {
@@ -138,7 +140,12 @@ export class TasksPutService {
 			oldTask.save();
 		}
 
-		const taskUpdated = await this.taskEntity.findByIdAndUpdate(_taskId, { _listId, order }, { new: true });
+		const estimatedTime = await this.changeEstimateTime(task, _listId);
+		const taskUpdated = await this.taskEntity.findByIdAndUpdate(
+			_taskId,
+			{ _listId, order, estimatedTime },
+			{ new: true },
+		);
 		return taskUpdated;
 	}
 
@@ -207,6 +214,9 @@ export class TasksPutService {
 		const indexTask = tasksOfOldList.findIndex(item => item._id.toString() === _taskId);
 
 		if (indexTask >= 0) {
+			const estimatedTime = await this.changeEstimateTime(task, destination._listId);
+			await this.taskEntity.findByIdAndUpdate(_taskId, { estimatedTime });
+
 			const [ taskRemoved ] = tasksOfOldList.splice(indexTask, 1);
 			taskRemoved._listId = destination._listId;
 
@@ -228,5 +238,35 @@ export class TasksPutService {
 
 			return dragAndDrop;
 		}
+	}
+
+	async changeEstimateTime (oldTask: TaskDocument, newListId: string): Promise<IEstimatedTime[]> {
+		const { estimatedTime } = oldTask;
+
+		const filteredOldList = estimatedTime.filter(e => e._listId.toString() === oldTask._listId.toString());
+		const m = this.countDown(new Date(filteredOldList[0].lastTime), new Date(), filteredOldList[0].totalTime);
+		filteredOldList.map(item => ({ ...item, totalTime: m, lastTime: null }));
+
+		const filteredNewList = estimatedTime.filter(e => e._listId.toString() === newListId);
+		if (filteredNewList.length === 0) {
+			estimatedTime.push({
+				_listId: newListId,
+				totalTime: 0,
+				lastTime: Date(),
+			});
+		}
+		else {
+			filteredNewList[0].lastTime = Date();
+		}
+
+		return estimatedTime;
+	}
+
+	countDown (then: Date, now: Date, totalTime: number): number {
+		const diffMs = now.getTime() - then.getTime();
+		const diffDays = Math.floor(diffMs / 86400000); // days
+		const diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+		const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
+		return diffMins + totalTime + diffDays * 1440 + diffHrs * 60;
 	}
 }
