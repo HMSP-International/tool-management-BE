@@ -78,6 +78,10 @@ export class TasksService {
 		);
 	}
 
+	changeCompletionTime (changeCompletionTimeInput: TaskDto.ChangeCompletionTimeInput, user: IPayLoadToken) {
+		return this.tasksPutService.changeCompletionTime(changeCompletionTimeInput, user);
+	}
+
 	getProject (_id: string) {
 		return this.tasksResolverFieldService.getProject(_id);
 	}

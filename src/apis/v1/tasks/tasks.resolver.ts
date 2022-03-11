@@ -91,6 +91,14 @@ export class TasksResolver {
 		);
 	}
 
+	@Mutation(() => Task)
+	changeCompletionTime (
+		@Args('changeCompletionTimeInput') changeCompletionTimeInput: TaskDto.ChangeCompletionTimeInput,
+		@CurrentUser() user: IPayLoadToken,
+	) {
+		return this.tasksService.changeCompletionTime(changeCompletionTimeInput, user);
+	}
+
 	@ResolveField(() => Project)
 	_projectId (@Parent() task: Task) {
 		return this.tasksService.getProject(task._projectId);

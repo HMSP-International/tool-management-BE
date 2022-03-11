@@ -43,6 +43,9 @@ export class Task {
 
 	@Field(() => [ EstimatedTime ])
 	estimatedTime: EstimatedTime[];
+
+	@Field(() => Number)
+	completionTime: number;
 }
 
 @ObjectType()

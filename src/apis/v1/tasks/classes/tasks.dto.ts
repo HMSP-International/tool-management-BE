@@ -1,5 +1,5 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { IsString, Length, IsOptional } from 'class-validator';
+import { IsString, Length, IsOptional, IsNumber } from 'class-validator';
 
 @InputType()
 export class GetTasksInput {
@@ -152,4 +152,16 @@ export class GetByUserId {
 	@IsString()
 	@Field(() => String)
 	_: string;
+}
+
+@InputType()
+export class ChangeCompletionTimeInput {
+	@Length(24, 24)
+	@IsString()
+	@Field(() => String)
+	_taskId: string;
+
+	@IsNumber()
+	@Field(() => Number)
+	completionTime: number;
 }

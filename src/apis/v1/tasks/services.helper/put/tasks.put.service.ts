@@ -269,4 +269,18 @@ export class TasksPutService {
 		const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
 		return diffMins + totalTime + diffDays * 1440 + diffHrs * 60;
 	}
+
+	async changeCompletionTime (
+		{ completionTime, _taskId }: TaskDto.ChangeCompletionTimeInput,
+		user: IPayLoadToken,
+	): Promise<TaskDocument> {
+		const task = await this.taskEntity.findById(_taskId);
+		if (task === null) {
+			throw new HttpException('Not Found taskId', HttpStatus.NOT_FOUND);
+		}
+
+		this.checkPermistion2(task, user);
+
+		return await this.taskEntity.findByIdAndUpdate(_taskId, { completionTime }, { new: true });
+	}
 }

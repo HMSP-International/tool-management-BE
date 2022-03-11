@@ -45,6 +45,9 @@ export class TaskModel {
 
 	@Prop({ type: [ EstimatedTimeSchema ], default: [] })
 	estimatedTime: IEstimatedTime[];
+
+	@Prop({ type: Number, default: 0 })
+	completionTime: number;
 }
 
 export const TaskSchema = SchemaFactory.createForClass(TaskModel);
